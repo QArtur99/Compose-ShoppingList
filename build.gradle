@@ -1,0 +1,65 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    def versions = [:]
+    ext {
+        versions.kotlin = '1.4-M1'
+    }
+    versions.android_gradle_plugin = '4.1.0-alpha06'
+    versions.arch_core = '2.1.0'
+    versions.atsl_core = "1.2.0"
+    versions.atsl_junit = "1.1.1"
+    versions.atsl_monitor = "1.2.0"
+    versions.atsl_rules = '1.2.0'
+    versions.atsl_runner = '1.3.0-alpha05'
+    versions.compose_compiler_extension_version = "0.1.0-dev09"
+    versions.compose_version = "0.1.0-dev09"
+    versions.constraint_layout = '2.0.0-beta4'
+    versions.core_ktx = '1.3.0-rc01'
+    versions.coroutine = '1.3.2'
+    versions.coroutines_adapter = "0.9.2"
+    versions.dagger = '2.27'
+    versions.diffplug = "3.28.1"
+    versions.espresso = '3.3.0-alpha05'
+    versions.fragment = '1.3.0-alpha03'
+    versions.fragment_testing = '1.3.0-alpha03'
+    versions.hamcrest = "1.3"
+    versions.junit = '4.13'
+    versions.koin = '2.0.1'
+    versions.kotlin = '1.3.72'
+    versions.ktlint = "0.33.0"
+    versions.lifecycle = '2.2.0'
+    versions.material = '1.1.0'
+    versions.mockito = "2.25.0"
+    versions.mockito_all = "1.10.19"
+    versions.mockito_android = "2.25.0"
+    versions.mockwebserver = "3.8.1"
+    versions.navigation = '2.3.0-alpha05'
+    versions.preference = '1.1.1'
+    versions.robolectric = '4.3.1'
+    versions.room = '2.2.5'
+    versions.support = '1.1.0'
+    versions.truth = '1.0.1'
+    ext.versions = versions
+    repositories {
+        google()
+        jcenter()
+        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.diffplug"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
