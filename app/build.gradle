@@ -1,0 +1,83 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.artf.shopinglistcompose"
+        minSdkVersion 24
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "$versions.compose_compiler_extension_version"
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":data")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
+    implementation "androidx.appcompat:appcompat:$versions.support"
+    implementation "androidx.core:core-ktx:$versions.core_ktx"
+    implementation "androidx.preference:preference-ktx:$versions.preference"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
+    implementation "com.google.android.material:material:$versions.material"
+
+    // Compose
+    implementation "androidx.compose:compose-runtime:$versions.compose_version"
+    implementation "androidx.ui:ui-framework:$versions.compose_version"
+    implementation "androidx.ui:ui-layout:$versions.compose_version"
+    implementation "androidx.ui:ui-material:$versions.compose_version"
+    implementation "androidx.ui:ui-foundation:$versions.compose_version"
+    implementation "androidx.ui:ui-animation:$versions.compose_version"
+    implementation "androidx.ui:ui-tooling:$versions.compose_version"
+
+    //Koin
+    implementation "org.koin:koin-android:$versions.koin"
+    implementation "org.koin:koin-androidx-scope:$versions.koin"
+    implementation "org.koin:koin-androidx-viewmodel:$versions.koin"
+
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
+
+    //Room
+    implementation "androidx.room:room-runtime:$versions.room"
+//    kapt "androidx.room:room-compiler:$versions.room"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
