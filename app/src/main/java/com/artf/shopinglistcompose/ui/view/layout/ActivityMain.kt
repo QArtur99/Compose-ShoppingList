@@ -1,22 +1,29 @@
 package com.artf.shopinglistcompose.ui.view.layout
 
-import android.util.Log
-import androidx.compose.*
-import androidx.lifecycle.LiveData
+import androidx.compose.Composable
+import androidx.compose.MutableState
+import androidx.compose.remember
+import androidx.compose.state
 import androidx.lifecycle.MutableLiveData
 import androidx.ui.animation.Crossfade
+import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.*
+import androidx.ui.foundation.Icon
+import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CornerSize
-import androidx.ui.layout.*
+import androidx.ui.layout.Column
+import androidx.ui.layout.fillMaxWidth
+import androidx.ui.layout.padding
 import androidx.ui.material.*
-import androidx.ui.material.ripple.ripple
+import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
-import com.artf.shopinglistcompose.R
 import com.artf.data.database.model.ShoppingList
-import com.artf.shopinglistcompose.ui.view.MainActivity
+import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
+import com.artf.shopinglistcompose.ui.view.menu.MainMenu
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Composable
 fun ShoppingListApp() {
@@ -24,16 +31,16 @@ fun ShoppingListApp() {
         colors = lightThemeColors,
         typography = themeTypography
     ) {
-        AppContent(MainActivity.instance.sharedViewModel)
+        AppContent()
     }
 }
 
 @Composable
-private fun AppContent(sharedViewModel: SharedViewModel) {
+private fun AppContent() {
     Crossfade(AppStatus.currentScreen) { screen ->
         Surface(color = MaterialTheme.colors.background) {
             when (screen) {
-                is Screen.Home -> HomeScreen(sharedViewModel)
+                is Screen.Home -> HomeScreen()
             }
         }
     }
@@ -41,7 +48,6 @@ private fun AppContent(sharedViewModel: SharedViewModel) {
 
 @Composable
 fun HomeScreen(
-    sharedViewModel: SharedViewModel,
     scaffoldState: ScaffoldState = remember { ScaffoldState() }
 ) {
     val showDialog = state { false }
@@ -49,17 +55,18 @@ fun HomeScreen(
         scaffoldState = scaffoldState,
         topAppBar = {
             TopAppBar(
-                title = { Text(text = "Jetnews") },
+                title = { Text(text = stringResource(id = R.string.app_name)) },
                 backgroundColor = MaterialTheme.colors.primary,
                 navigationIcon = {
                     IconButton(onClick = { scaffoldState.drawerState = DrawerState.Opened }) {
-                        Icon(vectorResource(R.drawable.ic_launcher_background))
+                        Icon(vectorResource(R.drawable.ic_baseline_menu_24))
                     }
-                }
+                },
+                actions = { MainMenu() }
             )
         },
         bodyContent = { modifier ->
-            HomeScreenBody(sharedViewModel.shoppingLists, modifier)
+            HomeScreenBody(modifier)
             ShoppingListDialog(showDialog)
         },
         floatingActionButton = { Fab(showDialog) }
@@ -68,9 +75,9 @@ fun HomeScreen(
 
 @Composable
 private fun HomeScreenBody(
-    posts: LiveData<List<ShoppingList>>,
     modifier: Modifier
 ) {
+    val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
     val posts2 = MutableLiveData<List<ShoppingList>>().apply {
         value = arrayListOf(
             ShoppingList(id = 0, shoppingListName = "A"),
@@ -81,26 +88,14 @@ private fun HomeScreenBody(
         )
     }
 
-    val post3 = observer(posts)
+    val post3 = observer(sharedViewModel.value.shoppingLists)
 
     VerticalScroller {
-        Column(modifier) {
+        Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
             post3?.forEach { post ->
-                PostCardSimple(post)
-                HomeScreenDivider()
+                PostCardSimple(sharedViewModel.value, post)
+//                HomeScreenDivider()
             }
-        }
-    }
-}
-
-@Composable
-fun PostCardSimple(post: ShoppingList) {
-    Clickable(
-        modifier = Modifier.ripple(),
-        onClick = { Log.e("CLICK", "PostCardSimple") }
-    ) {
-        Row(modifier = Modifier.padding(16.dp)) {
-            Text(text = post.shoppingListName)
         }
     }
 }
