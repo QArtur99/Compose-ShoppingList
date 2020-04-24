@@ -1,16 +1,15 @@
 package com.artf.shopinglistcompose.ui.view
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.compose.state
+import androidx.compose.Providers
 import androidx.ui.core.setContent
+import com.artf.shopinglistcompose.ui.view.layout.ScreenAmbient
+import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStack
 import com.artf.shopinglistcompose.ui.view.layout.ShoppingListApp
 import com.artf.shopinglistcompose.ui.view.productDialog.NewProductViewModel
 import com.artf.shopinglistcompose.ui.view.shoppingListDialog.NewListViewModel
-import com.artf.shopinglistcompose.util.ShoppingListType
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     val sharedViewModel: SharedViewModel by viewModel()
     val newListViewModel: NewListViewModel by viewModel()
     val newProductViewModel: NewProductViewModel by viewModel()
+    private lateinit var backStack: ScreenBackStack
 
     companion object {
         lateinit var instance: MainActivity
@@ -26,15 +26,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
-        sharedViewModel.setShoppingListType(ShoppingListType.CURRENT)
         setContent {
-            ShoppingListApp()
+            backStack = ScreenBackStack()
+            Providers(ScreenAmbient provides backStack) {
+                ShoppingListApp(backStack)
+            }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -44,5 +41,9 @@ class MainActivity : AppCompatActivity() {
 //            R.id.archived_shopping_list -> sharedViewModel.setShoppingListType(ShoppingListType.ARCHIVED)
         }
         return true
+    }
+
+    override fun onBackPressed() {
+        backStack.pop() ?: super.onBackPressed()
     }
 }

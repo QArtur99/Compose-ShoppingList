@@ -1,11 +1,9 @@
 package com.artf.shopinglistcompose.ui.view.menu
 
 import androidx.compose.Composable
+import androidx.compose.MutableState
 import androidx.compose.state
-import androidx.ui.core.ConfigurationAmbient
-import androidx.ui.core.DropdownPopup
-import androidx.ui.core.LifecycleOwnerAmbient
-import androidx.ui.core.Modifier
+import androidx.ui.core.*
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
@@ -21,7 +19,8 @@ import androidx.ui.unit.IntPxPosition
 import androidx.ui.unit.dp
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
-import com.artf.shopinglistcompose.util.ShoppingListType
+import com.artf.shopinglistcompose.ui.view.layout.Screen
+import com.artf.shopinglistcompose.ui.view.layout.ScreenAmbient
 import com.artf.shopinglistcompose.util.dpToPx
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,11 +28,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 fun MainMenu() {
     val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
     val showMenu = state { false }
+    val backStack = ScreenAmbient.current
+
     IconButton(onClick = { showMenu.value = true }) {
         Icon(vectorResource(R.drawable.ic_baseline_more_vert_black_24))
     }
     if (showMenu.value.not()) return
-    DropdownPopup(offset = IntPxPosition(IntPx(0.dpToPx()), IntPx((-48 - 16).dpToPx()))) {
+    DropdownPopup(
+        offset = IntPxPosition(IntPx(0.dpToPx()), IntPx((-48 - 16).dpToPx())),
+        popupProperties = PopupProperties(true) { showMenu.value = false }
+    ) {
         Row(Modifier.padding(16.dp, 16.dp, 4.dp, 16.dp)) {
             Surface(
                 Modifier.width((ConfigurationAmbient.current.screenWidthDp * 0.6).dp),
@@ -42,7 +46,7 @@ fun MainMenu() {
             ) {
                 Column {
                     TextButton(onClick = {
-                        sharedViewModel.value.setShoppingListType(ShoppingListType.CURRENT)
+                        backStack.push(Screen.ShoppingListCurrent)
                         showMenu.value = false
                     }) {
                         Text(
@@ -53,7 +57,7 @@ fun MainMenu() {
                         )
                     }
                     TextButton(onClick = {
-                        sharedViewModel.value.setShoppingListType(ShoppingListType.ARCHIVED)
+                        backStack.push(Screen.ShoppingListArchived)
                         showMenu.value = false
                     }) {
                         Text(

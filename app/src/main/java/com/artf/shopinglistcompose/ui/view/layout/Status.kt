@@ -1,27 +1,40 @@
 package com.artf.shopinglistcompose.ui.view.layout
 
-import androidx.compose.Model
-import androidx.compose.frames.ModelList
+import androidx.compose.*
+import java.lang.Exception
+import java.util.ArrayDeque
 
 /**
  * Class defining the screens we have in the app: home, article details and interests
  */
 sealed class Screen {
-    object Home : Screen()
-    data class Article(val postId: String) : Screen()
-    object Interests : Screen()
+    object ShoppingListCurrent : Screen()
+    object ShoppingListArchived : Screen()
 }
 
 @Model
-object AppStatus {
-    var currentScreen: Screen = Screen.Home
-    val favorites = ModelList<String>()
-    val selectedTopics = ModelList<String>()
+class ScreenBackStack() {
+    var currentScreen: Screen = Screen.ShoppingListCurrent
+    private val backStack = ArrayDeque<Screen>()
+
+    init {
+        push(Screen.ShoppingListCurrent)
+    }
+
+    fun pop(): Screen? {
+        return try {
+            backStack.pop()
+            backStack.peekFirst()?.also { currentScreen = it }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun push(screen: Screen) {
+        backStack.push(screen)
+        currentScreen = screen
+    }
 }
 
-/**
- * Temporary solution pending navigation support.
- */
-fun navigateTo(destination: Screen) {
-    AppStatus.currentScreen = destination
-}
+val ScreenAmbient =
+    ambientOf<ScreenBackStack> { throw IllegalStateException("backPressHandler is not initialized") }

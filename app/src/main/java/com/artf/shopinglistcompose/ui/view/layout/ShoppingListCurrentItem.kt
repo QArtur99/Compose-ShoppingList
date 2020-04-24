@@ -23,7 +23,7 @@ import com.artf.shopinglistcompose.util.getDateFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Composable
-fun PostCardSimple(
+fun ShoppingListCurrentItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingList
 ) {
@@ -33,13 +33,11 @@ fun PostCardSimple(
                 modifier = Modifier.ripple(),
                 onClick = { Log.e("CLICK", "PostCardSimple") }
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(all = 8.dp)
-                ) {
+                Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(
+                        text = post.shoppingListName,
                         modifier = Modifier.weight(1f).gravity(Alignment.CenterVertically)
-                            .padding(8.dp),
-                        text = post.shoppingListName
+                            .padding(8.dp)
                     )
                     Column(horizontalGravity = Alignment.End) {
                         IconButton(onClick = { sharedViewModel.updateShoppingList(post, true) }) {
@@ -61,5 +59,5 @@ fun PostCardSimple(
 fun PreviewPostCardSimple() {
     val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
     val shoppingList = ShoppingList(id = 0, shoppingListName = "A")
-    PostCardSimple(sharedViewModel.value, shoppingList)
+    ShoppingListCurrentItem(sharedViewModel.value, shoppingList)
 }
