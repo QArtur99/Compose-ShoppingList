@@ -1,6 +1,7 @@
 package com.artf.shopinglistcompose.ui.view.layout
 
 import androidx.compose.*
+import com.artf.data.database.model.ShoppingList
 import java.lang.Exception
 import java.util.ArrayDeque
 
@@ -10,6 +11,8 @@ import java.util.ArrayDeque
 sealed class Screen {
     object ShoppingListCurrent : Screen()
     object ShoppingListArchived : Screen()
+    class ProductListCurrent(val shoppingList: ShoppingList) : Screen()
+    class ProductListArchived(val shoppingList: ShoppingList) : Screen()
 }
 
 @Model

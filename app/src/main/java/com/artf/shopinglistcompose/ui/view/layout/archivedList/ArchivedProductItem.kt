@@ -1,9 +1,7 @@
-package com.artf.shopinglistcompose.ui.view.layout
+package com.artf.shopinglistcompose.ui.view.layout.archivedList
 
-import android.util.Log
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
-import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.Icon
@@ -14,50 +12,44 @@ import androidx.ui.material.IconButton
 import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
 import androidx.ui.res.vectorResource
-import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.artf.data.database.model.ShoppingList
+import com.artf.data.database.model.Product
 import com.artf.shopinglistcompose.R
+import com.artf.shopinglistcompose.ui.data.model.ProductUi
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
-import com.artf.shopinglistcompose.util.getDateFormat
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Composable
-fun ShoppingListCurrentItem(
+fun ArchivedProductItem(
     sharedViewModel: SharedViewModel,
-    post: ShoppingList
+    product: ProductUi
 ) {
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(
                 modifier = Modifier.ripple(),
-                onClick = { Log.e("CLICK", "PostCardSimple") }
+                onClick = { }
             ) {
                 Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(
-                        text = post.shoppingListName,
+                        text = product.productName,
+                        modifier = Modifier.weight(1f).gravity(Alignment.CenterVertically)
+                            .padding(8.dp)
+                    )
+                    Text(
+                        text = product.productQuantity.toString(),
                         modifier = Modifier.weight(1f).gravity(Alignment.CenterVertically)
                             .padding(8.dp)
                     )
                     Column(horizontalGravity = Alignment.End) {
-                        IconButton(onClick = { sharedViewModel.updateShoppingList(post, true) }) {
+                        IconButton(onClick = { sharedViewModel.deleteProduct(product) }) {
                             Icon(
-                                vectorResource(R.drawable.ic_archive_black_24dp),
+                                vectorResource(R.drawable.ic_delete_forever_black_24dp),
                                 Modifier.fillMaxSize()
                             )
                         }
-                        Text(text = post.shoppingListTimestamp.getDateFormat())
                     }
                 }
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewPostCardSimple() {
-    val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
-    val shoppingList = ShoppingList(id = 0, shoppingListName = "A")
-    ShoppingListCurrentItem(sharedViewModel.value, shoppingList)
 }
