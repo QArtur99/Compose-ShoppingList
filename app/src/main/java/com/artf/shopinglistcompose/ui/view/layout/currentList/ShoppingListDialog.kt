@@ -1,4 +1,4 @@
-package com.artf.shopinglistcompose.ui.view.layout
+package com.artf.shopinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.Composable
 import androidx.compose.MutableState

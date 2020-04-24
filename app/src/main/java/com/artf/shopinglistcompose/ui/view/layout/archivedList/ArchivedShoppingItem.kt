@@ -1,6 +1,5 @@
-package com.artf.shopinglistcompose.ui.view.layout
+package com.artf.shopinglistcompose.ui.view.layout.archivedList
 
-import android.util.Log
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
@@ -9,8 +8,6 @@ import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
-import androidx.ui.layout.RowScope.gravity
-import androidx.ui.layout.RowScope.weight
 import androidx.ui.material.IconButton
 import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
@@ -19,6 +16,8 @@ import androidx.ui.unit.dp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
+import com.artf.shopinglistcompose.ui.view.layout.Screen
+import com.artf.shopinglistcompose.ui.view.layout.ScreenAmbient
 import com.artf.shopinglistcompose.util.getDateFormat
 
 @Composable
@@ -26,11 +25,12 @@ fun ShoppingListArchivedItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingList
 ) {
+    val backStack = ScreenAmbient.current
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(
                 modifier = Modifier.ripple(),
-                onClick = { Log.e("CLICK", "PostCardSimple") }
+                onClick = { backStack.push(Screen.ProductListArchived(post)) }
             ) {
                 Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(

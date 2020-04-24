@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             backStack = ScreenBackStack()
             Providers(ScreenAmbient provides backStack) {
-                ShoppingListApp(backStack)
+                ShoppingListApp()
             }
         }
     }
