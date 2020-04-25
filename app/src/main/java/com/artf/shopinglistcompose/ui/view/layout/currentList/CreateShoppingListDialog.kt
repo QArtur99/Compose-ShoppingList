@@ -86,8 +86,8 @@ private fun DialogButtons(
 }
 
 @Composable
-fun EditText(state: MutableState<String>) {
-    val focus = state { false }
+private fun EditText(state: MutableState<String>) {
+    val focus = state { true }
     val selection = state { TextRange(0, 0) }
     Column {
         Box {

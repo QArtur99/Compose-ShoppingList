@@ -1,9 +1,6 @@
 package com.artf.shopinglistcompose.ui.view.layout.currentList
 
-import androidx.compose.Composable
-import androidx.compose.MutableState
-import androidx.compose.remember
-import androidx.compose.state
+import androidx.compose.*
 import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
@@ -20,8 +17,8 @@ import androidx.ui.unit.dp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
+import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
 import com.artf.shopinglistcompose.ui.view.layout.observer
-import com.artf.shopinglistcompose.ui.view.menu.MainMenu
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Composable
@@ -29,6 +26,7 @@ fun ProductListCurrentScreen(
     shoppingList: ShoppingList,
     scaffoldState: ScaffoldState = remember { ScaffoldState() }
 ) {
+    val backStack = ScreenBackStackAmbient.current
     val showDialog = state { false }
     Scaffold(
         scaffoldState = scaffoldState,
@@ -37,16 +35,15 @@ fun ProductListCurrentScreen(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
                 backgroundColor = MaterialTheme.colors.primary,
                 navigationIcon = {
-                    IconButton(onClick = { scaffoldState.drawerState = DrawerState.Opened }) {
-                        Icon(vectorResource(R.drawable.ic_baseline_menu_24))
+                    IconButton(onClick = { backStack.pop() }) {
+                        Icon(vectorResource(R.drawable.ic_baseline_arrow_back_24))
                     }
-                },
-                actions = { MainMenu() }
+                }
             )
         },
         bodyContent = {
             ScreenBody(shoppingList)
-            ShoppingListDialog(showDialog)
+            CreateProductDialog(showDialog, shoppingList)
         },
         floatingActionButton = { Fab(showDialog) }
     )

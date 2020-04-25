@@ -1,8 +1,8 @@
 package com.artf.shopinglistcompose.di
 
 import android.content.Context
-import com.artf.shopinglistcompose.ui.view.productDialog.NewProductViewModel
-import com.artf.shopinglistcompose.ui.view.shoppingListDialog.NewListViewModel
+import com.artf.shopinglistcompose.ui.view.NewProductViewModel
+import com.artf.shopinglistcompose.ui.view.NewListViewModel
 import com.artf.data.database.ShoppingListDatabase
 import com.artf.data.database.ShoppingListDatabaseDao
 import com.artf.data.repository.ShoppingListRepository

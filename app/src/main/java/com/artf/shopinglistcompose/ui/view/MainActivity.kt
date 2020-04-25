@@ -5,11 +5,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Providers
 import androidx.ui.core.setContent
-import com.artf.shopinglistcompose.ui.view.layout.ScreenAmbient
+import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
 import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStack
 import com.artf.shopinglistcompose.ui.view.layout.ShoppingListApp
-import com.artf.shopinglistcompose.ui.view.productDialog.NewProductViewModel
-import com.artf.shopinglistcompose.ui.view.shoppingListDialog.NewListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         instance = this
         setContent {
             backStack = ScreenBackStack()
-            Providers(ScreenAmbient provides backStack) {
+            Providers(ScreenBackStackAmbient provides backStack) {
                 ShoppingListApp()
             }
         }
