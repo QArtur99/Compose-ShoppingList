@@ -5,9 +5,6 @@ import com.artf.data.database.model.ShoppingList
 import java.lang.Exception
 import java.util.ArrayDeque
 
-/**
- * Class defining the screens we have in the app: home, article details and interests
- */
 sealed class Screen {
     object ShoppingListCurrent : Screen()
     object ShoppingListArchived : Screen()
@@ -16,7 +13,7 @@ sealed class Screen {
 }
 
 @Model
-class ScreenBackStack() {
+class ScreenBackStack {
     var currentScreen: Screen = Screen.ShoppingListCurrent
     private val backStack = ArrayDeque<Screen>()
 
@@ -39,5 +36,6 @@ class ScreenBackStack() {
     }
 }
 
-val ScreenAmbient =
-    ambientOf<ScreenBackStack> { throw IllegalStateException("backPressHandler is not initialized") }
+val ScreenBackStackAmbient = ambientOf<ScreenBackStack> {
+    throw IllegalStateException("backPressHandler is not initialized")
+}

@@ -17,7 +17,7 @@ import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
 import com.artf.shopinglistcompose.ui.view.layout.Screen
-import com.artf.shopinglistcompose.ui.view.layout.ScreenAmbient
+import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
 import com.artf.shopinglistcompose.util.getDateFormat
 
 @Composable
@@ -25,7 +25,7 @@ fun ShoppingListArchivedItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingList
 ) {
-    val backStack = ScreenAmbient.current
+    val backStack = ScreenBackStackAmbient.current
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(

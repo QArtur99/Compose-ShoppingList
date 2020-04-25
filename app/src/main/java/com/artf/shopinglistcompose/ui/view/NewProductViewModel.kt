@@ -1,4 +1,4 @@
-package com.artf.shopinglistcompose.ui.view.productDialog
+package com.artf.shopinglistcompose.ui.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

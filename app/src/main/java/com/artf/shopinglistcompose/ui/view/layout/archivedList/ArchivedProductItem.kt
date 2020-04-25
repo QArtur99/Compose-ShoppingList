@@ -40,14 +40,6 @@ fun ArchivedProductItem(
                         modifier = Modifier.weight(1f).gravity(Alignment.CenterVertically)
                             .padding(8.dp)
                     )
-                    Column(horizontalGravity = Alignment.End) {
-                        IconButton(onClick = { sharedViewModel.deleteProduct(product) }) {
-                            Icon(
-                                vectorResource(R.drawable.ic_delete_forever_black_24dp),
-                                Modifier.fillMaxSize()
-                            )
-                        }
-                    }
                 }
             }
         }

@@ -19,7 +19,7 @@ fun ShoppingListApp() {
 @Composable
 private fun AppContent() {
     Surface(color = MaterialTheme.colors.background) {
-        when (val screen = ScreenAmbient.current.currentScreen) {
+        when (val screen = ScreenBackStackAmbient.current.currentScreen) {
             is Screen.ShoppingListCurrent -> ShoppingListCurrentScreen()
             is Screen.ShoppingListArchived -> ShoppingListArchivedScreen()
             is Screen.ProductListCurrent -> ProductListCurrentScreen(screen.shoppingList)

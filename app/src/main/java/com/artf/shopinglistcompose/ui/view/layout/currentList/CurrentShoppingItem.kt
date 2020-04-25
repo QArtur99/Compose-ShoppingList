@@ -19,7 +19,7 @@ import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.view.SharedViewModel
 import com.artf.shopinglistcompose.ui.view.layout.Screen
-import com.artf.shopinglistcompose.ui.view.layout.ScreenAmbient
+import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
 import com.artf.shopinglistcompose.util.getDateFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,16 +28,12 @@ fun ShoppingListCurrentItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingList
 ) {
-    val backStack = ScreenAmbient.current
+    val backStack = ScreenBackStackAmbient.current
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(
                 modifier = Modifier.ripple(),
-                onClick = { backStack.push(
-                    Screen.ProductListCurrent(
-                        post
-                    )
-                ) }
+                onClick = { backStack.push(Screen.ProductListCurrent(post)) }
             ) {
                 Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(
@@ -65,8 +61,5 @@ fun ShoppingListCurrentItem(
 fun PreviewPostCardSimple() {
     val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
     val shoppingList = ShoppingList(id = 0, shoppingListName = "A")
-    ShoppingListCurrentItem(
-        sharedViewModel.value,
-        shoppingList
-    )
+    ShoppingListCurrentItem(sharedViewModel.value, shoppingList)
 }
