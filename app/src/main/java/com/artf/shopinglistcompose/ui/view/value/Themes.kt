@@ -1,4 +1,4 @@
-package com.artf.shopinglistcompose.ui.view.layout
+package com.artf.shopinglistcompose.ui.view.value
 
 import androidx.ui.graphics.Color
 import androidx.ui.material.darkColorPalette

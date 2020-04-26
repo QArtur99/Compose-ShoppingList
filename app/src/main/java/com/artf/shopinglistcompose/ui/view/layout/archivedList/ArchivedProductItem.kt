@@ -4,19 +4,14 @@ import androidx.compose.Composable
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Clickable
-import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
-import androidx.ui.material.IconButton
 import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
-import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
-import com.artf.data.database.model.Product
-import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.data.model.ProductUi
-import com.artf.shopinglistcompose.ui.view.SharedViewModel
+import com.artf.shopinglistcompose.ui.data.SharedViewModel
 
 @Composable
 fun ArchivedProductItem(

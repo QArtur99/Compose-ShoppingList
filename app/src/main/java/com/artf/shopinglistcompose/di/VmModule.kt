@@ -1,13 +1,13 @@
 package com.artf.shopinglistcompose.di
 
 import android.content.Context
-import com.artf.shopinglistcompose.ui.view.NewProductViewModel
-import com.artf.shopinglistcompose.ui.view.NewListViewModel
+import com.artf.shopinglistcompose.ui.data.NewProductViewModel
+import com.artf.shopinglistcompose.ui.data.NewListViewModel
 import com.artf.data.database.ShoppingListDatabase
 import com.artf.data.database.ShoppingListDatabaseDao
 import com.artf.data.repository.ShoppingListRepository
 import com.artf.data.repository.ShoppingListRepositoryImpl
-import com.artf.shopinglistcompose.ui.view.SharedViewModel
+import com.artf.shopinglistcompose.ui.data.SharedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
