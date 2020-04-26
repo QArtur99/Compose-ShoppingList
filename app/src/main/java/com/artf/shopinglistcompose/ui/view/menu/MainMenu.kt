@@ -18,16 +18,15 @@ import androidx.ui.unit.IntPx
 import androidx.ui.unit.IntPxPosition
 import androidx.ui.unit.dp
 import com.artf.shopinglistcompose.R
-import com.artf.shopinglistcompose.ui.view.SharedViewModel
-import com.artf.shopinglistcompose.ui.view.layout.Screen
-import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
+import com.artf.shopinglistcompose.ui.data.Screen
+import com.artf.shopinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shopinglistcompose.util.dpToPx
 import com.artf.shopinglistcompose.util.pxToDp
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Composable
 fun MainMenu() {
-    val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
     val showMenu = state { false }
     val backStack = ScreenBackStackAmbient.current
 

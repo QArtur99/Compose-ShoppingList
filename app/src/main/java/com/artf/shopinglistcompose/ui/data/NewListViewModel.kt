@@ -1,4 +1,4 @@
-package com.artf.shopinglistcompose.ui.view
+package com.artf.shopinglistcompose.ui.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +21,7 @@ class NewListViewModel constructor(
             ShoppingList(
                 shoppingListName = name
             )
+
         viewModelScope.launch {
             shoppingListRepository.insertShoppingList(shoppingList)
             _createShoppingListLoading.value = false

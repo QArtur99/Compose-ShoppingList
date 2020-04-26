@@ -1,4 +1,4 @@
-package com.artf.shopinglistcompose.ui.view.layout
+package com.artf.shopinglistcompose.ui.data
 
 import androidx.compose.*
 import com.artf.data.database.model.ShoppingList
@@ -34,8 +34,4 @@ class ScreenBackStack {
         backStack.push(screen)
         currentScreen = screen
     }
-}
-
-val ScreenBackStackAmbient = ambientOf<ScreenBackStack> {
-    throw IllegalStateException("backPressHandler is not initialized")
 }

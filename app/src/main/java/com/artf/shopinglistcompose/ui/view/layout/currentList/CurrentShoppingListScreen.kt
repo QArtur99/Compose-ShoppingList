@@ -4,7 +4,6 @@ import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.remember
 import androidx.compose.state
-import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
@@ -18,11 +17,10 @@ import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shopinglistcompose.R
-import com.artf.shopinglistcompose.ui.view.SharedViewModel
-import com.artf.shopinglistcompose.ui.view.layout.observer
+import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shopinglistcompose.ui.view.menu.MainMenu
 import com.artf.shopinglistcompose.util.ShoppingListType
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.artf.shopinglistcompose.util.observer
 
 @Composable
 fun ShoppingListCurrentScreen(
@@ -53,13 +51,13 @@ fun ShoppingListCurrentScreen(
 
 @Composable
 private fun ScreenBody() {
-    val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
-    sharedViewModel.value.setShoppingListType(ShoppingListType.CURRENT)
-    val post = observer(sharedViewModel.value.shoppingLists)
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
+    sharedViewModelAmbient.setShoppingListType(ShoppingListType.CURRENT)
+    val post = observer(sharedViewModelAmbient.shoppingLists)
 
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            post?.forEach { post -> ShoppingListCurrentItem(sharedViewModel.value, post) }
+            post?.forEach { post -> ShoppingListCurrentItem(sharedViewModelAmbient, post) }
         }
     }
 }

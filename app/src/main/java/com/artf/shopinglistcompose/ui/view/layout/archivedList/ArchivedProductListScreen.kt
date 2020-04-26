@@ -2,7 +2,6 @@ package com.artf.shopinglistcompose.ui.view.layout.archivedList
 
 import androidx.compose.Composable
 import androidx.compose.remember
-import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
@@ -16,10 +15,9 @@ import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
-import com.artf.shopinglistcompose.ui.view.SharedViewModel
-import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
-import com.artf.shopinglistcompose.ui.view.layout.observer
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.artf.shopinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shopinglistcompose.util.observer
 
 @Composable
 fun ArchivedProductListScreen(
@@ -46,13 +44,13 @@ fun ArchivedProductListScreen(
 
 @Composable
 private fun ScreenBody(shoppingList: ShoppingList) {
-    val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
-    sharedViewModel.value.onShoppingListClick(shoppingList)
-    val productList = observer(sharedViewModel.value.productListUi)
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
+    sharedViewModelAmbient.onShoppingListClick(shoppingList)
+    val productList = observer(sharedViewModelAmbient.productListUi)
 
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            productList?.forEach { post -> ArchivedProductItem(sharedViewModel.value, post) }
+            productList?.forEach { post -> ArchivedProductItem(sharedViewModelAmbient, post) }
         }
     }
 }

@@ -2,7 +2,6 @@ package com.artf.shopinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
-import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.Icon
@@ -17,11 +16,11 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
-import com.artf.shopinglistcompose.ui.view.SharedViewModel
-import com.artf.shopinglistcompose.ui.view.layout.Screen
-import com.artf.shopinglistcompose.ui.view.layout.ScreenBackStackAmbient
+import com.artf.shopinglistcompose.ui.data.SharedViewModel
+import com.artf.shopinglistcompose.ui.data.Screen
+import com.artf.shopinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shopinglistcompose.util.getDateFormat
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Composable
 fun ShoppingListCurrentItem(
@@ -59,7 +58,7 @@ fun ShoppingListCurrentItem(
 @Preview
 @Composable
 fun PreviewPostCardSimple() {
-    val sharedViewModel = LifecycleOwnerAmbient.current.viewModel<SharedViewModel>()
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
     val shoppingList = ShoppingList(id = 0, shoppingListName = "A")
-    ShoppingListCurrentItem(sharedViewModel.value, shoppingList)
+    ShoppingListCurrentItem(sharedViewModelAmbient, shoppingList)
 }
