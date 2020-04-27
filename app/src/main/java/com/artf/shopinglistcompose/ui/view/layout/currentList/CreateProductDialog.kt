@@ -40,7 +40,7 @@ fun CreateProductDialog(
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-                text = stringResource(id = R.string.add_new_product)
+                text = stringResource(id = R.string.dialog_title_add_new_product)
             )
         },
         text = {
@@ -135,7 +135,7 @@ private fun ProductEditText(state: MutableState<String>) {
             )
             if (state.value.isEmpty()) {
                 Text(
-                    text = stringResource(id = R.string.enter_product_name),
+                    text = stringResource(id = R.string.dialog_enter_product_name),
                     color = Color.Gray,
                     style = TextStyle(fontSize = 18.sp)
                 )
@@ -170,7 +170,7 @@ private fun QuantityEditText(state: MutableState<String>) {
             )
             if (state.value.isEmpty()) {
                 Text(
-                    text = stringResource(id = R.string.enter_quantity),
+                    text = stringResource(id = R.string.dialog_enter_quantity),
                     color = Color.Gray,
                     style = TextStyle(fontSize = 18.sp)
                 )

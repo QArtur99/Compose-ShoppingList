@@ -1,16 +1,24 @@
 <resources>
     <string name="app_name">ShopingListCompose</string>
-    <string name="empty_view_title_text">No products here …</string>
-    <string name="empty_view_subtitle_text">Get started by adding a product</string>
-    <string name="enter_shopping_list_name">Enter shopping list name</string>
-    <string name="add">Add</string>
-    <string name="cancel">Cancel</string>
-    <string name="shopping_list_empty">Shopping list name can\'t be empty</string>
-    <string name="product_empty">Product name can\'t be empty</string>
-    <string name="add_new_shopping_list">Add new shopping list</string>
-    <string name="current_shopping_list">Current shopping list</string>
-    <string name="archived_shopping_list">Archived shopping list</string>
-    <string name="add_new_product">Add new product</string>
-    <string name="enter_product_name">Enter product name</string>
-    <string name="enter_quantity">Enter quantity</string>
+    <!--  Dialog  -->
+    <string name="dialog_button_add">Add</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_enter_product_name">Enter product name</string>
+    <string name="dialog_enter_quantity">Enter quantity</string>
+    <string name="dialog_enter_shopping_list_name">Enter shopping list name</string>
+    <string name="dialog_error_product_empty">Product name can\'t be empty</string>
+    <string name="dialog_error_shopping_list_empty">Shopping list name can\'t be empty</string>
+    <string name="dialog_title_add_new_product">Add new product</string>
+    <string name="dialog_title_add_new_shopping_list">Add new shopping list</string>
+    <!--  Drawer  -->
+    <string name="drawer_archived">Archived</string>
+    <string name="drawer_home">Home</string>
+    <!--  Empty view  -->
+    <string name="empty_view_product_list_subtitle_text">Get started by adding a product</string>
+    <string name="empty_view_product_list_title">No products here …</string>
+    <string name="empty_view_shopping_list_subtitle">Get started by adding a shopping list</string>
+    <string name="empty_view_shopping_list_title">No shopping list here …</string>
+    <!--  Menu  -->
+    <string name="menu_archived_shopping_list">Archived shopping list</string>
+    <string name="menu_current_shopping_list">Current shopping list</string>
 </resources>
