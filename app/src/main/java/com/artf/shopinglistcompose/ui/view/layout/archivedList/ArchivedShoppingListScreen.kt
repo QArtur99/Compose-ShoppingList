@@ -15,6 +15,7 @@ import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shopinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shopinglistcompose.ui.view.menu.MainMenu
 import com.artf.shopinglistcompose.util.ShoppingListType
 import com.artf.shopinglistcompose.util.observer
@@ -45,11 +46,18 @@ fun ShoppingListArchivedScreen(
 private fun ScreenBody() {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
     sharedViewModelAmbient.setShoppingListType(ShoppingListType.ARCHIVED)
-    val post = observer(sharedViewModelAmbient.shoppingLists)
+    val postList = observer(sharedViewModelAmbient.shoppingLists)
+    if (postList == null || postList.isEmpty()) {
+        EmptyScreen(
+            R.string.empty_view_shopping_list_title,
+            R.string.empty_view_shopping_list_subtitle
+        )
+        return
+    }
 
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            post?.forEach { post -> ShoppingListArchivedItem(sharedViewModelAmbient, post) }
+            postList.forEach { post -> ShoppingListArchivedItem(sharedViewModelAmbient, post) }
         }
     }
 }

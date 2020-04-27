@@ -12,12 +12,22 @@ import androidx.ui.foundation.shape.corner.CornerSize
 import androidx.ui.layout.Column
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
-import androidx.ui.material.*
+import androidx.ui.material.DrawerState
+import androidx.ui.material.FloatingActionButton
+import androidx.ui.material.IconButton
+import androidx.ui.material.MaterialTheme
+import androidx.ui.material.Scaffold
+import androidx.ui.material.ScaffoldState
+import androidx.ui.material.TopAppBar
+import androidx.ui.material.contentColorFor
 import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shopinglistcompose.R
+import com.artf.shopinglistcompose.ui.data.Screen
 import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shopinglistcompose.ui.view.layout.EmptyScreen
+import com.artf.shopinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shopinglistcompose.ui.view.menu.MainMenu
 import com.artf.shopinglistcompose.util.ShoppingListType
 import com.artf.shopinglistcompose.util.observer
@@ -29,6 +39,12 @@ fun ShoppingListCurrentScreen(
     val showDialog = state { false }
     Scaffold(
         scaffoldState = scaffoldState,
+        drawerContent = {
+            AppDrawer(
+                currentScreen = Screen.ShoppingListCurrent,
+                closeDrawer = { scaffoldState.drawerState = DrawerState.Closed }
+            )
+        },
         topAppBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
@@ -53,11 +69,17 @@ fun ShoppingListCurrentScreen(
 private fun ScreenBody() {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
     sharedViewModelAmbient.setShoppingListType(ShoppingListType.CURRENT)
-    val post = observer(sharedViewModelAmbient.shoppingLists)
-
+    val postList = observer(sharedViewModelAmbient.shoppingLists)
+    if (postList == null || postList.isEmpty()) {
+        EmptyScreen(
+            R.string.empty_view_shopping_list_title,
+            R.string.empty_view_shopping_list_subtitle
+        )
+        return
+    }
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            post?.forEach { post -> ShoppingListCurrentItem(sharedViewModelAmbient, post) }
+            postList.forEach { post -> ShoppingListCurrentItem(sharedViewModelAmbient, post) }
         }
     }
 }

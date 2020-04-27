@@ -28,12 +28,16 @@ import com.artf.shopinglistcompose.util.pxToDp
 fun MainMenu() {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
     val showMenu = state { false }
+    val screen = state<Screen?> { null }
     val backStack = ScreenBackStackAmbient.current
 
     IconButton(onClick = { showMenu.value = true }) {
         Icon(vectorResource(R.drawable.ic_baseline_more_vert_black_24))
     }
-    if (showMenu.value.not()) return
+    if (showMenu.value.not()) {
+        screen.value?.let { backStack.push(it) }
+        return
+    }
     DropdownPopup(
         offset = IntPxPosition(IntPx(0.dpToPx()), IntPx((-48 - 16).dpToPx())),
         popupProperties = PopupProperties(true) { showMenu.value = false }
@@ -46,23 +50,23 @@ fun MainMenu() {
             ) {
                 Column {
                     TextButton(onClick = {
-                        backStack.push(Screen.ShoppingListCurrent)
+                        screen.value = Screen.ShoppingListCurrent
                         showMenu.value = false
                     }) {
                         Text(
                             modifier = Modifier.fillMaxWidth().padding(8.dp),
-                            text = stringResource(id = R.string.current_shopping_list),
+                            text = stringResource(id = R.string.menu_current_shopping_list),
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 1
                         )
                     }
                     TextButton(onClick = {
-                        backStack.push(Screen.ShoppingListArchived)
+                        screen.value = Screen.ShoppingListArchived
                         showMenu.value = false
                     }) {
                         Text(
                             modifier = Modifier.fillMaxWidth().padding(8.dp),
-                            text = stringResource(id = R.string.archived_shopping_list),
+                            text = stringResource(id = R.string.menu_archived_shopping_list),
                             color = MaterialTheme.colors.onSurface,
                             maxLines = 1
                         )
@@ -78,8 +82,8 @@ fun getMenuSize(): Dp {
     val spaceForChar = 16
     var result = 0
     mutableListOf<String>().apply {
-        add(stringResource(id = R.string.current_shopping_list))
-        add(stringResource(id = R.string.archived_shopping_list))
+        add(stringResource(id = R.string.menu_current_shopping_list))
+        add(stringResource(id = R.string.menu_archived_shopping_list))
     }.map { if (it.length > result) result = it.length }
     return ((result * spaceForChar).pxToDp() + 24 + 12).dp
 }

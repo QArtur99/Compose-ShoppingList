@@ -18,7 +18,7 @@ class ScreenBackStack {
     private val backStack = ArrayDeque<Screen>()
 
     init {
-        push(Screen.ShoppingListCurrent)
+        backStack.push(currentScreen)
     }
 
     fun pop(): Screen? {
@@ -31,7 +31,9 @@ class ScreenBackStack {
     }
 
     fun push(screen: Screen) {
-        backStack.push(screen)
-        currentScreen = screen
+        if (screen != currentScreen) {
+            backStack.push(screen)
+            currentScreen = screen
+        }
     }
 }

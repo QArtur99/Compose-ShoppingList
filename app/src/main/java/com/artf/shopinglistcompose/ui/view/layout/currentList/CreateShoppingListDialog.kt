@@ -34,7 +34,7 @@ fun ShoppingListDialog(showDialog: MutableState<Boolean>) {
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-                text = stringResource(id = R.string.add_new_shopping_list)
+                text = stringResource(id = R.string.dialog_title_add_new_shopping_list)
             )
         },
         text = { EditText(state) },
@@ -107,7 +107,7 @@ private fun EditText(state: MutableState<String>) {
             )
             if (state.value.isEmpty()) {
                 Text(
-                    text = stringResource(id = R.string.enter_shopping_list_name),
+                    text = stringResource(id = R.string.dialog_enter_shopping_list_name),
                     color = Color.Gray,
                     style = TextStyle(fontSize = 18.sp)
                 )

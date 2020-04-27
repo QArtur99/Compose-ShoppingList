@@ -17,6 +17,7 @@ import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
 import com.artf.shopinglistcompose.ui.data.ScreenBackStackAmbient
 import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shopinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shopinglistcompose.util.observer
 
 @Composable
@@ -52,10 +53,16 @@ private fun ScreenBody(shoppingList: ShoppingList) {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
     sharedViewModelAmbient.onShoppingListClick(shoppingList)
     val productList = observer(sharedViewModelAmbient.productListUi)
-
+    if (productList == null || productList.isEmpty()) {
+        EmptyScreen(
+            R.string.empty_view_product_list_title,
+            R.string.empty_view_product_list_subtitle_text
+        )
+        return
+    }
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            productList?.forEach { post -> ProductCurrentItem(sharedViewModelAmbient, post) }
+            productList.forEach { post -> ProductCurrentItem(sharedViewModelAmbient, post) }
         }
     }
 }
