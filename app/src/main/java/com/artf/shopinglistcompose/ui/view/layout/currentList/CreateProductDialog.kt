@@ -22,15 +22,15 @@ import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shopinglistcompose.R
-import com.artf.shopinglistcompose.ui.data.NewProductViewModel
-import com.artf.shopinglistcompose.ui.data.NewProductViewModelAmbient
+import com.artf.shopinglistcompose.ui.data.SharedViewModel
+import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
 
 @Composable
 fun CreateProductDialog(
     showDialog: MutableState<Boolean>,
     shoppingList: ShoppingList
 ) {
-    val newProductViewModelAmbient = NewProductViewModelAmbient.current
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
     if (showDialog.value.not()) return
     val productName = state { "" }
     val productQuantity = state { "" }
@@ -52,7 +52,7 @@ fun CreateProductDialog(
         },
         buttons = {
             DialogButtons(
-                newProductViewModelAmbient,
+                sharedViewModelAmbient,
                 showDialog,
                 productName,
                 productQuantity,
@@ -64,7 +64,7 @@ fun CreateProductDialog(
 
 @Composable
 private fun DialogButtons(
-    newProductViewModelAmbient: NewProductViewModel,
+    sharedViewModel: SharedViewModel,
     showDialog: MutableState<Boolean>,
     productName: MutableState<String>,
     productQuantity: MutableState<String>,
@@ -96,7 +96,7 @@ private fun DialogButtons(
                     if (productName.value.isEmpty().not() && productQuantity.value.isEmpty()
                             .not()
                     ) {
-                        newProductViewModelAmbient.createProduct(
+                        sharedViewModel.createProduct(
                             productName.value,
                             productQuantity.value.toLong(),
                             shoppingList.id

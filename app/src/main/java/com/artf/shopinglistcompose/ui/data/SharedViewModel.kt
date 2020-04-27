@@ -18,16 +18,24 @@ class SharedViewModel constructor(
 
     private val _shoppingListType = MutableLiveData<ShoppingListType>()
     val shoppingListType: LiveData<ShoppingListType> = _shoppingListType
-    fun setShoppingListType(shoppingListType: ShoppingListType) {
-        if (_shoppingListType.value != shoppingListType)
-            _shoppingListType.value = shoppingListType
-    }
 
     private val _selectedShoppingList = MutableLiveData<ShoppingList>()
     val selectedShoppingList: LiveData<ShoppingList> = _selectedShoppingList
-    fun onShoppingListClick(shoppingList: ShoppingList?) {
-        _selectedShoppingList.value = shoppingList
-    }
+
+    private val _createItem = MutableLiveData<Boolean>()
+    val createItem: LiveData<Boolean> = _createItem
+
+    private val _updateShoppingListLoading = MutableLiveData<Boolean>()
+    val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
+
+    private val _deleteProductLoading = MutableLiveData<Boolean>()
+    val deleteProductLoading: LiveData<Boolean> = _deleteProductLoading
+
+    private val _createProductLoading = MutableLiveData<Boolean>()
+    val createProductLoading: LiveData<Boolean> = _createProductLoading
+
+    private val _createShoppingListLoading = MutableLiveData<Boolean>()
+    val createShoppingListLoading: LiveData<Boolean> = _createShoppingListLoading
 
     val shoppingLists = Transformations.switchMap(shoppingListType) {
         when (it) {
@@ -48,14 +56,19 @@ class SharedViewModel constructor(
     val isShoppingListsEmpty = Transformations.map(shoppingLists) { it?.isEmpty() ?: false }
     val isProductListsEmpty = Transformations.map(productListUi) { it?.isEmpty() ?: false }
 
-    private val _createItem = MutableLiveData<Boolean>()
-    val createItem: LiveData<Boolean> = _createItem
+    fun setShoppingListType(shoppingListType: ShoppingListType) {
+        if (_shoppingListType.value != shoppingListType)
+            _shoppingListType.value = shoppingListType
+    }
+
+    fun onShoppingListClick(shoppingList: ShoppingList?) {
+        _selectedShoppingList.value = shoppingList
+    }
+
     fun onFabClicked(show: Boolean?) {
         _createItem.value = show
     }
 
-    private val _updateShoppingListLoading = MutableLiveData<Boolean>()
-    val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
     fun updateShoppingList(shoppingList: ShoppingList, isArchived: Boolean) {
         _updateShoppingListLoading.value = true
         shoppingList.isArchived = isArchived
@@ -65,8 +78,30 @@ class SharedViewModel constructor(
         }
     }
 
-    private val _deleteProductLoading = MutableLiveData<Boolean>()
-    val deleteProductLoading: LiveData<Boolean> = _deleteProductLoading
+    fun createShoppingList(name: String) {
+        _createShoppingListLoading.value = true
+        val shoppingList = ShoppingList(shoppingListName = name)
+
+        viewModelScope.launch {
+            shoppingListRepository.insertShoppingList(shoppingList)
+            _createShoppingListLoading.value = false
+        }
+    }
+
+    fun createProduct(name: String, quantity: Long, shoppingListId: Long) {
+        _createProductLoading.value = true
+
+        val product = Product(
+            productName = name,
+            productQuantity = quantity,
+            shoppingListId = shoppingListId
+        )
+        viewModelScope.launch {
+            shoppingListRepository.insertProduct(product)
+            _createProductLoading.value = false
+        }
+    }
+
     fun deleteProduct(product: ProductUi) {
         _deleteProductLoading.value = true
         viewModelScope.launch {

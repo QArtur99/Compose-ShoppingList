@@ -1,8 +1,6 @@
 package com.artf.shopinglistcompose.di
 
 import android.content.Context
-import com.artf.shopinglistcompose.ui.data.NewProductViewModel
-import com.artf.shopinglistcompose.ui.data.NewListViewModel
 import com.artf.data.database.ShoppingListDatabase
 import com.artf.data.database.ShoppingListDatabaseDao
 import com.artf.data.repository.ShoppingListRepository
@@ -16,8 +14,6 @@ import org.koin.dsl.module
 
 val vmModule = module {
     viewModel { SharedViewModel(get()) }
-    viewModel { NewProductViewModel(get()) }
-    viewModel { NewListViewModel(get()) }
 }
 
 val dataModule = module {

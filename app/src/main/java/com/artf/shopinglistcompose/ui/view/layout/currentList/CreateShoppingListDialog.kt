@@ -20,12 +20,12 @@ import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.artf.shopinglistcompose.R
-import com.artf.shopinglistcompose.ui.data.NewListViewModel
-import com.artf.shopinglistcompose.ui.data.NewListViewModelAmbient
+import com.artf.shopinglistcompose.ui.data.SharedViewModel
+import com.artf.shopinglistcompose.ui.data.SharedViewModelAmbient
 
 @Composable
 fun ShoppingListDialog(showDialog: MutableState<Boolean>) {
-    val newListViewModelAmbient = NewListViewModelAmbient.current
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
     if (showDialog.value.not()) return
     val state = state { "" }
     AlertDialog(
@@ -38,13 +38,13 @@ fun ShoppingListDialog(showDialog: MutableState<Boolean>) {
             )
         },
         text = { EditText(state) },
-        buttons = { DialogButtons(newListViewModelAmbient, showDialog, state) }
+        buttons = { DialogButtons(sharedViewModelAmbient, showDialog, state) }
     )
 }
 
 @Composable
 private fun DialogButtons(
-    newListViewModelAmbient: NewListViewModel,
+    sharedViewModel: SharedViewModel,
     showDialog: MutableState<Boolean>,
     state: MutableState<String>
 ) {
@@ -72,7 +72,7 @@ private fun DialogButtons(
                 modifier = Modifier.weight(0.35f, true),
                 onClick = {
                     if (state.value.isEmpty().not()) {
-                        newListViewModelAmbient.createShoppingList(state.value)
+                        sharedViewModel.createShoppingList(state.value)
                         showDialog.value = false
                     }
                 },
