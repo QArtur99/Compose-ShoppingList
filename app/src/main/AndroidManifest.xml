@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.artf.shopinglistcompose">
+    package="com.artf.shoppinglistcompose">
 
     <application
-        android:name=".App"
+        android:name="com.artf.shoppinglistcompose.App"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name="com.artf.shoppinglistcompose.ui.view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.App.NoActionBar">
             <intent-filter>
