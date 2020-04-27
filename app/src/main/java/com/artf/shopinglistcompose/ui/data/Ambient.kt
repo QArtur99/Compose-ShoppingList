@@ -9,11 +9,3 @@ val ScreenBackStackAmbient = ambientOf<ScreenBackStack> {
 val SharedViewModelAmbient = ambientOf<SharedViewModel> {
     throw IllegalStateException("SharedViewModel is not initialized")
 }
-
-val NewListViewModelAmbient = ambientOf<NewListViewModel> {
-    throw IllegalStateException("NewListViewModel is not initialized")
-}
-
-val NewProductViewModelAmbient = ambientOf<NewProductViewModel> {
-    throw IllegalStateException("NewProductViewModel is not initialized")
-}

@@ -12,8 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModel()
-    private val newListViewModel: NewListViewModel by viewModel()
-    private val newProductViewModel: NewProductViewModel by viewModel()
     private val backStack: ScreenBackStack by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             Providers(
                 ScreenBackStackAmbient provides backStack,
-                SharedViewModelAmbient provides sharedViewModel,
-                NewListViewModelAmbient provides newListViewModel,
-                NewProductViewModelAmbient provides newProductViewModel
+                SharedViewModelAmbient provides sharedViewModel
             ) { ShoppingListApp() }
         }
     }
