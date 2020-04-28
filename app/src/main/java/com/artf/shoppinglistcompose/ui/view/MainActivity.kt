@@ -12,19 +12,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModel()
-    private val backStack: ScreenBackStack by inject()
+    private val backStack: ScreenBackStackImpl by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Providers(
-                ScreenBackStackAmbient provides backStack,
                 SharedViewModelAmbient provides sharedViewModel
             ) { ShoppingListApp() }
         }
     }
 
     override fun onBackPressed() {
-        backStack.pop() ?: super.onBackPressed()
+        backStack.popBackStack() ?: super.onBackPressed()
     }
 }

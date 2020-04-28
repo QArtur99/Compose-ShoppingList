@@ -1,12 +1,17 @@
 package com.artf.shoppinglistcompose.ui.view.menu
 
 import androidx.compose.Composable
-import androidx.compose.state
-import androidx.ui.core.*
+import androidx.ui.core.DropdownPopup
+import androidx.ui.core.Modifier
+import androidx.ui.core.PopupProperties
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.layout.*
+import androidx.ui.layout.Column
+import androidx.ui.layout.Row
+import androidx.ui.layout.fillMaxWidth
+import androidx.ui.layout.padding
+import androidx.ui.layout.width
 import androidx.ui.material.IconButton
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Surface
@@ -18,29 +23,27 @@ import androidx.ui.unit.IntPx
 import androidx.ui.unit.IntPxPosition
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.Screen
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shoppinglistcompose.ui.data.status.Screen
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.screenState
+import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.showMenu
 import com.artf.shoppinglistcompose.util.dpToPx
 import com.artf.shoppinglistcompose.util.pxToDp
 
 @Composable
 fun MainMenu() {
-    val sharedViewModelAmbient = SharedViewModelAmbient.current
-    val showMenu = state { false }
-    val screen = state<Screen?> { null }
-    val backStack = ScreenBackStackAmbient.current
+    val sharedViewModel = SharedViewModelAmbient.current
 
-    IconButton(onClick = { showMenu.value = true }) {
+    IconButton(onClick = { showMenu = true }) {
         Icon(vectorResource(R.drawable.ic_baseline_more_vert_black_24))
     }
-    if (showMenu.value.not()) {
-        screen.value?.let { backStack.push(it) }
+    if (showMenu.not()) {
+        screenState?.let { sharedViewModel.pushBackStack(it) }
         return
     }
     DropdownPopup(
         offset = IntPxPosition(IntPx(0.dpToPx()), IntPx((-48 - 16).dpToPx())),
-        popupProperties = PopupProperties(true) { showMenu.value = false }
+        popupProperties = PopupProperties(true) { showMenu = false }
     ) {
         Row(Modifier.padding(16.dp, 16.dp, 4.dp, 16.dp)) {
             Surface(
@@ -50,8 +53,8 @@ fun MainMenu() {
             ) {
                 Column {
                     TextButton(onClick = {
-                        screen.value = Screen.ShoppingListCurrent
-                        showMenu.value = false
+                        screenState = Screen.CurrentShoppingList
+                        showMenu = false
                     }) {
                         Text(
                             modifier = Modifier.fillMaxWidth().padding(8.dp),
@@ -61,8 +64,8 @@ fun MainMenu() {
                         )
                     }
                     TextButton(onClick = {
-                        screen.value = Screen.ShoppingListArchived
-                        showMenu.value = false
+                        screenState = Screen.ArchivedShoppingList
+                        showMenu = false
                     }) {
                         Text(
                             modifier = Modifier.fillMaxWidth().padding(8.dp),

@@ -5,7 +5,7 @@ import com.artf.data.database.ShoppingListDatabase
 import com.artf.data.database.ShoppingListDatabaseDao
 import com.artf.data.repository.ShoppingListRepository
 import com.artf.data.repository.ShoppingListRepositoryImpl
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStack
+import com.artf.shoppinglistcompose.ui.data.ScreenBackStackImpl
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val vmModule = module {
-    viewModel { SharedViewModel(get()) }
+    viewModel { SharedViewModel(get(), get()) }
 }
 
 val dataModule = module {
@@ -26,7 +26,7 @@ val uiDataModule = module {
     single { createBackStack() }
 }
 
-fun createBackStack() = ScreenBackStack()
+fun createBackStack() = ScreenBackStackImpl()
 
 fun createIoDispatcher() = Dispatchers.Default
 

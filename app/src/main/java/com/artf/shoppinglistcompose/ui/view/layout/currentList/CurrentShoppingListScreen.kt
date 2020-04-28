@@ -1,9 +1,8 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
+import android.util.Log
 import androidx.compose.Composable
-import androidx.compose.MutableState
 import androidx.compose.remember
-import androidx.compose.state
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
@@ -24,25 +23,33 @@ import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.Screen
+import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
-import com.artf.shoppinglistcompose.util.ShoppingListType
-import com.artf.shoppinglistcompose.util.observer
 
 @Composable
 fun ShoppingListCurrentScreen(
-    scaffoldState: ScaffoldState = remember { ScaffoldState() }
+    scaffoldState: ScaffoldState = remember {
+        ScaffoldState().apply { drawerState = CurrentShoppingListModel.drawerState }
+    }
 ) {
-    val showDialog = state { false }
+    Log.e("TAG", "ShoppingListCurrentScreen")
+    CurrentShoppingListModel.drawerState = scaffoldState.drawerState
+
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
-                currentScreen = Screen.ShoppingListCurrent,
-                closeDrawer = { scaffoldState.drawerState = DrawerState.Closed }
+                currentScreen = Screen.CurrentShoppingList,
+                closeDrawer = {
+                    scaffoldState.drawerState = DrawerState.Closed
+                    CurrentShoppingListModel.drawerState = scaffoldState.drawerState
+                }
             )
         },
         topAppBar = {
@@ -59,18 +66,19 @@ fun ShoppingListCurrentScreen(
         },
         bodyContent = {
             ScreenBody()
-            ShoppingListDialog(showDialog)
+            CreateShoppingListDialog()
         },
-        floatingActionButton = { Fab(showDialog) }
+        floatingActionButton = { Fab() }
     )
 }
 
 @Composable
 private fun ScreenBody() {
-    val sharedViewModelAmbient = SharedViewModelAmbient.current
-    sharedViewModelAmbient.setShoppingListType(ShoppingListType.CURRENT)
-    val postList = observer(sharedViewModelAmbient.shoppingListsUi)
-    if (postList == null || postList.isEmpty()) {
+    val sharedViewModel = SharedViewModelAmbient.current
+    val postList = ScreenStateAmbient.current.shoppingListsUi
+    val isEmpty = ScreenStateAmbient.current.isShoppingListsEmpty
+
+    if (isEmpty == true) {
         EmptyScreen(
             R.string.empty_view_shopping_list_title,
             R.string.empty_view_shopping_list_subtitle
@@ -79,15 +87,15 @@ private fun ScreenBody() {
     }
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            postList.forEach { post -> ShoppingListCurrentItem(sharedViewModelAmbient, post) }
+            postList?.forEach { post -> ShoppingListCurrentItem(sharedViewModel, post) }
         }
     }
 }
 
 @Composable
-private fun Fab(showDialog: MutableState<Boolean>) {
+private fun Fab() {
     FloatingActionButton(
-        onClick = { showDialog.value = true },
+        onClick = { showDialogState = true },
         modifier = Modifier,
         shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
         backgroundColor = MaterialTheme.colors.secondary,

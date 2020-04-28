@@ -11,13 +11,9 @@ import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.ui.data.model.ProductUi
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 
 @Composable
-fun ArchivedProductItem(
-    sharedViewModel: SharedViewModel,
-    product: ProductUi
-) {
+fun ArchivedProductItem(product: ProductUi) {
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(

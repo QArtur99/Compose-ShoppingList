@@ -32,8 +32,8 @@ import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import androidx.ui.unit.px
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.Screen
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.util.dpToPx
 
 @Composable
@@ -41,26 +41,26 @@ fun AppDrawer(
     currentScreen: Screen,
     closeDrawer: () -> Unit
 ) {
-    val backStack = ScreenBackStackAmbient.current
+    val sharedViewModel = SharedViewModelAmbient.current
     Column(modifier = Modifier.fillMaxSize()) {
         AppLogo(Modifier.padding(16.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         DrawerButton(
             icon = R.drawable.ic_baseline_home_24,
             label = "Home",
-            isSelected = currentScreen == Screen.ShoppingListCurrent,
+            isSelected = currentScreen == Screen.CurrentShoppingList,
             action = {
-                backStack.push(Screen.ShoppingListCurrent)
                 closeDrawer()
+                sharedViewModel.pushBackStack(Screen.CurrentShoppingList)
             }
         )
         DrawerButton(
             icon = R.drawable.ic_archive_black_24dp,
             label = "Archived",
-            isSelected = currentScreen == Screen.ShoppingListArchived,
+            isSelected = currentScreen == Screen.ArchivedShoppingList,
             action = {
-                backStack.push(Screen.ShoppingListArchived)
                 closeDrawer()
+                sharedViewModel.pushBackStack(Screen.ArchivedShoppingList)
             }
         )
     }

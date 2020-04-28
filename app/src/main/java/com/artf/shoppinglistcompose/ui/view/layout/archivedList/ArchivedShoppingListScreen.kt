@@ -14,18 +14,31 @@ import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
+import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.model.compose.ArchivedShoppingListModel
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
+import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
-import com.artf.shoppinglistcompose.util.ShoppingListType
-import com.artf.shoppinglistcompose.util.observer
 
 @Composable
 fun ShoppingListArchivedScreen(
-    scaffoldState: ScaffoldState = remember { ScaffoldState() }
+    scaffoldState: ScaffoldState = remember {
+        ScaffoldState().apply { drawerState = ArchivedShoppingListModel.drawerState }
+    }
 ) {
+    ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
     Scaffold(
         scaffoldState = scaffoldState,
+        drawerContent = {
+            AppDrawer(
+                currentScreen = ScreenStateAmbient.current.currentScreen,
+                closeDrawer = {
+                    scaffoldState.drawerState = DrawerState.Closed
+                    ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
+                }
+            )
+        },
         topAppBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
@@ -45,9 +58,10 @@ fun ShoppingListArchivedScreen(
 @Composable
 private fun ScreenBody() {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
-    sharedViewModelAmbient.setShoppingListType(ShoppingListType.ARCHIVED)
-    val postList = observer(sharedViewModelAmbient.shoppingListsUi)
-    if (postList == null || postList.isEmpty()) {
+    val postList = ScreenStateAmbient.current.shoppingListsUi
+    val isEmpty = ScreenStateAmbient.current.isShoppingListsEmpty
+
+    if (isEmpty == true) {
         EmptyScreen(
             R.string.empty_view_shopping_list_title,
             R.string.empty_view_shopping_list_subtitle
@@ -57,7 +71,7 @@ private fun ScreenBody() {
 
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            postList.forEach { post -> ShoppingListArchivedItem(sharedViewModelAmbient, post) }
+            postList?.forEach { post -> ShoppingListArchivedItem(sharedViewModelAmbient, post) }
         }
     }
 }

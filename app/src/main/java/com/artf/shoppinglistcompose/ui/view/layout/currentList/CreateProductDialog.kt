@@ -1,8 +1,6 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.Composable
-import androidx.compose.MutableState
-import androidx.compose.state
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Border
 import androidx.ui.foundation.Box
@@ -33,21 +31,25 @@ import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.artf.shoppinglistcompose.R
+import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductNameFocusState
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductNameSelectionState
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductQuantityFocusState
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductQuantitySelectionState
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.productNameState
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.productQuantityState
+import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
 
 @Composable
-fun CreateProductDialog(
-    showDialog: MutableState<Boolean>,
-    shoppingList: ShoppingListUi
-) {
+fun CreateProductDialog() {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
-    if (showDialog.value.not()) return
-    val productName = state { "" }
-    val productQuantity = state { "" }
+    val selectedShoppingList = ScreenStateAmbient.current.selectedShoppingList ?: return
+    if (showDialogState.not()) return
     AlertDialog(
-        onCloseRequest = { showDialog.value = false },
+        onCloseRequest = { showDialogState = false },
         title = {
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
@@ -57,29 +59,18 @@ fun CreateProductDialog(
         },
         text = {
             Column {
-                ProductEditText(productName)
+                ProductEditText()
                 Spacer(Modifier.preferredHeight(16.dp))
-                QuantityEditText(productQuantity)
+                QuantityEditText()
             }
         },
-        buttons = {
-            DialogButtons(
-                sharedViewModelAmbient,
-                showDialog,
-                productName,
-                productQuantity,
-                shoppingList
-            )
-        }
+        buttons = { DialogButtons(sharedViewModelAmbient, selectedShoppingList) }
     )
 }
 
 @Composable
 private fun DialogButtons(
     sharedViewModel: SharedViewModel,
-    showDialog: MutableState<Boolean>,
-    productName: MutableState<String>,
-    productQuantity: MutableState<String>,
     shoppingList: ShoppingListUi
 ) {
     Box(Modifier.fillMaxWidth().padding(all = 8.dp), gravity = ContentGravity.CenterEnd) {
@@ -90,12 +81,12 @@ private fun DialogButtons(
             Spacer(Modifier.weight(0.3f, true))
             Button(
                 modifier = Modifier.weight(0.35f, true),
-                onClick = { showDialog.value = false },
+                onClick = { showDialogState = false },
                 border = Border(2.dp, MaterialTheme.colors.primary),
                 backgroundColor = MaterialTheme.colors.surface,
                 text = {
                     Text(
-                        text = "Cancel",
+                        text = stringResource(R.string.dialog_button_cancel),
                         maxLines = 1,
                         style = TextStyle(fontSize = 14.sp)
                     )
@@ -105,20 +96,18 @@ private fun DialogButtons(
             Button(
                 modifier = Modifier.weight(0.35f, true),
                 onClick = {
-                    if (productName.value.isEmpty().not() && productQuantity.value.isEmpty()
-                            .not()
-                    ) {
+                    if (productNameState.isEmpty().not() && productQuantityState.isEmpty().not()) {
                         sharedViewModel.createProduct(
-                            productName.value,
-                            productQuantity.value.toLong(),
+                            productNameState,
+                            productQuantityState.toLong(),
                             shoppingList.id
                         )
-                        showDialog.value = false
+                        showDialogState = false
                     }
                 },
                 text = {
                     Text(
-                        text = "Add",
+                        text = stringResource(R.string.dialog_button_add),
                         maxLines = 1,
                         style = TextStyle(fontSize = 14.sp)
                     )
@@ -129,23 +118,21 @@ private fun DialogButtons(
 }
 
 @Composable
-private fun ProductEditText(state: MutableState<String>) {
-    val focus = state { true }
-    val selection = state { TextRange(0, 0) }
+private fun ProductEditText() {
     Column {
         Box {
             TextField(
-                value = TextFieldValue(state.value, selection.value),
+                value = TextFieldValue(productNameState, editTextProductNameSelectionState),
                 modifier = Modifier.fillMaxWidth(),
                 imeAction = ImeAction.Done,
-                onFocus = { focus.value = true },
+                onFocus = { editTextProductNameFocusState = true },
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = {
-                    state.value = it.text
-                    selection.value = TextRange(it.text.length, it.text.length)
+                    productNameState = it.text
+                    editTextProductNameSelectionState = TextRange(it.text.length, it.text.length)
                 }
             )
-            if (state.value.isEmpty()) {
+            if (productNameState.isEmpty()) {
                 Text(
                     text = stringResource(id = R.string.dialog_enter_product_name),
                     color = Color.Gray,
@@ -153,7 +140,7 @@ private fun ProductEditText(state: MutableState<String>) {
                 )
             }
         }
-        if (focus.value) {
+        if (editTextProductNameFocusState) {
             Divider(
                 thickness = 2.dp,
                 modifier = Modifier.padding(start = 0.dp, end = 0.dp),
@@ -164,23 +151,22 @@ private fun ProductEditText(state: MutableState<String>) {
 }
 
 @Composable
-private fun QuantityEditText(state: MutableState<String>) {
-    val focus = state { true }
-    val selection = state { TextRange(0, 0) }
+private fun QuantityEditText() {
     Column {
         Box {
             TextField(
-                value = TextFieldValue(state.value, selection.value),
+                value = TextFieldValue(productQuantityState, editTextProductQuantitySelectionState),
                 modifier = Modifier.fillMaxWidth(),
                 keyboardType = KeyboardType.Number,
-                onFocus = { focus.value = true },
+                onFocus = { editTextProductQuantityFocusState = true },
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = {
-                    state.value = it.text
-                    selection.value = TextRange(it.text.length, it.text.length)
+                    productQuantityState = it.text
+                    editTextProductQuantitySelectionState =
+                        TextRange(it.text.length, it.text.length)
                 }
             )
-            if (state.value.isEmpty()) {
+            if (productQuantityState.isEmpty()) {
                 Text(
                     text = stringResource(id = R.string.dialog_enter_quantity),
                     color = Color.Gray,
@@ -188,7 +174,7 @@ private fun QuantityEditText(state: MutableState<String>) {
                 )
             }
         }
-        if (focus.value) {
+        if (editTextProductQuantityFocusState) {
             Divider(
                 thickness = 2.dp,
                 modifier = Modifier.padding(start = 0.dp, end = 0.dp),

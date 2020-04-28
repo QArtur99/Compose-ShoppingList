@@ -18,8 +18,7 @@ import androidx.ui.material.ripple.ripple
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.Screen
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shoppinglistcompose.ui.data.status.Screen
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
 import com.artf.shoppinglistcompose.util.getDateFormat
@@ -29,12 +28,11 @@ fun ShoppingListArchivedItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingListUi
 ) {
-    val backStack = ScreenBackStackAmbient.current
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(
                 modifier = Modifier.ripple(),
-                onClick = { backStack.push(Screen.ProductListArchived(post)) }
+                onClick = { sharedViewModel.pushBackStack(Screen.ArchivedProductList(post)) }
             ) {
                 Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(
