@@ -17,8 +17,7 @@ import androidx.ui.unit.dp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.Screen
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStackAmbient
+import com.artf.shoppinglistcompose.ui.data.status.Screen
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
@@ -29,12 +28,11 @@ fun ShoppingListCurrentItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingListUi
 ) {
-    val backStack = ScreenBackStackAmbient.current
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(
                 modifier = Modifier.ripple(),
-                onClick = { backStack.push(Screen.ProductListCurrent(post)) }
+                onClick = { sharedViewModel.pushBackStack(Screen.CurrentProductList(post)) }
             ) {
                 Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(

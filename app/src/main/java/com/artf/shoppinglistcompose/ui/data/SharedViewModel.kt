@@ -1,6 +1,7 @@
 package com.artf.shoppinglistcompose.ui.data
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -11,43 +12,60 @@ import com.artf.shoppinglistcompose.ui.data.model.ProductUi
 import com.artf.data.repository.ShoppingListRepository
 import com.artf.shoppinglistcompose.ui.data.mapper.asDomainModel
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
+import com.artf.shoppinglistcompose.ui.data.model.MutableScreenState
+import com.artf.shoppinglistcompose.ui.data.model.ScreenState
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
+import com.artf.shoppinglistcompose.ui.data.status.Screen
 import com.artf.shoppinglistcompose.util.ShoppingListType
 import kotlinx.coroutines.launch
 
 class SharedViewModel constructor(
+    private val backStack: ScreenBackStackImpl,
     private val shoppingListRepository: ShoppingListRepository
-) : ViewModel() {
+) : ViewModel(), ScreenBackStack by backStack {
 
-    private val _shoppingListType = MutableLiveData<ShoppingListType>()
-    private val shoppingListType: LiveData<ShoppingListType> = _shoppingListType
-
-    private val _selectedShoppingList = MutableLiveData<ShoppingListUi>()
-    val selectedShoppingList: LiveData<ShoppingListUi> = _selectedShoppingList
-
-    private val _createItem = MutableLiveData<Boolean>()
-    val createItem: LiveData<Boolean> = _createItem
+    private val _currentScreen = backStack.getCurrentScreen()
+    private val currentScreen: LiveData<Screen> = _currentScreen
 
     private val _updateShoppingListLoading = MutableLiveData<Boolean>()
-    val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
+    private val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
 
     private val _deleteProductLoading = MutableLiveData<Boolean>()
-    val deleteProductLoading: LiveData<Boolean> = _deleteProductLoading
+    private val deleteProductLoading: LiveData<Boolean> = _deleteProductLoading
 
     private val _createProductLoading = MutableLiveData<Boolean>()
-    val createProductLoading: LiveData<Boolean> = _createProductLoading
+    private val createProductLoading: LiveData<Boolean> = _createProductLoading
 
     private val _createShoppingListLoading = MutableLiveData<Boolean>()
-    val createShoppingListLoading: LiveData<Boolean> = _createShoppingListLoading
+    private val createShoppingListLoading: LiveData<Boolean> = _createShoppingListLoading
+
+    private val shoppingListType: LiveData<ShoppingListType> = Transformations.map(currentScreen) {
+        when (it) {
+            is Screen.CurrentShoppingList -> ShoppingListType.CURRENT
+            is Screen.CurrentProductList -> ShoppingListType.CURRENT
+            is Screen.ArchivedShoppingList -> ShoppingListType.ARCHIVED
+            is Screen.ArchivedProductList -> ShoppingListType.ARCHIVED
+            else -> null
+        }
+    }
 
     private val shoppingLists = Transformations.switchMap(shoppingListType) {
         when (it) {
             ShoppingListType.CURRENT -> shoppingListRepository.getCurrentShoppingList()
             ShoppingListType.ARCHIVED -> shoppingListRepository.getArchivedShoppingList()
+            else -> null
         }
     }
 
-    private val productList = Transformations.switchMap(_selectedShoppingList) {
+    private val selectedShoppingList = Transformations.map(currentScreen) {
+        when (it) {
+            is Screen.CurrentProductList -> it.shoppingList
+            is Screen.ArchivedProductList -> it.shoppingList
+            else -> null
+        }
+    }
+
+    private val productList = Transformations.switchMap(selectedShoppingList) {
         if (it == null) {
             MutableLiveData<List<Product>>().apply { value = null }
         } else {
@@ -55,23 +73,12 @@ class SharedViewModel constructor(
         }
     }
 
-    val shoppingListsUi = Transformations.map(shoppingLists) { it?.asUiModel() }
-    val isShoppingListsEmpty = Transformations.map(shoppingListsUi) { it?.isEmpty() ?: false }
-    val productListUi = Transformations.map(productList) { it?.asUiModel(shoppingListType.value!!) }
-    val isProductListsEmpty = Transformations.map(productListUi) { it?.isEmpty() ?: false }
-
-    fun setShoppingListType(shoppingListType: ShoppingListType) {
-        if (_shoppingListType.value != shoppingListType)
-            _shoppingListType.value = shoppingListType
-    }
-
-    fun onShoppingListClick(shoppingList: ShoppingListUi?) {
-        _selectedShoppingList.value = shoppingList
-    }
-
-    fun onFabClicked(show: Boolean?) {
-        _createItem.value = show
-    }
+    private val shoppingListsUi = Transformations.map(shoppingLists) { it?.asUiModel() }
+    private val isShoppingListsEmpty =
+        Transformations.map(shoppingListsUi) { it?.isEmpty() ?: true }
+    private val productListUi =
+        Transformations.map(productList) { shoppingListType.value?.let { type -> it?.asUiModel(type) } }
+    private val isProductListsEmpty = Transformations.map(productListUi) { it?.isEmpty() ?: true }
 
     fun updateShoppingList(shoppingList: ShoppingListUi, isArchived: Boolean) {
         _updateShoppingListLoading.value = true
@@ -113,4 +120,23 @@ class SharedViewModel constructor(
             _deleteProductLoading.value = false
         }
     }
+
+    private val _screenState = MediatorLiveData<MutableScreenState>().apply {
+        value = MutableScreenState(Screen.CurrentShoppingList)
+        addSource(currentScreen) { value?.currentScreen = it; value = value }
+        addSource(selectedShoppingList) { value?.selectedShoppingList = it; value = value }
+        addSource(updateShoppingListLoading) {
+            value?.updateShoppingListLoading = it; value = value
+        }
+        addSource(deleteProductLoading) { value?.deleteProductLoading = it; value = value }
+        addSource(createProductLoading) { value?.createProductLoading = it; value = value }
+        addSource(createShoppingListLoading) {
+            value?.createShoppingListLoading = it; value = value
+        }
+        addSource(shoppingListsUi) { value?.shoppingListsUi = it }
+        addSource(isShoppingListsEmpty) { value?.isShoppingListsEmpty = it; value = value }
+        addSource(productListUi) { value?.productListUi = it }
+        addSource(isProductListsEmpty) { value?.isProductListsEmpty = it; value = value }
+    }
+    val screenState: LiveData<ScreenState> = Transformations.map(_screenState) { it.copy() }
 }
