@@ -4,7 +4,7 @@ buildscript {
     ext {
         versions.kotlin = '1.4-M1'
     }
-    versions.android_gradle_plugin = '4.1.0-alpha06'
+    versions.android_gradle_plugin = '4.1.0-alpha08'
     versions.arch_core = '2.1.0'
     versions.atsl_core = "1.2.0"
     versions.atsl_junit = "1.1.1"

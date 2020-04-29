@@ -22,10 +22,12 @@ import androidx.ui.material.contentColorFor
 import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
+import com.artf.data.status.ResultStatus
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
@@ -74,22 +76,32 @@ fun ShoppingListCurrentScreen(
 
 @Composable
 private fun ScreenBody() {
-    val sharedViewModel = SharedViewModelAmbient.current
-    val postList = ScreenStateAmbient.current.shoppingListsUi
-    val isEmpty = ScreenStateAmbient.current.isShoppingListsEmpty
-
-    if (isEmpty == true) {
-        EmptyScreen(
-            R.string.empty_view_shopping_list_title,
-            R.string.empty_view_shopping_list_subtitle
-        )
-        return
+    Log.e("TAG", "ScreenBody")
+    val result = ScreenStateAmbient.current.shoppingListsUi
+    when (result) {
+        is ResultStatus.Success -> SuccessScreen(result.data)
+        is ResultStatus.Error -> ErrorScreen()
     }
+}
+
+@Composable
+private fun SuccessScreen(productList: List<ShoppingListUi>) {
+    Log.e("TAG", "SuccessScreen")
+    val sharedViewModelAmbient = SharedViewModelAmbient.current
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            postList?.forEach { post -> ShoppingListCurrentItem(sharedViewModel, post) }
+            productList.forEach { post -> ShoppingListCurrentItem(sharedViewModelAmbient, post) }
         }
     }
+}
+
+@Composable
+private fun ErrorScreen() {
+    Log.e("TAG", "ErrorScreen")
+    EmptyScreen(
+        R.string.empty_view_shopping_list_title,
+        R.string.empty_view_shopping_list_subtitle
+    )
 }
 
 @Composable

@@ -1,3 +1,6 @@
 package com.artf.shoppinglistcompose.ui.data.status
 
-enum class ShoppingListStatus { CURRENT, ARCHIVED }
+sealed class ShoppingListStatus {
+    object CURRENT : ShoppingListStatus()
+    object ARCHIVED : ShoppingListStatus()
+}

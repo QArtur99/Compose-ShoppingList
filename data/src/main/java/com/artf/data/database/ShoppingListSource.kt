@@ -1,11 +1,11 @@
-package com.artf.data.repository
+package com.artf.data.database
 
 import androidx.lifecycle.LiveData
 import com.artf.data.database.model.Product
 import com.artf.data.database.model.ShoppingList
 import com.artf.data.status.ResultStatus
 
-interface ShoppingListRepository {
+interface ShoppingListSource {
     suspend fun insertShoppingList(shoppingList: ShoppingList)
 
     suspend fun updateShoppingList(shoppingList: ShoppingList)

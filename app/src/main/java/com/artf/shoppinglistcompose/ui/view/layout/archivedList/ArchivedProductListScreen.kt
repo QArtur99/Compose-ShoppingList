@@ -17,9 +17,11 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
+import com.artf.data.status.ResultStatus
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.model.ProductUi
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 
 @Composable
@@ -46,20 +48,25 @@ fun ArchivedProductListScreen(
 
 @Composable
 private fun ScreenBody() {
-    val productList = ScreenStateAmbient.current.productListUi
-    val isEmpty = ScreenStateAmbient.current.isProductListsEmpty
-
-    if (isEmpty == true) {
-        EmptyScreen(
-            R.string.empty_view_product_list_title,
-            R.string.empty_view_product_list_subtitle_text
-        )
-        return
+    when (val result = ScreenStateAmbient.current.productListUi) {
+        is ResultStatus.Success -> SuccessScreen(result.data)
+        is ResultStatus.Error -> ErrorScreen()
     }
+}
 
+@Composable
+private fun SuccessScreen(productList: List<ProductUi>) {
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            productList?.forEach { post -> ArchivedProductItem(post) }
+            productList.forEach { post -> ArchivedProductItem(post) }
         }
     }
+}
+
+@Composable
+private fun ErrorScreen() {
+    EmptyScreen(
+        R.string.empty_view_product_list_title,
+        R.string.empty_view_product_list_subtitle_text
+    )
 }
