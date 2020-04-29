@@ -69,7 +69,7 @@ class SharedViewModel constructor(
         if (it == null) {
             MutableLiveData<List<Product>>().apply { value = null }
         } else {
-            shoppingListRepository.getAllShoppingListItem(it.id)
+            shoppingListRepository.getProductList(it.id)
         }
     }
 

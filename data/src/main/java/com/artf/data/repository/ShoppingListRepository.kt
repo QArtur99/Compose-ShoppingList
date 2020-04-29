@@ -5,13 +5,13 @@ import com.artf.data.database.model.Product
 import com.artf.data.database.model.ShoppingList
 
 interface ShoppingListRepository {
-    suspend fun updateShoppingList(shoppingList: ShoppingList)
-
-    suspend fun updateShoppingListItem(product: Product)
-
     suspend fun insertShoppingList(shoppingList: ShoppingList)
 
+    suspend fun updateShoppingList(shoppingList: ShoppingList)
+
     suspend fun insertProduct(product: Product)
+
+    suspend fun updateProduct(product: Product)
 
     suspend fun deleteProduct(product: Product)
 
@@ -19,5 +19,5 @@ interface ShoppingListRepository {
 
     fun getArchivedShoppingList(): LiveData<List<ShoppingList>>
 
-    fun getAllShoppingListItem(listId: Long): LiveData<List<Product>>
+    fun getProductList(listId: Long): LiveData<List<Product>>
 }
