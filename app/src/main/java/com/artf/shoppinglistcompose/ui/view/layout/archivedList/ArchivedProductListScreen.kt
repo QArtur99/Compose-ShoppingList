@@ -3,12 +3,16 @@ package com.artf.shoppinglistcompose.ui.view.layout.archivedList
 import androidx.compose.Composable
 import androidx.compose.remember
 import androidx.ui.core.Modifier
+import androidx.ui.foundation.Box
+import androidx.ui.foundation.ContentGravity
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.Column
+import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
+import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.IconButton
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
@@ -49,9 +53,18 @@ fun ArchivedProductListScreen(
 @Composable
 private fun ScreenBody() {
     when (val result = ScreenStateAmbient.current.productListUi) {
+        is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
     }
+}
+
+@Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        gravity = ContentGravity.Center
+    ) { CircularProgressIndicator() }
 }
 
 @Composable

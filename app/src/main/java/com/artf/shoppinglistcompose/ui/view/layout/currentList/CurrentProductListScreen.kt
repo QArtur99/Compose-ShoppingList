@@ -3,13 +3,16 @@ package com.artf.shoppinglistcompose.ui.view.layout.currentList
 import androidx.compose.Composable
 import androidx.compose.remember
 import androidx.ui.core.Modifier
+import androidx.ui.foundation.Box
+import androidx.ui.foundation.ContentGravity
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.VerticalScroller
-import androidx.ui.foundation.shape.corner.CornerSize
 import androidx.ui.layout.Column
+import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
+import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.FloatingActionButton
 import androidx.ui.material.IconButton
 import androidx.ui.material.MaterialTheme
@@ -57,9 +60,18 @@ fun ProductListCurrentScreen(
 @Composable
 private fun ScreenBody() {
     when (val result = ScreenStateAmbient.current.productListUi) {
+        is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
     }
+}
+
+@Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        gravity = ContentGravity.Center
+    ) { CircularProgressIndicator() }
 }
 
 @Composable
@@ -84,8 +96,6 @@ private fun ErrorScreen() {
 private fun Fab() {
     FloatingActionButton(
         onClick = { showDialogState = true },
-        modifier = Modifier,
-        shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
         elevation = 6.dp,
