@@ -26,7 +26,6 @@ import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.data.status.ResultStatus
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
@@ -42,13 +41,14 @@ fun ShoppingListCurrentScreen(
         ScaffoldState().apply { drawerState = CurrentShoppingListModel.drawerState }
     }
 ) {
+    val screenState = ScreenStateAmbient.current.currentScreenStatus
     CurrentShoppingListModel.drawerState = scaffoldState.drawerState
 
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
-                currentScreenStatus = ScreenStatus.CurrentShoppingList,
+                currentScreenStatus = screenState,
                 closeDrawer = {
                     scaffoldState.drawerState = DrawerState.Closed
                     CurrentShoppingListModel.drawerState = scaffoldState.drawerState

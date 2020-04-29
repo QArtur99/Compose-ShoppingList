@@ -47,7 +47,7 @@ fun AppDrawer(
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         DrawerButton(
             icon = R.drawable.ic_baseline_home_24,
-            label = "Home",
+            label = stringResource(R.string.drawer_home),
             isSelected = currentScreenStatus == ScreenStatus.CurrentShoppingList,
             action = {
                 closeDrawer()
@@ -56,7 +56,7 @@ fun AppDrawer(
         )
         DrawerButton(
             icon = R.drawable.ic_archive_black_24dp,
-            label = "Archived",
+            label = stringResource(R.string.drawer_archived),
             isSelected = currentScreenStatus == ScreenStatus.ArchivedShoppingList,
             action = {
                 closeDrawer()
