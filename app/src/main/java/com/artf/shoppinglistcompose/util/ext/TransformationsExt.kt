@@ -13,7 +13,7 @@ fun <X, Y> mapNonNull(
     result.addSource(source) { x ->
         x?.let {
             mapFunction(x)?.let {
-                result.value
+                result.value = it
             }
         }
     }

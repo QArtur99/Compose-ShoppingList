@@ -21,7 +21,12 @@ fun ShoppingListApp() {
     MaterialTheme(
         colors = lightThemeColors,
         typography = themeTypography
-    ) { AppContent() }
+    ) {
+        Surface(color = MaterialTheme.colors.background) {
+            AppContent()
+            Log.e("ShoppingListApp", "ShoppingListApp: ")
+        }
+    }
 }
 
 @Composable
@@ -29,15 +34,13 @@ private fun AppContent() {
     val sharedViewModelAmbient = SharedViewModelAmbient.current
     val screenState = observer(sharedViewModelAmbient.screenState)
     screenState ?: return
-    Log.e("TAG", "AppContent")
-    Surface(color = MaterialTheme.colors.background) {
-        Providers(ScreenStateAmbient provides screenState) {
-            when (val screen = screenState.currentScreenStatus) {
-                is ScreenStatus.CurrentShoppingList -> { ShoppingListCurrentScreen() }
-                is ScreenStatus.ArchivedShoppingList -> ShoppingListArchivedScreen()
-                is ScreenStatus.CurrentProductList -> ProductListCurrentScreen()
-                is ScreenStatus.ArchivedProductList -> ArchivedProductListScreen()
-            }
+
+    Providers(ScreenStateAmbient provides screenState) {
+        when (val screen = screenState.currentScreenStatus) {
+            is ScreenStatus.CurrentShoppingList -> ShoppingListCurrentScreen()
+            is ScreenStatus.ArchivedShoppingList -> ShoppingListArchivedScreen()
+            is ScreenStatus.CurrentProductList -> ProductListCurrentScreen()
+            is ScreenStatus.ArchivedProductList -> ArchivedProductListScreen()
         }
     }
 }

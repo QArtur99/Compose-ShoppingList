@@ -1,16 +1,18 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
-import android.util.Log
 import androidx.compose.Composable
 import androidx.compose.remember
 import androidx.ui.core.Modifier
+import androidx.ui.foundation.Box
+import androidx.ui.foundation.ContentGravity
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.VerticalScroller
-import androidx.ui.foundation.shape.corner.CornerSize
 import androidx.ui.layout.Column
+import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
+import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.DrawerState
 import androidx.ui.material.FloatingActionButton
 import androidx.ui.material.IconButton
@@ -40,7 +42,6 @@ fun ShoppingListCurrentScreen(
         ScaffoldState().apply { drawerState = CurrentShoppingListModel.drawerState }
     }
 ) {
-    Log.e("TAG", "ShoppingListCurrentScreen")
     CurrentShoppingListModel.drawerState = scaffoldState.drawerState
 
     Scaffold(
@@ -76,17 +77,23 @@ fun ShoppingListCurrentScreen(
 
 @Composable
 private fun ScreenBody() {
-    Log.e("TAG", "ScreenBody")
-    val result = ScreenStateAmbient.current.shoppingListsUi
-    when (result) {
+    when (val result = ScreenStateAmbient.current.shoppingListsUi) {
+        is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
     }
 }
 
 @Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        gravity = ContentGravity.Center
+    ) { CircularProgressIndicator() }
+}
+
+@Composable
 private fun SuccessScreen(productList: List<ShoppingListUi>) {
-    Log.e("TAG", "SuccessScreen")
     val sharedViewModelAmbient = SharedViewModelAmbient.current
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
@@ -97,7 +104,6 @@ private fun SuccessScreen(productList: List<ShoppingListUi>) {
 
 @Composable
 private fun ErrorScreen() {
-    Log.e("TAG", "ErrorScreen")
     EmptyScreen(
         R.string.empty_view_shopping_list_title,
         R.string.empty_view_shopping_list_subtitle
@@ -108,8 +114,6 @@ private fun ErrorScreen() {
 private fun Fab() {
     FloatingActionButton(
         onClick = { showDialogState = true },
-        modifier = Modifier,
-        shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
         elevation = 6.dp,
