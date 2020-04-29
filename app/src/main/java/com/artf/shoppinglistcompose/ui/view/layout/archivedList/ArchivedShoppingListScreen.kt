@@ -40,6 +40,7 @@ fun ShoppingListArchivedScreen(
 ) {
     val screenState = ScreenStateAmbient.current.currentScreenStatus
     ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
+
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {

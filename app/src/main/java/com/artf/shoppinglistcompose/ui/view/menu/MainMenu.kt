@@ -39,6 +39,7 @@ fun MainMenu() {
     }
     if (showMenu.not()) {
         screenStatusState?.let { sharedViewModel.pushBackStack(it) }
+        screenStatusState = null
         return
     }
     DropdownPopup(
