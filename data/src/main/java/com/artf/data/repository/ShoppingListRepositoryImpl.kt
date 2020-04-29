@@ -2,48 +2,48 @@ package com.artf.data.repository
 
 import com.artf.data.database.model.Product
 import com.artf.data.database.model.ShoppingList
-import com.artf.data.database.ShoppingListDatabaseDao
+import com.artf.data.database.ShoppingListSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 class ShoppingListRepositoryImpl constructor(
-    private val shoppingListDatabase: ShoppingListDatabaseDao,
+    private val shoppingListSource: ShoppingListSource,
     private val ioDispatcher: CoroutineDispatcher
 ) : ShoppingListRepository {
 
     override suspend fun insertShoppingList(shoppingList: ShoppingList) {
         withContext(ioDispatcher) {
-            shoppingListDatabase.insertShoppingList(shoppingList)
+            shoppingListSource.insertShoppingList(shoppingList)
         }
     }
 
     override suspend fun updateShoppingList(shoppingList: ShoppingList) {
         withContext(ioDispatcher) {
-            shoppingListDatabase.updateShoppingList(shoppingList)
+            shoppingListSource.updateShoppingList(shoppingList)
         }
     }
 
     override suspend fun insertProduct(product: Product) {
         withContext(ioDispatcher) {
-            shoppingListDatabase.insertProduct(product)
+            shoppingListSource.insertProduct(product)
         }
     }
 
     override suspend fun updateProduct(product: Product) {
         withContext(ioDispatcher) {
-            shoppingListDatabase.updateProduct(product)
+            shoppingListSource.updateProduct(product)
         }
     }
 
     override suspend fun deleteProduct(product: Product) {
         withContext(ioDispatcher) {
-            shoppingListDatabase.deleteProduct(product)
+            shoppingListSource.deleteProduct(product)
         }
     }
 
-    override fun getCurrentShoppingList() = shoppingListDatabase.getCurrentShoppingList()
+    override fun getCurrentShoppingList() = shoppingListSource.getCurrentShoppingList()
 
-    override fun getArchivedShoppingList() = shoppingListDatabase.getArchivedShoppingList()
+    override fun getArchivedShoppingList() = shoppingListSource.getArchivedShoppingList()
 
-    override fun getProductList(listId: Long) = shoppingListDatabase.getProductList(listId)
+    override fun getProductList(listId: Long) = shoppingListSource.getProductList(listId)
 }
