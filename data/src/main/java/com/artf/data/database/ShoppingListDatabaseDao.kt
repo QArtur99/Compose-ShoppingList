@@ -15,17 +15,17 @@ interface ShoppingListDatabaseDao {
     @Insert
     fun insertShoppingList(shoppingList: ShoppingList)
 
-    @Insert
-    fun insertShoppingListItem(product: Product)
-
     @Update
     fun updateShoppingList(shoppingList: ShoppingList)
 
+    @Insert
+    fun insertProduct(product: Product)
+
     @Update
-    fun updateShoppingListItem(product: Product)
+    fun updateProduct(product: Product)
 
     @Delete
-    fun deleteShoppingListItem(product: Product)
+    fun deleteProduct(product: Product)
 
     @Query("SELECT * FROM shopping_list WHERE isArchived IS 0 ORDER BY shoppingListTimestamp DESC")
     fun getCurrentShoppingList(): LiveData<List<ShoppingList>>
@@ -34,5 +34,5 @@ interface ShoppingListDatabaseDao {
     fun getArchivedShoppingList(): LiveData<List<ShoppingList>>
 
     @Query("SELECT * FROM products WHERE shoppingListId = :listId ORDER BY productTimestamp DESC")
-    fun getAllShoppingListItem(listId: Long): LiveData<List<Product>>
+    fun getProductList(listId: Long): LiveData<List<Product>>
 }
