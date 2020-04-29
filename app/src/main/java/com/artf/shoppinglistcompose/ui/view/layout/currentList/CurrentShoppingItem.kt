@@ -17,7 +17,7 @@ import androidx.ui.unit.dp
 import com.artf.data.database.model.ShoppingList
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
@@ -32,7 +32,7 @@ fun ShoppingListCurrentItem(
         Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
             Clickable(
                 modifier = Modifier.ripple(),
-                onClick = { sharedViewModel.pushBackStack(Screen.CurrentProductList(post)) }
+                onClick = { sharedViewModel.pushBackStack(ScreenStatus.CurrentProductList(post)) }
             ) {
                 Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
                     Text(

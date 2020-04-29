@@ -5,7 +5,7 @@ import androidx.compose.Composable
 import androidx.compose.Providers
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Surface
-import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.view.layout.archivedList.ArchivedProductListScreen
@@ -32,14 +32,14 @@ private fun AppContent() {
 
     Surface(color = MaterialTheme.colors.background) {
         Providers(ScreenStateAmbient provides screenState) {
-            when (val screen = screenState.currentScreen) {
-                is Screen.CurrentShoppingList -> {
+            when (val screen = screenState.currentScreenStatus) {
+                is ScreenStatus.CurrentShoppingList -> {
                     Log.e("TAG", "AppContent")
                     ShoppingListCurrentScreen()
                 }
-                is Screen.ArchivedShoppingList -> ShoppingListArchivedScreen()
-                is Screen.CurrentProductList -> ProductListCurrentScreen()
-                is Screen.ArchivedProductList -> ArchivedProductListScreen()
+                is ScreenStatus.ArchivedShoppingList -> ShoppingListArchivedScreen()
+                is ScreenStatus.CurrentProductList -> ProductListCurrentScreen()
+                is ScreenStatus.ArchivedProductList -> ArchivedProductListScreen()
             }
         }
     }

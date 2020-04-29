@@ -1,6 +1,6 @@
 package com.artf.shoppinglistcompose.ui.data.model
 
-import com.artf.shoppinglistcompose.util.ShoppingListType
+import com.artf.shoppinglistcompose.ui.data.status.ShoppingListStatus
 
 data class ProductUi(
     val id: Long,
@@ -8,5 +8,5 @@ data class ProductUi(
     val productQuantity: Long,
     val productTimestamp: Long,
     val shoppingListId: Long,
-    val shoppingListType: ShoppingListType
+    val shoppingListStatus: ShoppingListStatus
 )

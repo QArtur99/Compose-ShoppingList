@@ -1,9 +1,9 @@
 package com.artf.shoppinglistcompose.ui.data.model
 
-import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 
 data class MutableScreenState(
-    override var currentScreen: Screen,
+    override var currentScreenStatus: ScreenStatus,
     override var selectedShoppingList: ShoppingListUi? = null,
     override var updateShoppingListLoading: Boolean? = null,
     override var deleteProductLoading: Boolean? = null,
@@ -13,10 +13,10 @@ data class MutableScreenState(
     override var isShoppingListsEmpty: Boolean? = null,
     override var productListUi: List<ProductUi>? = null,
     override var isProductListsEmpty: Boolean? = null
-) : ScreenState(currentScreen)
+) : ScreenState(currentScreenStatus)
 
 abstract class ScreenState(
-    open val currentScreen: Screen,
+    open val currentScreenStatus: ScreenStatus,
     open val selectedShoppingList: ShoppingListUi? = null,
     open val updateShoppingListLoading: Boolean? = null,
     open val deleteProductLoading: Boolean? = null,
