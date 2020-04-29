@@ -1,41 +1,41 @@
 package com.artf.shoppinglistcompose.ui.data
 
 import androidx.lifecycle.MutableLiveData
-import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import java.util.ArrayDeque
 
 class ScreenBackStackImpl : ScreenBackStack {
 
-    private var currentScreen: MutableLiveData<Screen> = MutableLiveData<Screen>()
-    private val backStack = ArrayDeque<Screen>()
+    private var currentScreenStatus: MutableLiveData<ScreenStatus> = MutableLiveData<ScreenStatus>()
+    private val backStack = ArrayDeque<ScreenStatus>()
 
     init {
-        pushBackStack(Screen.CurrentShoppingList)
+        pushBackStack(ScreenStatus.CurrentShoppingList)
     }
 
-    fun getCurrentScreen(): MutableLiveData<Screen> {
-        return currentScreen
+    fun getCurrentScreen(): MutableLiveData<ScreenStatus> {
+        return currentScreenStatus
     }
 
-    override fun popBackStack(): Screen? {
+    override fun popBackStack(): ScreenStatus? {
         return try {
             if (backStack.size == 1) return null
             backStack.pop()
-            backStack.peekFirst()?.also { currentScreen.value = it }
+            backStack.peekFirst()?.also { currentScreenStatus.value = it }
         } catch (e: Exception) {
             null
         }
     }
 
-    override fun pushBackStack(screen: Screen) {
-        if (screen != currentScreen.value) {
-            backStack.push(screen)
-            currentScreen.value = screen
+    override fun pushBackStack(screenStatus: ScreenStatus) {
+        if (screenStatus != currentScreenStatus.value) {
+            backStack.push(screenStatus)
+            currentScreenStatus.value = screenStatus
         }
     }
 }
 
 interface ScreenBackStack {
-    fun popBackStack(): Screen?
-    fun pushBackStack(screen: Screen)
+    fun popBackStack(): ScreenStatus?
+    fun pushBackStack(screenStatus: ScreenStatus)
 }

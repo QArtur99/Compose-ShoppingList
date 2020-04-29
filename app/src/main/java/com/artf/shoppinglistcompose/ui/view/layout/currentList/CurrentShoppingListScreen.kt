@@ -23,7 +23,7 @@ import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel
@@ -45,7 +45,7 @@ fun ShoppingListCurrentScreen(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
-                currentScreen = Screen.CurrentShoppingList,
+                currentScreenStatus = ScreenStatus.CurrentShoppingList,
                 closeDrawer = {
                     scaffoldState.drawerState = DrawerState.Closed
                     CurrentShoppingListModel.drawerState = scaffoldState.drawerState

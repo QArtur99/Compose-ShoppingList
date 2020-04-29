@@ -32,7 +32,7 @@ fun ShoppingListArchivedScreen(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
-                currentScreen = ScreenStateAmbient.current.currentScreen,
+                currentScreenStatus = ScreenStateAmbient.current.currentScreenStatus,
                 closeDrawer = {
                     scaffoldState.drawerState = DrawerState.Closed
                     ArchivedShoppingListModel.drawerState = scaffoldState.drawerState

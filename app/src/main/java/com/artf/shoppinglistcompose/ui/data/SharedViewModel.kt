@@ -15,8 +15,8 @@ import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.model.MutableScreenState
 import com.artf.shoppinglistcompose.ui.data.model.ScreenState
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
-import com.artf.shoppinglistcompose.ui.data.status.Screen
-import com.artf.shoppinglistcompose.util.ShoppingListType
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
+import com.artf.shoppinglistcompose.ui.data.status.ShoppingListStatus
 import kotlinx.coroutines.launch
 
 class SharedViewModel constructor(
@@ -25,7 +25,7 @@ class SharedViewModel constructor(
 ) : ViewModel(), ScreenBackStack by backStack {
 
     private val _currentScreen = backStack.getCurrentScreen()
-    private val currentScreen: LiveData<Screen> = _currentScreen
+    private val currentScreenStatus: LiveData<ScreenStatus> = _currentScreen
 
     private val _updateShoppingListLoading = MutableLiveData<Boolean>()
     private val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
@@ -39,28 +39,28 @@ class SharedViewModel constructor(
     private val _createShoppingListLoading = MutableLiveData<Boolean>()
     private val createShoppingListLoading: LiveData<Boolean> = _createShoppingListLoading
 
-    private val shoppingListType: LiveData<ShoppingListType> = Transformations.map(currentScreen) {
+    private val shoppingListStatus: LiveData<ShoppingListStatus> = Transformations.map(currentScreenStatus) {
         when (it) {
-            is Screen.CurrentShoppingList -> ShoppingListType.CURRENT
-            is Screen.CurrentProductList -> ShoppingListType.CURRENT
-            is Screen.ArchivedShoppingList -> ShoppingListType.ARCHIVED
-            is Screen.ArchivedProductList -> ShoppingListType.ARCHIVED
+            is ScreenStatus.CurrentShoppingList -> ShoppingListStatus.CURRENT
+            is ScreenStatus.CurrentProductList -> ShoppingListStatus.CURRENT
+            is ScreenStatus.ArchivedShoppingList -> ShoppingListStatus.ARCHIVED
+            is ScreenStatus.ArchivedProductList -> ShoppingListStatus.ARCHIVED
             else -> null
         }
     }
 
-    private val shoppingLists = Transformations.switchMap(shoppingListType) {
+    private val shoppingLists = Transformations.switchMap(shoppingListStatus) {
         when (it) {
-            ShoppingListType.CURRENT -> shoppingListRepository.getCurrentShoppingList()
-            ShoppingListType.ARCHIVED -> shoppingListRepository.getArchivedShoppingList()
+            ShoppingListStatus.CURRENT -> shoppingListRepository.getCurrentShoppingList()
+            ShoppingListStatus.ARCHIVED -> shoppingListRepository.getArchivedShoppingList()
             else -> null
         }
     }
 
-    private val selectedShoppingList = Transformations.map(currentScreen) {
+    private val selectedShoppingList = Transformations.map(currentScreenStatus) {
         when (it) {
-            is Screen.CurrentProductList -> it.shoppingList
-            is Screen.ArchivedProductList -> it.shoppingList
+            is ScreenStatus.CurrentProductList -> it.shoppingList
+            is ScreenStatus.ArchivedProductList -> it.shoppingList
             else -> null
         }
     }
@@ -77,7 +77,7 @@ class SharedViewModel constructor(
     private val isShoppingListsEmpty =
         Transformations.map(shoppingListsUi) { it?.isEmpty() ?: true }
     private val productListUi =
-        Transformations.map(productList) { shoppingListType.value?.let { type -> it?.asUiModel(type) } }
+        Transformations.map(productList) { shoppingListStatus.value?.let { type -> it?.asUiModel(type) } }
     private val isProductListsEmpty = Transformations.map(productListUi) { it?.isEmpty() ?: true }
 
     fun updateShoppingList(shoppingList: ShoppingListUi, isArchived: Boolean) {
@@ -122,8 +122,8 @@ class SharedViewModel constructor(
     }
 
     private val _screenState = MediatorLiveData<MutableScreenState>().apply {
-        value = MutableScreenState(Screen.CurrentShoppingList)
-        addSource(currentScreen) { value?.currentScreen = it; value = value }
+        value = MutableScreenState(ScreenStatus.CurrentShoppingList)
+        addSource(currentScreenStatus) { value?.currentScreenStatus = it; value = value }
         addSource(selectedShoppingList) { value?.selectedShoppingList = it; value = value }
         addSource(updateShoppingListLoading) {
             value?.updateShoppingListLoading = it; value = value

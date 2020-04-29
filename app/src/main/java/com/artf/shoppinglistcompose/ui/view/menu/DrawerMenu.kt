@@ -32,13 +32,13 @@ import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import androidx.ui.unit.px
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.status.Screen
+import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.util.dpToPx
 
 @Composable
 fun AppDrawer(
-    currentScreen: Screen,
+    currentScreenStatus: ScreenStatus,
     closeDrawer: () -> Unit
 ) {
     val sharedViewModel = SharedViewModelAmbient.current
@@ -48,19 +48,19 @@ fun AppDrawer(
         DrawerButton(
             icon = R.drawable.ic_baseline_home_24,
             label = "Home",
-            isSelected = currentScreen == Screen.CurrentShoppingList,
+            isSelected = currentScreenStatus == ScreenStatus.CurrentShoppingList,
             action = {
                 closeDrawer()
-                sharedViewModel.pushBackStack(Screen.CurrentShoppingList)
+                sharedViewModel.pushBackStack(ScreenStatus.CurrentShoppingList)
             }
         )
         DrawerButton(
             icon = R.drawable.ic_archive_black_24dp,
             label = "Archived",
-            isSelected = currentScreen == Screen.ArchivedShoppingList,
+            isSelected = currentScreenStatus == ScreenStatus.ArchivedShoppingList,
             action = {
                 closeDrawer()
-                sharedViewModel.pushBackStack(Screen.ArchivedShoppingList)
+                sharedViewModel.pushBackStack(ScreenStatus.ArchivedShoppingList)
             }
         )
     }

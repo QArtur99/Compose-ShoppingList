@@ -24,8 +24,6 @@ fun <T> observer(data: LiveData<T>): T? {
     return result.value
 }
 
-enum class ShoppingListType { CURRENT, ARCHIVED }
-
 fun Long.getDateFormat(): String {
     val df = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
     df.timeZone = TimeZone.getTimeZone("UTC")
