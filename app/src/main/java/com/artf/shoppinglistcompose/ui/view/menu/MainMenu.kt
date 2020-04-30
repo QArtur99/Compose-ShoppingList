@@ -23,9 +23,9 @@ import androidx.ui.unit.IntPx
 import androidx.ui.unit.IntPxPosition
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
+import com.artf.shoppinglistcompose.ui.data.state.ScreenState
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.screenStatusState
+import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.screenStateState
 import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.showMenu
 import com.artf.shoppinglistcompose.util.dpToPx
 import com.artf.shoppinglistcompose.util.pxToDp
@@ -38,8 +38,8 @@ fun MainMenu() {
         Icon(vectorResource(R.drawable.ic_baseline_more_vert_black_24))
     }
     if (showMenu.not()) {
-        screenStatusState?.let { sharedViewModel.pushBackStack(it) }
-        screenStatusState = null
+        screenStateState?.let { sharedViewModel.pushBackStack(it) }
+        screenStateState = null
         return
     }
     DropdownPopup(
@@ -54,7 +54,7 @@ fun MainMenu() {
             ) {
                 Column {
                     TextButton(onClick = {
-                        screenStatusState = ScreenStatus.CurrentShoppingList
+                        screenStateState = ScreenState.CurrentShoppingList
                         showMenu = false
                     }) {
                         Text(
@@ -65,7 +65,7 @@ fun MainMenu() {
                         )
                     }
                     TextButton(onClick = {
-                        screenStatusState = ScreenStatus.ArchivedShoppingList
+                        screenStateState = ScreenState.ArchivedShoppingList
                         showMenu = false
                     }) {
                         Text(

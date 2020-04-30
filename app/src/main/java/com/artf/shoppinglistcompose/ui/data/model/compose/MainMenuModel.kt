@@ -1,10 +1,10 @@
 package com.artf.shoppinglistcompose.ui.data.model.compose
 
 import androidx.compose.Model
-import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
+import com.artf.shoppinglistcompose.ui.data.state.ScreenState
 
 @Model
 object MainMenuModel {
     var showMenu = false
-    var screenStatusState: ScreenStatus? = null
+    var screenStateState: ScreenState? = null
 }

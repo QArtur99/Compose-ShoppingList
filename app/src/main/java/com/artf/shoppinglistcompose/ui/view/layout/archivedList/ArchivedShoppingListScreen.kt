@@ -38,14 +38,14 @@ fun ShoppingListArchivedScreen(
         ScaffoldState().apply { drawerState = ArchivedShoppingListModel.drawerState }
     }
 ) {
-    val screenState = ScreenStateAmbient.current.currentScreenStatus
+    val screenState = ScreenStateAmbient.current.currentScreenState
     ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
 
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
-                currentScreenStatus = screenState,
+                currentScreenState = screenState,
                 closeDrawer = {
                     scaffoldState.drawerState = DrawerState.Closed
                     ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
