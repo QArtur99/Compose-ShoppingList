@@ -94,10 +94,10 @@ private fun LoadingScreen() {
 
 @Composable
 private fun SuccessScreen(productList: List<ShoppingListUi>) {
-    val sharedViewModelAmbient = SharedViewModelAmbient.current
+    val sharedViewModel = SharedViewModelAmbient.current
     VerticalScroller {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            productList.forEach { post -> ShoppingListCurrentItem(sharedViewModelAmbient, post) }
+            productList.forEach { post -> ShoppingListCurrentItem(sharedViewModel, post) }
         }
     }
 }
