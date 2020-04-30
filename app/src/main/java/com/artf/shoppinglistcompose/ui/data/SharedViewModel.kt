@@ -13,12 +13,12 @@ import com.artf.data.repository.ShoppingListRepository
 import com.artf.data.status.ResultStatus
 import com.artf.shoppinglistcompose.ui.data.mapper.asDomainModel
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
-import com.artf.shoppinglistcompose.ui.data.model.MutableScreenState
+import com.artf.shoppinglistcompose.ui.data.model.MutableScreenUi
 import com.artf.shoppinglistcompose.ui.data.model.ProductUi
-import com.artf.shoppinglistcompose.ui.data.model.ScreenState
+import com.artf.shoppinglistcompose.ui.data.model.ScreenUi
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
-import com.artf.shoppinglistcompose.ui.data.status.ScreenStatus
-import com.artf.shoppinglistcompose.ui.data.status.ShoppingListStatus
+import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.data.state.ShoppingListState
 import com.artf.shoppinglistcompose.util.ext.addSourceInvoke
 import com.artf.shoppinglistcompose.util.ext.mapNonNull
 import kotlinx.coroutines.launch
@@ -29,7 +29,7 @@ class SharedViewModel constructor(
 ) : ViewModel(), ScreenBackStack by backStack {
 
     private val _currentScreen = backStack.getCurrentScreen()
-    private val currentScreenStatus: LiveData<ScreenStatus> = _currentScreen
+    private val currentScreenState: LiveData<ScreenState> = _currentScreen
 
     private val _updateShoppingListLoading = MutableLiveData<Boolean>()
     private val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
@@ -43,18 +43,18 @@ class SharedViewModel constructor(
     private val _createShoppingListLoading = MutableLiveData<Boolean>()
     private val createShoppingListLoading: LiveData<Boolean> = _createShoppingListLoading
 
-    private val shoppingListStatus = mapNonNull(currentScreenStatus) {
+    private val shoppingListStatus = mapNonNull(currentScreenState) {
         when (it) {
-            is ScreenStatus.CurrentShoppingList -> ShoppingListStatus.CURRENT
-            is ScreenStatus.ArchivedShoppingList -> ShoppingListStatus.ARCHIVED
+            is ScreenState.CurrentShoppingList -> ShoppingListState.CURRENT
+            is ScreenState.ArchivedShoppingList -> ShoppingListState.ARCHIVED
             else -> null
         }
     }
 
     private val shoppingLists = shoppingListStatus.switchMap {
         when (it) {
-            ShoppingListStatus.CURRENT -> shoppingListRepository.getCurrentShoppingList()
-            ShoppingListStatus.ARCHIVED -> shoppingListRepository.getArchivedShoppingList()
+            ShoppingListState.CURRENT -> shoppingListRepository.getCurrentShoppingList()
+            ShoppingListState.ARCHIVED -> shoppingListRepository.getArchivedShoppingList()
         }
     }
 
@@ -66,10 +66,10 @@ class SharedViewModel constructor(
         }
     }
 
-    private val selectedShoppingList = mapNonNull(currentScreenStatus) {
+    private val selectedShoppingList = mapNonNull(currentScreenState) {
         when (it) {
-            is ScreenStatus.CurrentProductList -> it.shoppingList
-            is ScreenStatus.ArchivedProductList -> it.shoppingList
+            is ScreenState.CurrentProductList -> it.shoppingList
+            is ScreenState.ArchivedProductList -> it.shoppingList
             else -> null
         }
     }
@@ -127,9 +127,9 @@ class SharedViewModel constructor(
         }
     }
 
-    private val _screenState = MediatorLiveData<MutableScreenState>().apply {
-        value = MutableScreenState(ScreenStatus.CurrentShoppingList)
-        addSource(currentScreenStatus) { value?.currentScreenStatus = it!! }
+    private val _screenState = MediatorLiveData<MutableScreenUi>().apply {
+        value = MutableScreenUi(ScreenState.CurrentShoppingList)
+        addSource(currentScreenState) { value?.currentScreenState = it!! }
         addSource(selectedShoppingList) { value?.selectedShoppingList = it }
         addSourceInvoke(createShoppingListLoading) { value?.createShoppingListLoading = it }
         addSourceInvoke(updateShoppingListLoading) { value?.updateShoppingListLoading = it }
@@ -138,5 +138,5 @@ class SharedViewModel constructor(
         addSourceInvoke(shoppingListsUi) { value?.shoppingListsUi = it }
         addSourceInvoke(productListUi) { value?.productListUi = it }
     }
-    val screenState: LiveData<ScreenState> = Transformations.map(_screenState) { it.copy() }
+    val screenState: LiveData<ScreenUi> = Transformations.map(_screenState) { it.copy() }
 }
