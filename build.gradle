@@ -48,6 +48,8 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$versions.android_gradle_plugin"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$versions.kotlin"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.diffplug"
     }
 }

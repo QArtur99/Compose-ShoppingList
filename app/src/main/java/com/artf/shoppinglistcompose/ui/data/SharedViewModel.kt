@@ -11,6 +11,7 @@ import com.artf.data.database.model.Product
 import com.artf.data.database.model.ShoppingList
 import com.artf.data.repository.ShoppingListRepository
 import com.artf.data.status.ResultStatus
+import com.artf.data.testing.OpenForTesting
 import com.artf.shoppinglistcompose.ui.data.mapper.asDomainModel
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.model.MutableScreenUi
@@ -23,6 +24,7 @@ import com.artf.shoppinglistcompose.util.ext.addSourceInvoke
 import com.artf.shoppinglistcompose.util.ext.mapNonNull
 import kotlinx.coroutines.launch
 
+@OpenForTesting
 class SharedViewModel constructor(
     private val backStack: ScreenBackStackImpl,
     private val shoppingListRepository: ShoppingListRepository
