@@ -12,14 +12,10 @@ import androidx.ui.material.IconButton
 import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
 import androidx.ui.res.vectorResource
-import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.artf.data.database.model.ShoppingList
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import com.artf.shoppinglistcompose.ui.data.state.ScreenState
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
 import com.artf.shoppinglistcompose.util.getDateFormat
 
@@ -53,12 +49,4 @@ fun ShoppingListCurrentItem(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewPostCardSimple() {
-    val sharedViewModelAmbient = SharedViewModelAmbient.current
-    val shoppingList = ShoppingList(id = 0, shoppingListName = "A").asUiModel()
-    ShoppingListCurrentItem(sharedViewModelAmbient, shoppingList)
 }
