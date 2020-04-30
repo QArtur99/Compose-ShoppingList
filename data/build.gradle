@@ -3,8 +3,16 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-allopen'
+    id 'kotlin-noarg'
 }
 
+allOpen {
+    annotation 'com.artf.data.testing.OpenClass'
+}
+noArg {
+    annotation 'com.artf.data.testing.NoArgClass"'
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -18,7 +26,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
+    sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
+//        String debugDir = 'src/debug/java'
+//        main.java.srcDirs += debugDir
+        test.java.srcDirs += sharedTestDir
+        androidTest.java.srcDirs += sharedTestDir
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -54,7 +68,43 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //Test
+    testImplementation "androidx.arch.core:core-testing:$versions.arch_core"
+    testImplementation "com.google.truth:truth:$versions.truth"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    testImplementation "org.mockito:mockito-inline:$versions.mockito"
+    testImplementation "junit:junit:$versions.junit"
+
+    //Android Test
+    implementation("androidx.fragment:fragment-testing:$versions.fragment_testing", {
+        exclude group: 'androidx.test', module: 'core'
+    })
+    implementation "androidx.fragment:fragment-ktx:$versions.fragment"
+    androidTestImplementation "com.google.truth:truth:$versions.truth"
+    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    androidTestImplementation "androidx.arch.core:core-testing:$versions.arch_core"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$versions.espresso"
+    androidTestImplementation "androidx.test:core:$versions.atsl_core"
+    androidTestImplementation "androidx.test.ext:junit:$versions.atsl_junit"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$versions.atsl_junit"
+    androidTestImplementation "androidx.test:monitor:$versions.atsl_monitor"
+    androidTestImplementation "androidx.test:rules:$versions.atsl_rules"
+    androidTestImplementation "androidx.test:runner:$versions.atsl_runner"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
+    androidTestImplementation "org.mockito:mockito-android:$versions.mockito_android"
+    androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
+    androidTestImplementation "org.robolectric:annotations:$versions.robolectric"
+}
+
+// we need all open to run tests which  a we enable only for debug builds.
+project.tasks.whenTaskAdded {
+    if (it.name == "testReleaseUnitTest") {
+        it.enabled = false
+    }
 }
