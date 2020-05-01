@@ -18,7 +18,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -38,13 +37,16 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion "$versions.compose_compiler_extension_version"
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":data")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.support"
     implementation "androidx.core:core-ktx:$versions.core_ktx"
@@ -79,7 +81,36 @@ dependencies {
     implementation "androidx.room:room-runtime:$versions.room"
 //    kapt "androidx.room:room-compiler:$versions.room"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //Test
+    testImplementation "androidx.arch.core:core-testing:$versions.arch_core"
+    testImplementation "com.google.truth:truth:$versions.truth"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    testImplementation "org.mockito:mockito-inline:$versions.mockito"
+    testImplementation "junit:junit:$versions.junit"
+
+    //Android Test
+    implementation("androidx.fragment:fragment-testing:$versions.fragment_testing", {
+        exclude group: 'androidx.test', module: 'core'
+    })
+    implementation "androidx.fragment:fragment-ktx:$versions.fragment"
+    androidTestImplementation "com.google.truth:truth:$versions.truth"
+    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    androidTestImplementation "androidx.arch.core:core-testing:$versions.arch_core"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$versions.espresso"
+    androidTestImplementation "androidx.test:core:$versions.atsl_core"
+    androidTestImplementation "androidx.test.ext:junit:$versions.atsl_junit"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$versions.atsl_junit"
+    androidTestImplementation "androidx.test:monitor:$versions.atsl_monitor"
+    androidTestImplementation "androidx.test:rules:$versions.atsl_rules"
+    androidTestImplementation "androidx.test:runner:$versions.atsl_runner"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
+    androidTestImplementation "org.mockito:mockito-android:$versions.mockito_android"
+    androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
+    androidTestImplementation "org.robolectric:annotations:$versions.robolectric"
 }

@@ -28,8 +28,8 @@ android {
     }
     sourceSets {
         String sharedTestDir = 'src/sharedTest/java'
-//        String debugDir = 'src/debug/java'
-//        main.java.srcDirs += debugDir
+        String debugDir = 'src/debug/java'
+        main.java.srcDirs += debugDir
         test.java.srcDirs += sharedTestDir
         androidTest.java.srcDirs += sharedTestDir
     }
@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
