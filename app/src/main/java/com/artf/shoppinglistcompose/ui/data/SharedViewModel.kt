@@ -11,7 +11,6 @@ import com.artf.data.database.model.Product
 import com.artf.data.database.model.ShoppingList
 import com.artf.data.repository.ShoppingListRepository
 import com.artf.data.status.ResultStatus
-import com.artf.data.testing.OpenForTesting
 import com.artf.shoppinglistcompose.ui.data.mapper.asDomainModel
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.model.MutableScreenUi
@@ -24,7 +23,6 @@ import com.artf.shoppinglistcompose.util.ext.addSourceInvoke
 import com.artf.shoppinglistcompose.util.ext.mapNonNull
 import kotlinx.coroutines.launch
 
-@OpenForTesting
 class SharedViewModel constructor(
     private val backStack: ScreenBackStackImpl,
     private val shoppingListRepository: ShoppingListRepository
@@ -88,15 +86,6 @@ class SharedViewModel constructor(
         }
     }
 
-    fun updateShoppingList(shoppingList: ShoppingListUi, isArchived: Boolean) {
-        _updateShoppingListLoading.value = true
-        shoppingList.isArchived = isArchived
-        viewModelScope.launch {
-            shoppingListRepository.updateShoppingList(shoppingList.asDomainModel())
-            _updateShoppingListLoading.value = false
-        }
-    }
-
     fun createShoppingList(name: String) {
         _createShoppingListLoading.value = true
         val shoppingList = ShoppingList(shoppingListName = name)
@@ -104,6 +93,15 @@ class SharedViewModel constructor(
         viewModelScope.launch {
             shoppingListRepository.insertShoppingList(shoppingList)
             _createShoppingListLoading.value = false
+        }
+    }
+
+    fun updateShoppingList(shoppingList: ShoppingListUi, isArchived: Boolean) {
+        _updateShoppingListLoading.value = true
+        val shoppingListDomain = shoppingList.asDomainModel().apply { this.isArchived = isArchived }
+        viewModelScope.launch {
+            shoppingListRepository.updateShoppingList(shoppingListDomain)
+            _updateShoppingListLoading.value = false
         }
     }
 

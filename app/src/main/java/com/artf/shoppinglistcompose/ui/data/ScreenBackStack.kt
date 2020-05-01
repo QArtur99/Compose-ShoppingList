@@ -6,7 +6,7 @@ import java.util.ArrayDeque
 
 class ScreenBackStackImpl : ScreenBackStack {
 
-    private var currentScreenState: MutableLiveData<ScreenState> = MutableLiveData<ScreenState>()
+    private val currentScreenState = MutableLiveData<ScreenState>()
     private val backStack = ArrayDeque<ScreenState>()
 
     init {
@@ -18,13 +18,9 @@ class ScreenBackStackImpl : ScreenBackStack {
     }
 
     override fun popBackStack(): ScreenState? {
-        return try {
-            if (backStack.size == 1) return null
-            backStack.pop()
-            backStack.peekFirst()?.also { currentScreenState.value = it }
-        } catch (e: Exception) {
-            null
-        }
+        if (backStack.size == 1) return null
+        backStack.pop()
+        return backStack.peekFirst()?.also { currentScreenState.value = it }
     }
 
     override fun pushBackStack(screenState: ScreenState) {
