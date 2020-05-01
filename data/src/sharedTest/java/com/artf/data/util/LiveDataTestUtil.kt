@@ -46,4 +46,22 @@ object LiveDataTestUtil {
         @Suppress("UNCHECKED_CAST")
         return data[0] as T
     }
+
+    fun <T> isNotInvoke(liveData: LiveData<T>, callBack: () -> Unit) {
+        var counter = 0
+        val latch = CountDownLatch(1)
+        val observer = object : Observer<T> {
+            override fun onChanged(o: T?) {
+                if (counter > 0) {
+                    liveData.removeObserver(this)
+                    throw IllegalStateException("LiveData was invoked")
+                }
+                counter++
+            }
+        }
+        liveData.observeForever(observer)
+        callBack()
+        latch.await(2, TimeUnit.SECONDS)
+        liveData.removeObserver(observer)
+    }
 }

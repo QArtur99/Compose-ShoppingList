@@ -6,12 +6,13 @@ import com.artf.data.database.model.Product
 import com.artf.data.database.model.ShoppingList
 import com.artf.data.repository.ShoppingListRepository
 import com.artf.data.status.ResultStatus
+import com.artf.shoppinglistcompose.util.LiveDataTestUtil.getValue
+import com.artf.shoppinglistcompose.util.LiveDataTestUtil.isNotInvoke
+import com.artf.shoppinglistcompose.util.any
 import com.artf.shoppinglistcompose.ui.data.ScreenBackStackImpl
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
 import com.artf.shoppinglistcompose.ui.data.state.ScreenState
-import com.artf.shoppinglistcompose.util.LiveDataTestUtil.getValue
-import com.artf.shoppinglistcompose.util.LiveDataTestUtil.isNotInvoke
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +27,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.any
 import org.mockito.Mockito.anyLong
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
@@ -34,6 +34,10 @@ import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 class SharedViewModelTest {
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
 
     @ObsoleteCoroutinesApi
     private var mainThreadSurrogate = newSingleThreadContext("UI thread")
@@ -199,5 +203,5 @@ class SharedViewModelTest {
 }
 
 suspend fun unlockThread() {
-    delay(1)
+    delay(10)
 }

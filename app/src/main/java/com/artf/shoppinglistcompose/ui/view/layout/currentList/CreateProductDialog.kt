@@ -125,7 +125,7 @@ private fun ProductEditText() {
                 value = TextFieldValue(productNameState, editTextProductNameSelectionState),
                 modifier = Modifier.fillMaxWidth(),
                 imeAction = ImeAction.Done,
-                onFocus = { editTextProductNameFocusState = true },
+                onFocusChange = { editTextProductNameFocusState = true },
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = {
                     productNameState = it.text
@@ -158,7 +158,7 @@ private fun QuantityEditText() {
                 value = TextFieldValue(productQuantityState, editTextProductQuantitySelectionState),
                 modifier = Modifier.fillMaxWidth(),
                 keyboardType = KeyboardType.Number,
-                onFocus = { editTextProductQuantityFocusState = true },
+                onFocusChange = { editTextProductQuantityFocusState = true },
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = {
                     productQuantityState = it.text

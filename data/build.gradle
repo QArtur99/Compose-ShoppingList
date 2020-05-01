@@ -46,6 +46,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -76,6 +79,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "org.mockito:mockito-inline:$versions.mockito"
     testImplementation "junit:junit:$versions.junit"
+    testImplementation "org.robolectric:annotations:$versions.robolectric"
+    testImplementation "org.robolectric:robolectric:$versions.robolectric"
 
     //Android Test
     implementation("androidx.fragment:fragment-testing:$versions.fragment_testing", {
@@ -99,7 +104,6 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
     androidTestImplementation "org.mockito:mockito-android:$versions.mockito_android"
     androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
-    androidTestImplementation "org.robolectric:annotations:$versions.robolectric"
 }
 
 // we need all open to run tests which  a we enable only for debug builds.
