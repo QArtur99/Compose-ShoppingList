@@ -105,7 +105,7 @@ private fun EditText() {
                 value = TextFieldValue(shoppingListNameState, editTextSelectionState),
                 modifier = Modifier.fillMaxWidth(),
                 imeAction = ImeAction.Done,
-                onFocus = { editTextFocusState = true },
+                onFocusChange = { editTextFocusState = true },
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = {
                     shoppingListNameState = it.text

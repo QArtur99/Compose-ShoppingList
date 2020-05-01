@@ -18,6 +18,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
+        String debugDir = 'src/debug/java'
+        main.java.srcDirs += debugDir
+        test.java.srcDirs += sharedTestDir
+        androidTest.java.srcDirs += sharedTestDir
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -35,7 +42,8 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "$versions.compose_compiler_extension_version"
+        kotlinCompilerVersion "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
+        kotlinCompilerExtensionVersion "$versions.compose_version"
     }
     testOptions {
         unitTests.returnDefaultValues = true
@@ -89,6 +97,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "org.mockito:mockito-inline:$versions.mockito"
     testImplementation "junit:junit:$versions.junit"
+    testImplementation "org.robolectric:annotations:$versions.robolectric"
+    testImplementation "org.robolectric:robolectric:$versions.robolectric"
 
     //Android Test
     implementation("androidx.fragment:fragment-testing:$versions.fragment_testing", {
@@ -112,5 +122,4 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
     androidTestImplementation "org.mockito:mockito-android:$versions.mockito_android"
     androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
-    androidTestImplementation "org.robolectric:annotations:$versions.robolectric"
 }
