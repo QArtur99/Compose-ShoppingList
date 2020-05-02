@@ -1,5 +1,6 @@
 package com.artf.shoppinglistcompose.ui.data
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artf.shoppinglistcompose.ui.data.state.ScreenState
 import java.util.ArrayDeque
@@ -13,7 +14,7 @@ class ScreenBackStackImpl : ScreenBackStack {
         pushBackStack(ScreenState.CurrentShoppingList)
     }
 
-    fun getCurrentScreen(): MutableLiveData<ScreenState> {
+    override fun getCurrentScreen(): LiveData<ScreenState> {
         return currentScreenState
     }
 
@@ -32,6 +33,7 @@ class ScreenBackStackImpl : ScreenBackStack {
 }
 
 interface ScreenBackStack {
+    fun getCurrentScreen(): LiveData<ScreenState>
     fun popBackStack(): ScreenState?
     fun pushBackStack(screenState: ScreenState)
 }

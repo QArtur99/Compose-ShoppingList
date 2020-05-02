@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModel()
-    private val backStack: ScreenBackStackImpl by inject()
+    private val backStack: ScreenBackStack by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

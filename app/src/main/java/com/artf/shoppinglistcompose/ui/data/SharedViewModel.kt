@@ -28,8 +28,7 @@ class SharedViewModel constructor(
     private val shoppingListRepository: ShoppingListRepository
 ) : ViewModel(), ScreenBackStack by backStack {
 
-    private val _currentScreen = backStack.getCurrentScreen()
-    private val currentScreenState: LiveData<ScreenState> = _currentScreen
+    private val currentScreenState = backStack.getCurrentScreen()
 
     private val _updateShoppingListLoading = MutableLiveData<Boolean>()
     private val updateShoppingListLoading: LiveData<Boolean> = _updateShoppingListLoading
