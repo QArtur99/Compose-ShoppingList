@@ -32,8 +32,9 @@ import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import androidx.ui.unit.px
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.util.avoidLagging
 import com.artf.shoppinglistcompose.util.dpToPx
 
 @Composable
@@ -51,7 +52,9 @@ fun AppDrawer(
             isSelected = currentScreenState == ScreenState.CurrentShoppingList,
             action = {
                 closeDrawer()
-                sharedViewModel.pushBackStack(ScreenState.CurrentShoppingList)
+                avoidLagging {
+                    sharedViewModel.pushBackStack(ScreenState.CurrentShoppingList)
+                }
             }
         )
         DrawerButton(
@@ -60,7 +63,9 @@ fun AppDrawer(
             isSelected = currentScreenState == ScreenState.ArchivedShoppingList,
             action = {
                 closeDrawer()
-                sharedViewModel.pushBackStack(ScreenState.ArchivedShoppingList)
+                avoidLagging {
+                    sharedViewModel.pushBackStack(ScreenState.ArchivedShoppingList)
+                }
             }
         )
     }

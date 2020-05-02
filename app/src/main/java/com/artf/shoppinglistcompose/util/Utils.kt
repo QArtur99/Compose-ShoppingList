@@ -1,6 +1,7 @@
 package com.artf.shoppinglistcompose.util
 
 import android.content.res.Resources
+import android.os.Handler
 import androidx.compose.Composable
 import androidx.compose.onCommit
 import androidx.compose.remember
@@ -32,3 +33,9 @@ fun Long.getDateFormat(): String {
 
 fun Int.dpToPx(): Int = ((this * Resources.getSystem().displayMetrics.density).toInt())
 fun Int.pxToDp(): Int = ((this / Resources.getSystem().displayMetrics.density).toInt())
+
+fun avoidLagging(callback: () -> Unit) {
+    Handler().postDelayed({
+        callback()
+    }, 200)
+}
