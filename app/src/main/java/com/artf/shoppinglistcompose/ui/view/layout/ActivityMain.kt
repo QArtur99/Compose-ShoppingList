@@ -1,6 +1,5 @@
 package com.artf.shoppinglistcompose.ui.view.layout
 
-import android.util.Log
 import androidx.compose.Composable
 import androidx.compose.Providers
 import androidx.ui.material.MaterialTheme
@@ -24,7 +23,6 @@ fun ShoppingListApp() {
     ) {
         Surface(color = MaterialTheme.colors.background) {
             AppContent()
-            Log.e("ShoppingListApp", "ShoppingListApp: ")
         }
     }
 }
