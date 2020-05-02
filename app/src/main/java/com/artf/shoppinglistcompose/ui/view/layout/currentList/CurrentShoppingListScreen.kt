@@ -3,6 +3,7 @@ package com.artf.shoppinglistcompose.ui.view.layout.currentList
 import androidx.compose.Composable
 import androidx.compose.remember
 import androidx.ui.core.Modifier
+import androidx.ui.core.tag
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.ContentGravity
 import androidx.ui.foundation.Icon
@@ -113,6 +114,7 @@ private fun ErrorScreen() {
 @Composable
 private fun Fab() {
     FloatingActionButton(
+        modifier = Modifier.tag("Fab"),
         onClick = { showDialogState = true },
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
