@@ -14,8 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val vmModule = module {
+val uiDataModule = module {
     viewModel { SharedViewModel(get(), get()) }
+    single { createBackStack() }
 }
 
 val dataModule = module {
@@ -23,10 +24,6 @@ val dataModule = module {
     single { createRepository(get(), get()) }
     single { createDatabase(get()) }
     single { createIoDispatcher() }
-}
-
-val uiDataModule = module {
-    single { createBackStack() }
 }
 
 fun createBackStack() = ScreenBackStackImpl()
