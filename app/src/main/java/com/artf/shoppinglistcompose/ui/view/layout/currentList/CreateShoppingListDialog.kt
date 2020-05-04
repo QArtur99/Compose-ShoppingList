@@ -89,6 +89,7 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
                         if (shoppingListNameState.isEmpty().not()) {
                             sharedViewModel.createShoppingList(shoppingListNameState)
                             showDialogState = false
+                            shoppingListNameState = ""
                         }
                     },
                     text = {
