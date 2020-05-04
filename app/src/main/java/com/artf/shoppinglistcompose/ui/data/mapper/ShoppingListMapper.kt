@@ -1,6 +1,6 @@
 package com.artf.shoppinglistcompose.ui.data.mapper
 
-import com.artf.data.database.model.ShoppingList
+import com.artf.shoppinglistcompose.data.database.model.ShoppingList
 import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
 
 fun List<ShoppingList>.asUiModel(): List<ShoppingListUi> {

@@ -22,7 +22,7 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
-import com.artf.data.status.ResultStatus
+import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient

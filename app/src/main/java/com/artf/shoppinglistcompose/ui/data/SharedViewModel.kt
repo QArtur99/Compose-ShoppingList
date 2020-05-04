@@ -7,10 +7,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.artf.data.database.model.Product
-import com.artf.data.database.model.ShoppingList
-import com.artf.data.repository.ShoppingListRepository
-import com.artf.data.status.ResultStatus
+import com.artf.shoppinglistcompose.data.database.model.Product
+import com.artf.shoppinglistcompose.data.database.model.ShoppingList
+import com.artf.shoppinglistcompose.data.repository.ShoppingListRepository
+import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.testing.OpenForTesting
 import com.artf.shoppinglistcompose.ui.data.mapper.asDomainModel
 import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
@@ -110,10 +110,10 @@ class SharedViewModel constructor(
         _createProductLoading.value = true
 
         val product = Product(
-            productName = name,
-            productQuantity = quantity,
-            shoppingListId = shoppingListId
-        )
+                productName = name,
+                productQuantity = quantity,
+                shoppingListId = shoppingListId
+            )
         viewModelScope.launch {
             shoppingListRepository.insertProduct(product)
             _createProductLoading.value = false

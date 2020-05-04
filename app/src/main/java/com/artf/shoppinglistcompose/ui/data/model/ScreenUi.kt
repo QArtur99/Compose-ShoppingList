@@ -1,6 +1,6 @@
 package com.artf.shoppinglistcompose.ui.data.model
 
-import com.artf.data.status.ResultStatus
+import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.ui.data.state.ScreenState
 
 data class MutableScreenUi(
