@@ -61,7 +61,6 @@ android {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":data")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.support"
@@ -96,7 +95,7 @@ dependencies {
 
     //Room
     implementation "androidx.room:room-runtime:$versions.room"
-//    kapt "androidx.room:room-compiler:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room"
 
     //Test
     testImplementation "androidx.arch.core:core-testing:$versions.arch_core"

@@ -1,12 +1,12 @@
 package com.artf.shoppinglistcompose.di
 
 import android.content.Context
-import com.artf.data.database.ShoppingListDatabase
-import com.artf.data.database.ShoppingListDatabaseDao
-import com.artf.data.database.ShoppingListSource
-import com.artf.data.database.ShoppingListSourceImpl
-import com.artf.data.repository.ShoppingListRepository
-import com.artf.data.repository.ShoppingListRepositoryImpl
+import com.artf.shoppinglistcompose.data.database.ShoppingListDatabase
+import com.artf.shoppinglistcompose.data.database.ShoppingListDatabaseDao
+import com.artf.shoppinglistcompose.data.database.ShoppingListSource
+import com.artf.shoppinglistcompose.data.database.ShoppingListSourceImpl
+import com.artf.shoppinglistcompose.data.repository.ShoppingListRepository
+import com.artf.shoppinglistcompose.data.repository.ShoppingListRepositoryImpl
 import com.artf.shoppinglistcompose.ui.data.ScreenBackStackImpl
 import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import kotlinx.coroutines.CoroutineDispatcher

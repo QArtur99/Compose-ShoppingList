@@ -1,3 +1,2 @@
-include ':data'
 include ':app'
 rootProject.name = "ShopingListCompose"
