@@ -7,8 +7,8 @@ import com.artf.shoppinglistcompose.data.database.ShoppingListSource
 import com.artf.shoppinglistcompose.data.database.ShoppingListSourceImpl
 import com.artf.shoppinglistcompose.data.repository.ShoppingListRepository
 import com.artf.shoppinglistcompose.data.repository.ShoppingListRepositoryImpl
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStackImpl
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.ScreenBackStackImpl
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel

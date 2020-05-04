@@ -1,4 +1,4 @@
-package com.artf.shoppinglistcompose.ui.data.model
+package com.artf.shoppinglistcompose.ui.model.model
 
 data class ShoppingListUi(
     val id: Long,

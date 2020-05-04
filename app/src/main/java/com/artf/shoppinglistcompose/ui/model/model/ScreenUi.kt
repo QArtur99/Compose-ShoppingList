@@ -1,7 +1,7 @@
-package com.artf.shoppinglistcompose.ui.data.model
+package com.artf.shoppinglistcompose.ui.model.model
 
 import com.artf.shoppinglistcompose.data.status.ResultStatus
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 
 data class MutableScreenUi(
     override var currentScreenState: ScreenState,

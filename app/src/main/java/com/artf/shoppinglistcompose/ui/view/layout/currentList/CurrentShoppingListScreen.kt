@@ -27,11 +27,11 @@ import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shoppinglistcompose.ui.view.value.TestTag.fab
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer

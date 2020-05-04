@@ -1,6 +1,6 @@
-package com.artf.shoppinglistcompose.ui.data.state
+package com.artf.shoppinglistcompose.ui.model.state
 
-import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
+import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 
 sealed class ScreenState {
     object CurrentShoppingList : ScreenState()

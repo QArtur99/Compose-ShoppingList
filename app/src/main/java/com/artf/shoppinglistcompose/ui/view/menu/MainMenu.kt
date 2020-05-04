@@ -23,10 +23,10 @@ import androidx.ui.unit.IntPx
 import androidx.ui.unit.IntPxPosition
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.screenStateState
-import com.artf.shoppinglistcompose.ui.data.model.compose.MainMenuModel.showMenu
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.model.compose.MainMenuModel.screenStateState
+import com.artf.shoppinglistcompose.ui.model.model.compose.MainMenuModel.showMenu
 import com.artf.shoppinglistcompose.util.dpToPx
 import com.artf.shoppinglistcompose.util.pxToDp
 

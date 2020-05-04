@@ -1,4 +1,4 @@
-package com.artf.shoppinglistcompose.ui.data
+package com.artf.shoppinglistcompose.ui.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -12,14 +12,14 @@ import com.artf.shoppinglistcompose.data.database.model.ShoppingList
 import com.artf.shoppinglistcompose.data.repository.ShoppingListRepository
 import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.testing.OpenForTesting
-import com.artf.shoppinglistcompose.ui.data.mapper.asDomainModel
-import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
-import com.artf.shoppinglistcompose.ui.data.model.MutableScreenUi
-import com.artf.shoppinglistcompose.ui.data.model.ProductUi
-import com.artf.shoppinglistcompose.ui.data.model.ScreenUi
-import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
-import com.artf.shoppinglistcompose.ui.data.state.ShoppingListState
+import com.artf.shoppinglistcompose.ui.model.mapper.asDomainModel
+import com.artf.shoppinglistcompose.ui.model.mapper.asUiModel
+import com.artf.shoppinglistcompose.ui.model.model.MutableScreenUi
+import com.artf.shoppinglistcompose.ui.model.model.ProductUi
+import com.artf.shoppinglistcompose.ui.model.model.ScreenUi
+import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.state.ShoppingListState
 import com.artf.shoppinglistcompose.util.ext.addSourceInvoke
 import com.artf.shoppinglistcompose.util.ext.mapNonNull
 import kotlinx.coroutines.launch

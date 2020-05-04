@@ -30,12 +30,12 @@ import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.editTextFocusState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.editTextSelectionState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.shoppingListNameState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.editTextFocusState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.editTextSelectionState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.shoppingListNameState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogAdd
 import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogCancel
 

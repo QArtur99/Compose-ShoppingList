@@ -25,10 +25,10 @@ import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.model.ProductUi
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.model.ProductUi
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 
 @Composable

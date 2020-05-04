@@ -1,4 +1,4 @@
-package com.artf.shoppinglistcompose.ui.data.model.compose
+package com.artf.shoppinglistcompose.ui.model.model.compose
 
 import androidx.compose.Model
 import androidx.ui.material.DrawerState
