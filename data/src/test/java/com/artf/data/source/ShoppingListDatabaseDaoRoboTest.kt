@@ -50,42 +50,55 @@ class ShoppingListDatabaseDaoRoboTest {
 
     @Test
     fun insertShoppingList() = runBlockingTest {
-        val shoppingList = ShoppingList().apply { isArchived = false }
+        val testName = "TestName"
+        val shoppingList = ShoppingList(
+            shoppingListName = testName,
+            isArchived = false
+        )
         dao.insertShoppingList(shoppingList)
         val loaded = getValue(dao.getCurrentShoppingList())[0]
-        assertThat(loaded, `is`(shoppingList))
+        assertThat(loaded.shoppingListName, `is`(shoppingList.shoppingListName))
     }
 
     @Test
     fun updateShoppingList() = runBlockingTest {
-        val shoppingList = ShoppingList().apply { isArchived = false }
+        val testName = "TestName"
+        var shoppingList = ShoppingList().apply { isArchived = false }
         dao.insertShoppingList(shoppingList)
-        dao.updateShoppingList(shoppingList.apply { shoppingListName = "AAA" })
+        shoppingList = getValue(dao.getCurrentShoppingList())[0]
+        dao.updateShoppingList(shoppingList.apply { shoppingListName = testName })
         val loaded = getValue(dao.getCurrentShoppingList())[0]
-        assertThat(loaded, `is`(shoppingList))
+        assertThat(loaded.shoppingListName, `is`(shoppingList.shoppingListName))
     }
 
     @Test
     fun insertProduct() = runBlockingTest {
-        val product = Product().apply { shoppingListId = 1L }
+        val testName = "TestName"
+        val product = Product(
+            productName = testName,
+            shoppingListId = 1L
+        )
         dao.insertProduct(product)
         val loaded = getValue(dao.getProductList(product.shoppingListId))[0]
-        assertThat(loaded, `is`(product))
+        assertThat(loaded.productName, `is`(product.productName))
     }
 
     @Test
     fun updateProduct() = runBlockingTest {
-        val product = Product().apply { shoppingListId = 1L }
+        val testProductName = "TestName"
+        var product = Product().apply { shoppingListId = 1L }
         dao.insertProduct(product)
-        dao.updateProduct(product.apply { productName = "AAA" })
+        product = getValue(dao.getProductList(product.shoppingListId))[0]
+        dao.updateProduct(product.apply { productName = testProductName })
         val loaded = getValue(dao.getProductList(product.shoppingListId))[0]
-        assertThat(loaded, `is`(product))
+        assertThat(loaded.productName, `is`(product.productName))
     }
 
     @Test
     fun deleteProduct() = runBlockingTest {
-        val product = Product().apply { shoppingListId = 1L }
+        var product = Product().apply { shoppingListId = 1L }
         dao.insertProduct(product)
+        product = getValue(dao.getProductList(product.shoppingListId))[0]
         dao.deleteProduct(product)
         val loaded = getValue(dao.getProductList(product.shoppingListId))
         assertThat(loaded.isEmpty(), `is`(true))
