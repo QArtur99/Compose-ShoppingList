@@ -13,10 +13,14 @@ import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
 import androidx.ui.material.IconButton
+import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
 import androidx.ui.res.vectorResource
+import androidx.ui.text.TextStyle
+import androidx.ui.text.font.FontStyle
 import androidx.ui.unit.dp
+import androidx.ui.unit.sp
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
@@ -47,7 +51,12 @@ fun ShoppingListArchivedItem(
                                 Modifier.fillMaxSize()
                             )
                         }
-                        Text(text = post.shoppingListTimestamp.getDateFormat())
+                        Text(
+                            text = post.shoppingListTimestamp.getDateFormat(),
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                            modifier = Modifier.padding(end = 8.dp),
+                            style = TextStyle(fontSize = 16.sp, fontStyle = FontStyle.Italic)
+                        )
                     }
                 }
             }
