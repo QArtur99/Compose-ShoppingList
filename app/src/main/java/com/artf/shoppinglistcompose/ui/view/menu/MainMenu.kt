@@ -38,6 +38,7 @@ fun MainMenu() {
         Icon(vectorResource(R.drawable.ic_baseline_more_vert_black_24))
     }
     if (showMenu.not()) {
+        if (screenStateState == null) return
         screenStateState?.let { sharedViewModel.pushBackStack(it) }
         screenStateState = null
         return
