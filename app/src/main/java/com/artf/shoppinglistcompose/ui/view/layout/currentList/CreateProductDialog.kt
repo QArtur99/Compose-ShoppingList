@@ -34,6 +34,7 @@ import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameFocusState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameSelectionState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductQuantityFocusState
@@ -41,7 +42,6 @@ import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListMod
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.productNameState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.productQuantityState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.showDialogState
-import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 
 @Composable
 fun CreateProductDialog() {
@@ -103,6 +103,8 @@ private fun DialogButtons(
                             shoppingList.id
                         )
                         showDialogState = false
+                        productNameState = ""
+                        productQuantityState = ""
                     }
                 },
                 text = {
