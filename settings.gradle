@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "ShopingListCompose"
+rootProject.name = "ShoppingListCompose"
