@@ -1,9 +1,9 @@
-package com.artf.shoppinglistcompose.ui.data
+package com.artf.shoppinglistcompose.ui.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artf.shoppinglistcompose.testing.OpenForTesting
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 import java.util.ArrayDeque
 
 @OpenForTesting

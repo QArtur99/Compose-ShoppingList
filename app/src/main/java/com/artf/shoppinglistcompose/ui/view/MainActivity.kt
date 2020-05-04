@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Providers
 import androidx.ui.core.setContent
-import com.artf.shoppinglistcompose.ui.data.*
+import com.artf.shoppinglistcompose.ui.model.*
 import com.artf.shoppinglistcompose.ui.view.layout.ShoppingListApp
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

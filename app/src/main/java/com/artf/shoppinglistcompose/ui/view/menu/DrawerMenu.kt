@@ -32,8 +32,8 @@ import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import androidx.ui.unit.px
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 import com.artf.shoppinglistcompose.util.avoidLagging
 import com.artf.shoppinglistcompose.util.dpToPx
 

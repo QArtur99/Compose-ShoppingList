@@ -4,9 +4,9 @@ import androidx.compose.Composable
 import androidx.compose.Providers
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Surface
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
-import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.view.layout.archivedList.ArchivedProductListScreen
 import com.artf.shoppinglistcompose.ui.view.layout.archivedList.ShoppingListArchivedScreen
 import com.artf.shoppinglistcompose.ui.view.layout.currentList.ProductListCurrentScreen

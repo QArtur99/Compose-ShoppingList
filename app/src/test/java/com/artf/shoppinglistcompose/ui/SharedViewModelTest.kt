@@ -10,10 +10,10 @@ import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.util.LiveDataTestUtil.getValue
 import com.artf.shoppinglistcompose.util.LiveDataTestUtil.isNotInvoke
 import com.artf.shoppinglistcompose.util.any
-import com.artf.shoppinglistcompose.ui.data.ScreenBackStackImpl
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.mapper.asUiModel
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.ScreenBackStackImpl
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.mapper.asUiModel
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -14,9 +14,9 @@ import androidx.ui.material.ripple.ripple
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
-import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 import com.artf.shoppinglistcompose.util.getDateFormat
 
 @Composable

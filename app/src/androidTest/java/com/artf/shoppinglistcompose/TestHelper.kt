@@ -8,8 +8,8 @@ import androidx.ui.test.ComposeTestRule
 import androidx.ui.test.SemanticsNodeInteraction
 import androidx.ui.test.findAll
 import androidx.ui.test.hasSubstring
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.view.layout.ShoppingListApp
 
 fun ComposeTestRule.launchApp(mainThreadCallBack: @Composable() () -> SharedViewModel) {

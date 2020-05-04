@@ -14,10 +14,10 @@ import androidx.ui.test.runOnIdleCompose
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.findAllBySubstring
 import com.artf.shoppinglistcompose.launchApp
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.model.MutableScreenUi
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.shoppingListNameState
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.model.MutableScreenUi
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.shoppingListNameState
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogAdd
 import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogCancel
 import com.artf.shoppinglistcompose.ui.view.value.TestTag.fab

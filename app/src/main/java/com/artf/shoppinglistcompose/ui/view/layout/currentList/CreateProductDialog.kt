@@ -31,17 +31,17 @@ import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.ScreenStateAmbient
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
-import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductNameFocusState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductNameSelectionState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductQuantityFocusState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.editTextProductQuantitySelectionState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.productNameState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.productQuantityState
-import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentProductListModel.showDialogState
-import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
+import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameFocusState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameSelectionState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductQuantityFocusState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductQuantitySelectionState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.productNameState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.productQuantityState
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 
 @Composable
 fun CreateProductDialog() {

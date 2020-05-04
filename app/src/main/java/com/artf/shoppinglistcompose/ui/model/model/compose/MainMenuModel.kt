@@ -1,7 +1,7 @@
-package com.artf.shoppinglistcompose.ui.data.model.compose
+package com.artf.shoppinglistcompose.ui.model.model.compose
 
 import androidx.compose.Model
-import com.artf.shoppinglistcompose.ui.data.state.ScreenState
+import com.artf.shoppinglistcompose.ui.model.state.ScreenState
 
 @Model
 object MainMenuModel {

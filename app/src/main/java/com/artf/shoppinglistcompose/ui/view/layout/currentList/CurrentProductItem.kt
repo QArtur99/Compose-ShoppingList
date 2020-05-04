@@ -14,8 +14,8 @@ import androidx.ui.material.ripple.ripple
 import androidx.ui.res.vectorResource
 import androidx.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.data.model.ProductUi
-import com.artf.shoppinglistcompose.ui.data.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.model.ProductUi
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 
 @Composable
 fun ProductCurrentItem(

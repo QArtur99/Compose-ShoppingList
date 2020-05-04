@@ -10,7 +10,7 @@ import androidx.ui.layout.*
 import androidx.ui.material.Surface
 import androidx.ui.material.ripple.ripple
 import androidx.ui.unit.dp
-import com.artf.shoppinglistcompose.ui.data.model.ProductUi
+import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 
 @Composable
 fun ArchivedProductItem(product: ProductUi) {
