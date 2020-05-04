@@ -2,7 +2,7 @@
 Compose-ShoppingList is a sample project that presents a way of implementing UI components with Jetpack Compose.
 
 ### Screenshots
-![image](https://user-images.githubusercontent.com/25232443/63807967-22693480-c91f-11e9-8f22-af367171ae00.png)
+![image](https://user-images.githubusercontent.com/25232443/81019836-c9677e00-8e67-11ea-9bab-ed997b149e21.jpg)
 
 ### Used Tech
 * [Kotlin](https://kotlinlang.org/)
@@ -21,6 +21,7 @@ Compose-ShoppingList is a sample project that presents a way of implementing UI 
 
 ### Features
 * Handle back press
+* Handle configuration changes
 * ActionBar menu
 * Drawer menu
 * Add shopping lists/products
@@ -39,7 +40,7 @@ Awesome! If you would like to contribute with a new feature or submit a bugfix, 
 * Run 'app' `SHIFT+F10`.
 
 #### Android Studio IDE setup 
-ChatApp uses [ktlint](https://ktlint.github.io/) to enforce Kotlin coding styles.
+Compose-ShoppingList uses [ktlint](https://ktlint.github.io/) to enforce Kotlin coding styles.
 Here's how to configure it for use with Android Studio (instructions adapted from the ktlint [README](https://github.com/shyiko/ktlint/blob/master/README.md)):
 * Close Android Studio if it's open
 * Download ktlint using these [installation instructions](https://github.com/shyiko/ktlint/blob/master/README.md#installation)    
@@ -48,3 +49,4 @@ Here's how to configure it for use with Android Studio (instructions adapted fro
 * Start Android Studio
 
 ### License
+Compose-ShoppingList is released under the MIT license. See [LICENSE](./LICENSE) for details.
