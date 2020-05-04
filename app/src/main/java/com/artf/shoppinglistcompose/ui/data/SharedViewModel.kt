@@ -99,7 +99,7 @@ class SharedViewModel constructor(
 
     fun updateShoppingList(shoppingList: ShoppingListUi, isArchived: Boolean) {
         _updateShoppingListLoading.value = true
-        val shoppingListDomain = shoppingList.asDomainModel().apply { this.isArchived = isArchived }
+        val shoppingListDomain = shoppingList.copy(isArchived = isArchived).asDomainModel()
         viewModelScope.launch {
             shoppingListRepository.updateShoppingList(shoppingListDomain)
             _updateShoppingListLoading.value = false
@@ -110,10 +110,10 @@ class SharedViewModel constructor(
         _createProductLoading.value = true
 
         val product = Product(
-                productName = name,
-                productQuantity = quantity,
-                shoppingListId = shoppingListId
-            )
+            productName = name,
+            productQuantity = quantity,
+            shoppingListId = shoppingListId
+        )
         viewModelScope.launch {
             shoppingListRepository.insertProduct(product)
             _createProductLoading.value = false
