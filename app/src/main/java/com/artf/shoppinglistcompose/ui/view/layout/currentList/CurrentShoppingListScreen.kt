@@ -3,7 +3,7 @@ package com.artf.shoppinglistcompose.ui.view.layout.currentList
 import androidx.compose.Composable
 import androidx.compose.remember
 import androidx.ui.core.Modifier
-import androidx.ui.core.tag
+import androidx.ui.core.TestTag
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.ContentGravity
 import androidx.ui.foundation.Icon
@@ -33,6 +33,7 @@ import com.artf.shoppinglistcompose.ui.data.model.ShoppingListUi
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.showDialogState
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
+import com.artf.shoppinglistcompose.ui.view.value.TestTag.fab
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
 
@@ -113,12 +114,13 @@ private fun ErrorScreen() {
 
 @Composable
 private fun Fab() {
-    FloatingActionButton(
-        modifier = Modifier.tag("Fab"),
-        onClick = { showDialogState = true },
-        backgroundColor = MaterialTheme.colors.secondary,
-        contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
-        elevation = 6.dp,
-        icon = { Icon(vectorResource(R.drawable.ic_add_black_24dp)) }
-    )
+    TestTag(tag = fab) {
+        FloatingActionButton(
+            onClick = { showDialogState = true },
+            backgroundColor = MaterialTheme.colors.secondary,
+            contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
+            elevation = 6.dp,
+            icon = { Icon(vectorResource(R.drawable.ic_add_black_24dp)) }
+        )
+    }
 }

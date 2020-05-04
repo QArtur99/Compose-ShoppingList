@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "shopping_list")
 data class ShoppingList(
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 1L,
+    var id: Long = 0L,
 
     @ColumnInfo(name = "shoppingListName")
     var shoppingListName: String = "",

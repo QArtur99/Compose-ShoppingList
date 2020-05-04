@@ -3,8 +3,16 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-allopen'
+    id 'kotlin-noarg'
 }
 
+allOpen {
+    annotation 'com.artf.shoppinglistcompose.testing.OpenClass'
+}
+noArg {
+    annotation 'com.artf.shoppinglistcompose.testing.NoArgClass'
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -45,6 +53,7 @@ android {
         kotlinCompilerExtensionVersion "$versions.compose_version"
     }
     testOptions {
+        animationsDisabled = true
         unitTests.returnDefaultValues = true
     }
 }
@@ -120,8 +129,16 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$versions.atsl_runner"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
-    androidTestImplementation "org.mockito:mockito-android:$versions.mockito_android"
+    androidTestImplementation "org.mockito:mockito-android:$versions.mockito"
     androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
+    androidTestImplementation "org.robolectric:annotations:$versions.robolectric"
     androidTestImplementation "androidx.ui:ui-platform:$versions.compose_version"
     androidTestImplementation "androidx.ui:ui-test:$versions.compose_version"
+}
+
+// we need all open to run tests which we enable only for debug builds.
+project.tasks.whenTaskAdded {
+    if (it.name == "testReleaseUnitTest") {
+        it.enabled = false
+    }
 }

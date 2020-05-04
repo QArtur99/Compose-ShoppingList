@@ -11,7 +11,7 @@ allOpen {
     annotation 'com.artf.data.testing.OpenClass'
 }
 noArg {
-    annotation 'com.artf.data.testing.NoArgClass"'
+    annotation 'com.artf.data.testing.NoArgClass'
 }
 android {
     compileSdkVersion 29
@@ -106,7 +106,7 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
 }
 
-// we need all open to run tests which  a we enable only for debug builds.
+// we need all open to run tests which we enable only for debug builds.
 project.tasks.whenTaskAdded {
     if (it.name == "testReleaseUnitTest") {
         it.enabled = false
