@@ -11,5 +11,5 @@ fun <T, S> MediatorLiveData<T>.addSourceInvoke(
     addSource(source) {
         callback(it)
         value = value
-    }.apply { }
+    }
 }
