@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @OpenForTesting
 class SharedViewModel constructor(
-    private val backStack: ScreenBackStackImpl,
+    private val backStack: ScreenBackStack,
     private val shoppingListRepository: ShoppingListRepository
 ) : ViewModel(), ScreenBackStack by backStack {
 

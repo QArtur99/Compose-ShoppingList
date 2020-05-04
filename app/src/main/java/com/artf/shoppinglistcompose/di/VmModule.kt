@@ -7,6 +7,7 @@ import com.artf.shoppinglistcompose.data.database.ShoppingListSource
 import com.artf.shoppinglistcompose.data.database.ShoppingListSourceImpl
 import com.artf.shoppinglistcompose.data.repository.ShoppingListRepository
 import com.artf.shoppinglistcompose.data.repository.ShoppingListRepositoryImpl
+import com.artf.shoppinglistcompose.ui.model.ScreenBackStack
 import com.artf.shoppinglistcompose.ui.model.ScreenBackStackImpl
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,7 +27,7 @@ val dataModule = module {
     single { createIoDispatcher() }
 }
 
-fun createBackStack() = ScreenBackStackImpl()
+fun createBackStack(): ScreenBackStack = ScreenBackStackImpl()
 
 fun createIoDispatcher() = Dispatchers.Default
 
