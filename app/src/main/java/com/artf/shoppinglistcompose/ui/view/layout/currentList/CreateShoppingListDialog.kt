@@ -2,6 +2,7 @@ package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.Composable
 import androidx.ui.core.Modifier
+import androidx.ui.core.TestTag
 import androidx.ui.foundation.Border
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.ContentGravity
@@ -35,6 +36,8 @@ import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListMod
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.editTextSelectionState
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.shoppingListNameState
 import com.artf.shoppinglistcompose.ui.data.model.compose.CurrentShoppingListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogAdd
+import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogCancel
 
 @Composable
 fun CreateShoppingListDialog() {
@@ -63,36 +66,40 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
             horizontalArrangement = Arrangement.End
         ) {
             Spacer(Modifier.weight(0.3f, true))
-            Button(
-                modifier = Modifier.weight(0.35f, true),
-                onClick = { showDialogState = false },
-                border = Border(2.dp, MaterialTheme.colors.primary),
-                backgroundColor = MaterialTheme.colors.surface,
-                text = {
-                    Text(
-                        text = "Cancel",
-                        maxLines = 1,
-                        style = TextStyle(fontSize = 14.sp)
-                    )
-                }
-            )
-            Spacer(Modifier.preferredWidth(8.dp))
-            Button(
-                modifier = Modifier.weight(0.35f, true),
-                onClick = {
-                    if (shoppingListNameState.isEmpty().not()) {
-                        sharedViewModel.createShoppingList(shoppingListNameState)
-                        showDialogState = false
+            TestTag(tag = dialogCancel) {
+                Button(
+                    modifier = Modifier.weight(0.35f, true),
+                    onClick = { showDialogState = false },
+                    border = Border(2.dp, MaterialTheme.colors.primary),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    text = {
+                        Text(
+                            text = stringResource(R.string.dialog_button_cancel),
+                            maxLines = 1,
+                            style = TextStyle(fontSize = 14.sp)
+                        )
                     }
-                },
-                text = {
-                    Text(
-                        text = "Add",
-                        maxLines = 1,
-                        style = TextStyle(fontSize = 14.sp)
-                    )
-                }
-            )
+                )
+            }
+            Spacer(Modifier.preferredWidth(8.dp))
+            TestTag(tag = dialogAdd) {
+                Button(
+                    modifier = Modifier.weight(0.35f, true),
+                    onClick = {
+                        if (shoppingListNameState.isEmpty().not()) {
+                            sharedViewModel.createShoppingList(shoppingListNameState)
+                            showDialogState = false
+                        }
+                    },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.dialog_button_add),
+                            maxLines = 1,
+                            style = TextStyle(fontSize = 14.sp)
+                        )
+                    }
+                )
+            }
         }
     }
 }

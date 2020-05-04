@@ -2,9 +2,11 @@ package com.artf.shoppinglistcompose.ui.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.artf.shoppinglistcompose.testing.OpenForTesting
 import com.artf.shoppinglistcompose.ui.data.state.ScreenState
 import java.util.ArrayDeque
 
+@OpenForTesting
 class ScreenBackStackImpl : ScreenBackStack {
 
     private val currentScreenState = MutableLiveData<ScreenState>()

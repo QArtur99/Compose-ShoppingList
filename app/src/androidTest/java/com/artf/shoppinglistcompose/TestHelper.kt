@@ -12,7 +12,7 @@ import com.artf.shoppinglistcompose.ui.data.SharedViewModel
 import com.artf.shoppinglistcompose.ui.data.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.view.layout.ShoppingListApp
 
-fun ComposeTestRule.launchApp(mainThreadCallBack: () -> SharedViewModel) {
+fun ComposeTestRule.launchApp(mainThreadCallBack: @Composable() () -> SharedViewModel) {
     setContent {
         val sharedViewModel = mainThreadCallBack()
         Providers(
