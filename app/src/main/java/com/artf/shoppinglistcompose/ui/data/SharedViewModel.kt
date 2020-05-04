@@ -130,7 +130,7 @@ class SharedViewModel constructor(
 
     private val _screenState = MediatorLiveData<MutableScreenUi>().apply {
         value = MutableScreenUi(ScreenState.CurrentShoppingList)
-        addSource(currentScreenState) { value?.currentScreenState = it!! }
+        addSource(currentScreenState) { value?.currentScreenState = it ?: return@addSource }
         addSource(selectedShoppingList) { value?.selectedShoppingList = it }
         addSourceInvoke(createShoppingListLoading) { value?.createShoppingListLoading = it }
         addSourceInvoke(updateShoppingListLoading) { value?.updateShoppingListLoading = it }
