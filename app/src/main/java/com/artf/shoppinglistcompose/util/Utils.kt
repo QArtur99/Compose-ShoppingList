@@ -34,8 +34,12 @@ fun Long.getDateFormat(): String {
 fun Int.dpToPx(): Int = ((this * Resources.getSystem().displayMetrics.density).toInt())
 fun Int.pxToDp(): Int = ((this / Resources.getSystem().displayMetrics.density).toInt())
 
+/**
+ * [avoidLagging] on old phones closing drawerContent is lagging to prevent it
+ * let drawer execute closing animation then execute action onDrawer close
+ */
 fun avoidLagging(callback: () -> Unit) {
     Handler().postDelayed({
         callback()
-    }, 200)
+    }, 400)
 }
