@@ -102,8 +102,9 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$versions.atsl_runner"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
-    androidTestImplementation "org.mockito:mockito-android:$versions.mockito_android"
+    androidTestImplementation "org.mockito:mockito-android:$versions.mockito"
     androidTestImplementation "org.mockito:mockito-core:$versions.mockito"
+    androidTestImplementation "org.robolectric:annotations:$versions.robolectric"
 }
 
 // we need all open to run tests which we enable only for debug builds.
