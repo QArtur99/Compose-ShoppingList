@@ -86,8 +86,7 @@ class SharedViewModelTest {
 
     @Test
     fun selectedShoppingListNoInvoke() {
-        val shoppingList = ShoppingList()
-            .asUiModel()
+        val shoppingList = ShoppingList().asUiModel()
         isNotInvoke(sharedViewModel.screenState) {
             sharedViewModel.pushBackStack(ScreenState.CurrentProductList(shoppingList))
         }
@@ -99,14 +98,13 @@ class SharedViewModelTest {
             .apply { value = ResultStatus.Success(emptyList()) }
         `when`(shoppingListRepository.getCurrentShoppingList()).thenReturn(shoppingLists)
         sharedViewModel.pushBackStack(ScreenState.CurrentShoppingList)
-        assertThat(getValue(sharedViewModel.screenState).shoppingListsUi).isInstanceOf(
-            ResultStatus.Success::class.java)
+        assertThat(getValue(sharedViewModel.screenState).shoppingListsUi)
+            .isInstanceOf(ResultStatus.Success::class.java)
     }
 
     @Test
     fun screenStateCurrentShoppingListNoInvoke() {
-        val shoppingList = ShoppingList()
-            .asUiModel()
+        val shoppingList = ShoppingList().asUiModel()
         val shoppingLists = MutableLiveData<ResultStatus<List<ShoppingList>>>()
             .apply { value = ResultStatus.Success(emptyList()) }
         `when`(shoppingListRepository.getCurrentShoppingList()).thenReturn(shoppingLists)
@@ -120,14 +118,13 @@ class SharedViewModelTest {
             .apply { value = ResultStatus.Success(emptyList()) }
         `when`(shoppingListRepository.getArchivedShoppingList()).thenReturn(shoppingLists)
         sharedViewModel.pushBackStack(ScreenState.ArchivedShoppingList)
-        assertThat(getValue(sharedViewModel.screenState).shoppingListsUi).isInstanceOf(
-            ResultStatus.Success::class.java)
+        assertThat(getValue(sharedViewModel.screenState).shoppingListsUi)
+            .isInstanceOf(ResultStatus.Success::class.java)
     }
 
     @Test
     fun screenStateArchivedShoppingListNoInvoke() {
-        val shoppingList = ShoppingList()
-            .asUiModel()
+        val shoppingList = ShoppingList().asUiModel()
         val shoppingLists = MutableLiveData<ResultStatus<List<ShoppingList>>>()
             .apply { value = ResultStatus.Success(emptyList()) }
         `when`(shoppingListRepository.getArchivedShoppingList()).thenReturn(shoppingLists)
@@ -137,14 +134,13 @@ class SharedViewModelTest {
 
     @Test
     fun screenStateProductList() {
-        val shoppingList = ShoppingList()
-            .asUiModel()
+        val shoppingList = ShoppingList().asUiModel()
         val shoppingLists = MutableLiveData<ResultStatus<List<Product>>>()
             .apply { value = ResultStatus.Success(emptyList()) }
         `when`(shoppingListRepository.getProductList(anyLong())).thenReturn(shoppingLists)
         sharedViewModel.pushBackStack(ScreenState.CurrentProductList(shoppingList))
-        assertThat(getValue(sharedViewModel.screenState).productListUi).isInstanceOf(
-            ResultStatus.Success::class.java)
+        assertThat(getValue(sharedViewModel.screenState).productListUi)
+            .isInstanceOf(ResultStatus.Success::class.java)
     }
 
     @Test
@@ -168,8 +164,7 @@ class SharedViewModelTest {
 
     @Test
     fun updateShoppingList() = runBlocking {
-        val shoppingList = ShoppingList()
-            .asUiModel()
+        val shoppingList = ShoppingList().asUiModel()
         sharedViewModel.updateShoppingList(shoppingList, true)
         assertThat(getValue(sharedViewModel.screenState).updateShoppingListLoading).isTrue()
         unlockThread()
@@ -179,8 +174,7 @@ class SharedViewModelTest {
 
     @Test
     fun createProduct() = runBlocking {
-        val product =
-            Product()
+        val product = Product()
         sharedViewModel.createProduct(
             product.productName,
             product.productQuantity,
@@ -194,8 +188,7 @@ class SharedViewModelTest {
 
     @Test
     fun deleteProduct() = runBlocking {
-        val product = Product()
-            .asUiModel()
+        val product = Product().asUiModel()
         sharedViewModel.deleteProduct(product)
         assertThat(getValue(sharedViewModel.screenState).deleteProductLoading).isTrue()
         unlockThread()
