@@ -1,4 +1,4 @@
-# Compose-ShoppingList
+# Compose-ShoppingList, an amazing shopping app with interactive desing and UI.
 Compose-ShoppingList is a sample project that presents a way of implementing UI components with Jetpack Compose.
 
 ### Screenshots
