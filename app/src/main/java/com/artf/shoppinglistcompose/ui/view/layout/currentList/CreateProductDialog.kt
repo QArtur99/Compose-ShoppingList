@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.preferredWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
-import androidx.compose.material.Divider
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -61,6 +61,7 @@ fun CreateProductDialog() {
         },
         text = {
             Column {
+                Spacer(Modifier.preferredHeight(16.dp))
                 ProductEditText()
                 Spacer(Modifier.preferredHeight(16.dp))
                 QuantityEditText()
@@ -84,6 +85,7 @@ private fun DialogButtons(
                 modifier = Modifier.weight(0.35f, true),
                 onClick = { showDialogState.value = false },
                 border = BorderStroke(2.dp, MaterialTheme.colors.primary),
+                colors = ButtonDefaults.outlinedButtonColors(),
                 content = {
                     Text(
                         text = stringResource(R.string.dialog_button_cancel),
@@ -139,21 +141,15 @@ private fun ProductEditText() {
                     productNameState.value = it.text
                     editTextProductNameSelectionState.value =
                         TextRange(it.text.length, it.text.length)
+                },
+                backgroundColor = MaterialTheme.colors.surface,
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.dialog_enter_product_name),
+                        color = Color.Gray,
+                        style = TextStyle(fontSize = 18.sp)
+                    )
                 }
-            )
-            if (productNameState.value.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.dialog_enter_product_name),
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 18.sp)
-                )
-            }
-        }
-        if (editTextProductNameFocusState.value) {
-            Divider(
-                thickness = 2.dp,
-                modifier = Modifier.padding(start = 0.dp, end = 0.dp),
-                color = MaterialTheme.colors.secondary
             )
         }
     }
@@ -164,7 +160,10 @@ private fun QuantityEditText() {
     Column {
         Box {
             TextField(
-                value = TextFieldValue(productQuantityState.value, editTextProductQuantitySelectionState.value),
+                value = TextFieldValue(
+                    productQuantityState.value,
+                    editTextProductQuantitySelectionState.value
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusChanged { editTextProductQuantityFocusState.value = true },
@@ -174,21 +173,15 @@ private fun QuantityEditText() {
                     productQuantityState.value = it.text
                     editTextProductQuantitySelectionState.value =
                         TextRange(it.text.length, it.text.length)
+                },
+                backgroundColor = MaterialTheme.colors.surface,
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.dialog_enter_quantity),
+                        color = Color.Gray,
+                        style = TextStyle(fontSize = 18.sp)
+                    )
                 }
-            )
-            if (productQuantityState.value.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.dialog_enter_quantity),
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 18.sp)
-                )
-            }
-        }
-        if (editTextProductQuantityFocusState.value) {
-            Divider(
-                thickness = 2.dp,
-                modifier = Modifier.padding(start = 0.dp, end = 0.dp),
-                color = MaterialTheme.colors.secondary
             )
         }
     }

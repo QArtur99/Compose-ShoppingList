@@ -7,21 +7,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.sp
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.editTextFocusState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.editTextSelectionState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.shoppingListNameState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.view.value.util.TestTag
 
 @Composable
 fun CreateShoppingListDialog() {
@@ -65,7 +65,7 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
         ) {
             Spacer(Modifier.weight(0.3f, true))
             Button(
-                modifier = Modifier.weight(0.35f, true),
+                modifier = Modifier.weight(0.35f, true).testTag(TestTag.dialogCancel),
                 onClick = { showDialogState.value = false },
                 border = BorderStroke(2.dp, MaterialTheme.colors.primary),
                 colors = ButtonDefaults.outlinedButtonColors(),
@@ -79,7 +79,7 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
             )
             Spacer(Modifier.preferredWidth(8.dp))
             Button(
-                modifier = Modifier.weight(0.35f, true),
+                modifier = Modifier.weight(0.35f, true).testTag(TestTag.dialogAdd),
                 onClick = {
                     if (shoppingListNameState.value.isEmpty().not()) {
                         sharedViewModel.createShoppingList(shoppingListNameState.value)
@@ -102,19 +102,18 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
 @Composable
 private fun EditText() {
     Column {
-
+        Spacer(Modifier.height(16.dp))
         Box {
             TextField(
                 value = TextFieldValue(shoppingListNameState.value, editTextSelectionState.value),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onFocusChanged { editTextFocusState.value = true },
+                modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 textStyle = TextStyle(fontSize = 18.sp),
-                onValueChange = { it ->
+                onValueChange = {
                     shoppingListNameState.value = it.text
                     editTextSelectionState.value = TextRange(it.text.length, it.text.length)
                 },
+                backgroundColor = MaterialTheme.colors.surface,
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.dialog_enter_shopping_list_name),
@@ -122,13 +121,6 @@ private fun EditText() {
                         style = TextStyle(fontSize = 18.sp)
                     )
                 }
-            )
-        }
-        if (editTextFocusState.value) {
-            Divider(
-                thickness = 2.dp,
-                modifier = Modifier.padding(start = 0.dp, end = 0.dp),
-                color = MaterialTheme.colors.secondary
             )
         }
     }

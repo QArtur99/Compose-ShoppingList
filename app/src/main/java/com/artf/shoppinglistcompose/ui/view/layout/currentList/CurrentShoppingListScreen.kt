@@ -20,6 +20,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -32,6 +33,7 @@ import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListMo
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
+import com.artf.shoppinglistcompose.ui.view.value.util.TestTag
 
 @Composable
 fun ShoppingListCurrentScreen(
@@ -105,6 +107,7 @@ private fun ErrorScreen() {
 @Composable
 private fun Fab() {
     FloatingActionButton(
+        modifier = Modifier.testTag(TestTag.fab),
         onClick = { showDialogState.value = true },
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
