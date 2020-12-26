@@ -27,11 +27,3 @@ fun avoidLagging(callback: () -> Unit) {
     }, 400)
 }
 
-fun getCharSize(): Int = when (Resources.getSystem().displayMetrics.density) {
-    in 3.5f..Float.MAX_VALUE -> 2
-    in 2.5f..3.5f -> 3
-    in 2f..2.5f -> 4
-    in 1.5f..2f -> 5
-    in 1f..1.5f -> 6
-    else -> 7
-}

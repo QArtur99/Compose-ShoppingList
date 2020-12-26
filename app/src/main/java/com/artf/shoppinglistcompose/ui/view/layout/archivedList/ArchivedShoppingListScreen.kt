@@ -14,7 +14,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.rememberDrawerState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,29 +26,22 @@ import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
 import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
-import com.artf.shoppinglistcompose.ui.model.model.compose.ArchivedShoppingListModel
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
 
 @Composable
 fun ShoppingListArchivedScreen(
-    scaffoldState: ScaffoldState = rememberScaffoldState(
-        drawerState = rememberDrawerState(ArchivedShoppingListModel.drawerState.value)
-    )
+    scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val screenState = AmbientScreenState.current.currentScreenState
-    ArchivedShoppingListModel.drawerState.value = scaffoldState.drawerState.value
 
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
             AppDrawer(
                 currentScreenState = screenState,
-                closeDrawer = {
-                    scaffoldState.drawerState.close()
-                    ArchivedShoppingListModel.drawerState.value = scaffoldState.drawerState.value
-                }
+                closeDrawer = { scaffoldState.drawerState.close() }
             )
         },
         topBar = {

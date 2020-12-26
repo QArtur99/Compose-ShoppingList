@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.preferredWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -46,7 +47,7 @@ fun CreateShoppingListDialog() {
         onDismissRequest = { showDialogState.value = false },
         title = {
             Text(
-                modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
+                modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp),
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
                 text = stringResource(id = R.string.dialog_title_add_new_shopping_list)
             )
@@ -67,6 +68,7 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
                 modifier = Modifier.weight(0.35f, true),
                 onClick = { showDialogState.value = false },
                 border = BorderStroke(2.dp, MaterialTheme.colors.primary),
+                colors = ButtonDefaults.outlinedButtonColors(),
                 content = {
                     Text(
                         text = stringResource(R.string.dialog_button_cancel),
@@ -100,6 +102,7 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
 @Composable
 private fun EditText() {
     Column {
+
         Box {
             TextField(
                 value = TextFieldValue(shoppingListNameState.value, editTextSelectionState.value),
@@ -111,15 +114,15 @@ private fun EditText() {
                 onValueChange = { it ->
                     shoppingListNameState.value = it.text
                     editTextSelectionState.value = TextRange(it.text.length, it.text.length)
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.dialog_enter_shopping_list_name),
+                        color = Color.Gray,
+                        style = TextStyle(fontSize = 18.sp)
+                    )
                 }
             )
-            if (shoppingListNameState.value.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.dialog_enter_shopping_list_name),
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 18.sp)
-                )
-            }
         }
         if (editTextFocusState.value) {
             Divider(

@@ -12,15 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.compose.MainMenuModel.screenStateState
 import com.artf.shoppinglistcompose.ui.model.model.compose.MainMenuModel.showMenu
 import com.artf.shoppinglistcompose.ui.model.state.ScreenState
-import com.artf.shoppinglistcompose.util.dpToPx
-import com.artf.shoppinglistcompose.util.getCharSize
 
 @Composable
 fun MainMenu() {
@@ -52,7 +49,7 @@ fun MainMenu() {
             )
         }
         DropdownMenuItem(onClick = {
-            screenStateState.value = ScreenState.CurrentShoppingList
+            screenStateState.value = ScreenState.ArchivedShoppingList
             showMenu.value = false
         }) {
             Text(
@@ -63,15 +60,4 @@ fun MainMenu() {
             )
         }
     }
-}
-
-@Composable
-fun getMenuSize(): Dp {
-    val spaceForChar = getCharSize()
-    var result = 0
-    mutableListOf<String>().apply {
-        add(stringResource(id = R.string.menu_current_shopping_list))
-        add(stringResource(id = R.string.menu_archived_shopping_list))
-    }.map { if (it.length > result) result = it.length }
-    return ((result * spaceForChar).dpToPx() + 24 + 12).dp
 }
