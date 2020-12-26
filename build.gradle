@@ -26,7 +26,7 @@ buildscript {
     versions.ktlint = "0.33.0"
     versions.lifecycle = '2.2.0'
     versions.material = '1.2.1'
-    versions.mockito = "2.25.0"
+    versions.mockito = "3.6.28"
     versions.mockwebserver = "3.8.1"
     versions.multidex = "2.0.1"
     versions.navigation = '2.3.0-alpha05'
