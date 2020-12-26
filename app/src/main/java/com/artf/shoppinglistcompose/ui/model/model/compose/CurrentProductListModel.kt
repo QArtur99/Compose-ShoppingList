@@ -1,15 +1,14 @@
 package com.artf.shoppinglistcompose.ui.model.model.compose
 
-import androidx.compose.Model
-import androidx.ui.text.TextRange
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.TextRange
 
-@Model
 object CurrentProductListModel {
-    var showDialogState = false
-    var productNameState = ""
-    var editTextProductNameFocusState = true
-    var editTextProductNameSelectionState = TextRange(0, 0)
-    var productQuantityState = ""
-    var editTextProductQuantityFocusState = true
-    var editTextProductQuantitySelectionState = TextRange(0, 0)
+    var showDialogState = mutableStateOf(false)
+    var productNameState = mutableStateOf("")
+    var editTextProductNameFocusState = mutableStateOf(true)
+    var editTextProductNameSelectionState = mutableStateOf(TextRange(0, 0))
+    var productQuantityState = mutableStateOf("")
+    var editTextProductQuantityFocusState = mutableStateOf(true)
+    var editTextProductQuantitySelectionState = mutableStateOf(TextRange(0, 0))
 }

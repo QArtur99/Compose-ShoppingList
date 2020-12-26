@@ -1,39 +1,41 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
-import androidx.compose.Composable
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Border
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.ContentGravity
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.TextField
-import androidx.ui.foundation.TextFieldValue
-import androidx.ui.graphics.Color
-import androidx.ui.input.ImeAction
-import androidx.ui.input.KeyboardType
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.Row
-import androidx.ui.layout.RowScope.weight
-import androidx.ui.layout.Spacer
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.padding
-import androidx.ui.layout.preferredHeight
-import androidx.ui.layout.preferredWidth
-import androidx.ui.material.AlertDialog
-import androidx.ui.material.Button
-import androidx.ui.material.Divider
-import androidx.ui.material.MaterialTheme
-import androidx.ui.res.stringResource
-import androidx.ui.text.TextRange
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
-import androidx.ui.unit.dp
-import androidx.ui.unit.sp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.preferredHeight
+import androidx.compose.foundation.layout.preferredWidth
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
+import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
+import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
-import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
 import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameFocusState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameSelectionState
@@ -45,11 +47,11 @@ import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListMod
 
 @Composable
 fun CreateProductDialog() {
-    val sharedViewModelAmbient = SharedViewModelAmbient.current
-    val selectedShoppingList = ScreenStateAmbient.current.selectedShoppingList ?: return
-    if (showDialogState.not()) return
+    val sharedViewModelAmbient = AmbientSharedViewModel.current
+    val selectedShoppingList = AmbientScreenState.current.selectedShoppingList ?: return
+    if (showDialogState.value.not()) return
     AlertDialog(
-        onCloseRequest = { showDialogState = false },
+        onDismissRequest = { showDialogState.value = false },
         title = {
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
@@ -59,6 +61,7 @@ fun CreateProductDialog() {
         },
         text = {
             Column {
+                Spacer(Modifier.preferredHeight(16.dp))
                 ProductEditText()
                 Spacer(Modifier.preferredHeight(16.dp))
                 QuantityEditText()
@@ -73,18 +76,17 @@ private fun DialogButtons(
     sharedViewModel: SharedViewModel,
     shoppingList: ShoppingListUi
 ) {
-    Box(Modifier.fillMaxWidth().padding(all = 8.dp), gravity = ContentGravity.CenterEnd) {
+    Box(Modifier.fillMaxWidth().padding(all = 8.dp), contentAlignment = Alignment.CenterEnd) {
         Row(
-            modifier = Modifier.weight(1f, true),
             horizontalArrangement = Arrangement.End
         ) {
             Spacer(Modifier.weight(0.3f, true))
-            Button(
+            TextButton(
                 modifier = Modifier.weight(0.35f, true),
-                onClick = { showDialogState = false },
-                border = Border(2.dp, MaterialTheme.colors.primary),
-                backgroundColor = MaterialTheme.colors.surface,
-                text = {
+                onClick = { showDialogState.value = false },
+                border = BorderStroke(2.dp, MaterialTheme.colors.primary),
+                colors = ButtonDefaults.outlinedButtonColors(),
+                content = {
                     Text(
                         text = stringResource(R.string.dialog_button_cancel),
                         maxLines = 1,
@@ -96,18 +98,20 @@ private fun DialogButtons(
             Button(
                 modifier = Modifier.weight(0.35f, true),
                 onClick = {
-                    if (productNameState.isEmpty().not() && productQuantityState.isEmpty().not()) {
+                    if (productNameState.value.isEmpty()
+                            .not() && productQuantityState.value.isEmpty().not()
+                    ) {
                         sharedViewModel.createProduct(
-                            productNameState,
-                            productQuantityState.toLong(),
+                            productNameState.value,
+                            productQuantityState.value.toLong(),
                             shoppingList.id
                         )
-                        showDialogState = false
-                        productNameState = ""
-                        productQuantityState = ""
+                        showDialogState.value = false
+                        productNameState.value = ""
+                        productQuantityState.value = ""
                     }
                 },
-                text = {
+                content = {
                     Text(
                         text = stringResource(R.string.dialog_button_add),
                         maxLines = 1,
@@ -124,29 +128,28 @@ private fun ProductEditText() {
     Column {
         Box {
             TextField(
-                value = TextFieldValue(productNameState, editTextProductNameSelectionState),
-                modifier = Modifier.fillMaxWidth(),
-                imeAction = ImeAction.Done,
-                onFocusChange = { editTextProductNameFocusState = true },
+                value = TextFieldValue(
+                    productNameState.value,
+                    editTextProductNameSelectionState.value
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { editTextProductNameFocusState.value = true },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 textStyle = TextStyle(fontSize = 18.sp),
-                onValueChange = {
-                    productNameState = it.text
-                    editTextProductNameSelectionState = TextRange(it.text.length, it.text.length)
+                onValueChange = { it ->
+                    productNameState.value = it.text
+                    editTextProductNameSelectionState.value =
+                        TextRange(it.text.length, it.text.length)
+                },
+                backgroundColor = MaterialTheme.colors.surface,
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.dialog_enter_product_name),
+                        color = Color.Gray,
+                        style = TextStyle(fontSize = 18.sp)
+                    )
                 }
-            )
-            if (productNameState.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.dialog_enter_product_name),
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 18.sp)
-                )
-            }
-        }
-        if (editTextProductNameFocusState) {
-            Divider(
-                thickness = 2.dp,
-                modifier = Modifier.padding(start = 0.dp, end = 0.dp),
-                color = MaterialTheme.colors.secondary
             )
         }
     }
@@ -157,30 +160,28 @@ private fun QuantityEditText() {
     Column {
         Box {
             TextField(
-                value = TextFieldValue(productQuantityState, editTextProductQuantitySelectionState),
-                modifier = Modifier.fillMaxWidth(),
-                keyboardType = KeyboardType.Number,
-                onFocusChange = { editTextProductQuantityFocusState = true },
+                value = TextFieldValue(
+                    productQuantityState.value,
+                    editTextProductQuantitySelectionState.value
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { editTextProductQuantityFocusState.value = true },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 textStyle = TextStyle(fontSize = 18.sp),
-                onValueChange = {
-                    productQuantityState = it.text
-                    editTextProductQuantitySelectionState =
+                onValueChange = { it ->
+                    productQuantityState.value = it.text
+                    editTextProductQuantitySelectionState.value =
                         TextRange(it.text.length, it.text.length)
+                },
+                backgroundColor = MaterialTheme.colors.surface,
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.dialog_enter_quantity),
+                        color = Color.Gray,
+                        style = TextStyle(fontSize = 18.sp)
+                    )
                 }
-            )
-            if (productQuantityState.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.dialog_enter_quantity),
-                    color = Color.Gray,
-                    style = TextStyle(fontSize = 18.sp)
-                )
-            }
-        }
-        if (editTextProductQuantityFocusState) {
-            Divider(
-                thickness = 2.dp,
-                modifier = Modifier.padding(start = 0.dp, end = 0.dp),
-                color = MaterialTheme.colors.secondary
             )
         }
     }

@@ -2,9 +2,11 @@ package com.artf.shoppinglistcompose.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Providers
-import androidx.ui.core.setContent
-import com.artf.shoppinglistcompose.ui.model.*
+import androidx.compose.runtime.Providers
+import androidx.compose.ui.platform.setContent
+import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
+import com.artf.shoppinglistcompose.ui.model.ScreenBackStack
+import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import com.artf.shoppinglistcompose.ui.view.layout.ShoppingListApp
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Providers(
-                SharedViewModelAmbient provides sharedViewModel
+                AmbientSharedViewModel provides sharedViewModel
             ) { ShoppingListApp() }
         }
     }
