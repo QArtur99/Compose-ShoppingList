@@ -1,9 +1,8 @@
 package com.artf.shoppinglistcompose.ui.model.model.compose
 
-import androidx.compose.Model
-import androidx.ui.material.DrawerState
+import androidx.compose.material.DrawerValue
+import androidx.compose.runtime.mutableStateOf
 
-@Model
 object ArchivedShoppingListModel {
-    var drawerState = DrawerState.Closed
+    var drawerState = mutableStateOf(DrawerValue.Closed)
 }

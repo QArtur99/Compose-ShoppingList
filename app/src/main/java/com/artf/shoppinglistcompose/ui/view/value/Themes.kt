@@ -1,10 +1,10 @@
 package com.artf.shoppinglistcompose.ui.view.value
 
-import androidx.ui.graphics.Color
-import androidx.ui.material.darkColorPalette
-import androidx.ui.material.lightColorPalette
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.ui.graphics.Color
 
-val lightThemeColors = lightColorPalette(
+val lightThemeColors = lightColors(
     primary = Color(0xFF6200EE),
     primaryVariant = Color(0xFF3700B3),
     onPrimary = Color(0xFFFFFFFF),
@@ -19,7 +19,7 @@ val lightThemeColors = lightColorPalette(
     onError = Color.White
 )
 
-val darkThemeColors = darkColorPalette(
+val darkThemeColors = darkColors(
     primary = Color(0xFFEA6D7E),
     primaryVariant = Color(0xFFDD0D3E),
     onPrimary = Color.Black,

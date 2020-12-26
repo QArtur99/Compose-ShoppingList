@@ -1,31 +1,31 @@
 package com.artf.shoppinglistcompose.ui.view.layout.archivedList
 
-import androidx.compose.Composable
-import androidx.compose.remember
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.ContentGravity
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.layout.Column
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.padding
-import androidx.ui.material.CircularProgressIndicator
-import androidx.ui.material.DrawerState
-import androidx.ui.material.IconButton
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Scaffold
-import androidx.ui.material.ScaffoldState
-import androidx.ui.material.TopAppBar
-import androidx.ui.res.stringResource
-import androidx.ui.res.vectorResource
-import androidx.ui.unit.dp
-import com.artf.shoppinglistcompose.data.status.ResultStatus
+import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.rememberDrawerState
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.model.ScreenStateAmbient
-import com.artf.shoppinglistcompose.ui.model.SharedViewModelAmbient
+import com.artf.shoppinglistcompose.data.status.ResultStatus
+import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
+import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.ArchivedShoppingListModel
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
@@ -34,12 +34,12 @@ import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
 
 @Composable
 fun ShoppingListArchivedScreen(
-    scaffoldState: ScaffoldState = remember {
-        ScaffoldState().apply { drawerState = ArchivedShoppingListModel.drawerState }
-    }
+    scaffoldState: ScaffoldState = rememberScaffoldState(
+        drawerState = rememberDrawerState(ArchivedShoppingListModel.drawerState.value)
+    )
 ) {
-    val screenState = ScreenStateAmbient.current.currentScreenState
-    ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
+    val screenState = AmbientScreenState.current.currentScreenState
+    ArchivedShoppingListModel.drawerState.value = scaffoldState.drawerState.value
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -47,17 +47,17 @@ fun ShoppingListArchivedScreen(
             AppDrawer(
                 currentScreenState = screenState,
                 closeDrawer = {
-                    scaffoldState.drawerState = DrawerState.Closed
-                    ArchivedShoppingListModel.drawerState = scaffoldState.drawerState
+                    scaffoldState.drawerState.close()
+                    ArchivedShoppingListModel.drawerState.value = scaffoldState.drawerState.value
                 }
             )
         },
-        topAppBar = {
+        topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
                 backgroundColor = MaterialTheme.colors.primary,
                 navigationIcon = {
-                    IconButton(onClick = { scaffoldState.drawerState = DrawerState.Opened }) {
+                    IconButton(onClick = { scaffoldState.drawerState.open() }) {
                         Icon(vectorResource(R.drawable.ic_baseline_menu_24))
                     }
                 },
@@ -70,7 +70,7 @@ fun ShoppingListArchivedScreen(
 
 @Composable
 private fun ScreenBody() {
-    when (val result = ScreenStateAmbient.current.shoppingListsUi) {
+    when (val result = AmbientScreenState.current.shoppingListsUi) {
         is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
@@ -81,14 +81,14 @@ private fun ScreenBody() {
 private fun LoadingScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
-        gravity = ContentGravity.Center
+        contentAlignment = Alignment.Center
     ) { CircularProgressIndicator() }
 }
 
 @Composable
 private fun SuccessScreen(productList: List<ShoppingListUi>) {
-    val sharedViewModel = SharedViewModelAmbient.current
-    VerticalScroller {
+    val sharedViewModel = AmbientSharedViewModel.current
+    ScrollableColumn {
         Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
             productList.forEach { post -> ShoppingListArchivedItem(sharedViewModel, post) }
         }
