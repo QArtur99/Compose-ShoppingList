@@ -1,14 +1,10 @@
 package com.artf.shoppinglistcompose.ui.model.model.compose
 
-import androidx.compose.Model
-import androidx.ui.material.DrawerState
-import androidx.ui.text.TextRange
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.TextRange
 
-@Model
 object CurrentShoppingListModel {
-    var drawerState = DrawerState.Closed
-    var showDialogState = false
-    var shoppingListNameState = ""
-    var editTextFocusState = true
-    var editTextSelectionState = TextRange(0, 0)
+    var showDialogState = mutableStateOf(false)
+    var shoppingListNameState = mutableStateOf("")
+    var editTextSelectionState = mutableStateOf(TextRange(0, 0))
 }

@@ -1,21 +1,24 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Clickable
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.layout.*
-import androidx.ui.material.IconButton
-import androidx.ui.material.Surface
-import androidx.ui.material.ripple.ripple
-import androidx.ui.res.vectorResource
-import androidx.ui.unit.dp
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
+import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 
 @Composable
 fun ProductCurrentItem(
@@ -23,29 +26,30 @@ fun ProductCurrentItem(
     product: ProductUi
 ) {
     Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
-        Surface(shape = RoundedCornerShape(8.dp), elevation = 4.dp) {
-            Clickable(
-                modifier = Modifier.ripple(),
-                onClick = { }
-            ) {
-                Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
-                    Text(
-                        text = product.productName,
-                        modifier = Modifier.weight(1f).gravity(Alignment.CenterVertically)
-                            .padding(8.dp)
-                    )
-                    Text(
-                        text = product.productQuantity.toString(),
-                        modifier = Modifier.weight(1f).gravity(Alignment.CenterVertically)
-                            .padding(8.dp)
-                    )
-                    Column(horizontalGravity = Alignment.End) {
-                        IconButton(onClick = { sharedViewModel.deleteProduct(product) }) {
-                            Icon(
-                                vectorResource(R.drawable.ic_delete_forever_black_24dp),
-                                Modifier.fillMaxSize()
-                            )
-                        }
+        Surface(
+            shape = RoundedCornerShape(8.dp),
+            elevation = 4.dp,
+            modifier = Modifier.clickable(onClick = {
+
+            })
+        ) {
+            Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
+                Text(
+                    text = product.productName,
+                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
+                        .padding(8.dp)
+                )
+                Text(
+                    text = product.productQuantity.toString(),
+                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
+                        .padding(8.dp)
+                )
+                Column(horizontalAlignment = Alignment.End) {
+                    IconButton(onClick = { sharedViewModel.deleteProduct(product) }) {
+                        Icon(
+                            vectorResource(R.drawable.ic_delete_forever_black_24dp),
+                            Modifier.fillMaxSize()
+                        )
                     }
                 }
             }

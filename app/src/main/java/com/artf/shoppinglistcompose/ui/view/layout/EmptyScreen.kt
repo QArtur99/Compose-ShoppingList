@@ -1,24 +1,22 @@
 package com.artf.shoppinglistcompose.ui.view.layout
 
 import androidx.annotation.StringRes
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.ContentGravity
-import androidx.ui.foundation.Text
-import androidx.ui.layout.Column
-import androidx.ui.layout.RowScope.gravity
-import androidx.ui.layout.fillMaxHeight
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.padding
-import androidx.ui.material.MaterialTheme
-import androidx.ui.res.stringResource
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.style.TextAlign
-import androidx.ui.unit.TextUnit
-import androidx.ui.unit.dp
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun EmptyScreen(
@@ -27,12 +25,12 @@ fun EmptyScreen(
 ) {
     Box(
         modifier = Modifier.fillMaxHeight(),
-        gravity = ContentGravity.Center
+        contentAlignment = Alignment.Center
     ) {
         Column(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 64.dp)) {
             Text(
                 text = stringResource(titleId),
-                modifier = Modifier.fillMaxWidth().gravity(Alignment.CenterVertically),
+                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
                 color = MaterialTheme.colors.onSurface,
                 style = TextStyle(
                     fontSize = TextUnit.Sp(18),
@@ -42,7 +40,7 @@ fun EmptyScreen(
             )
             Text(
                 text = stringResource(subTitleId),
-                modifier = Modifier.fillMaxWidth().gravity(Alignment.CenterVertically),
+                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
                 color = MaterialTheme.colors.onSurface,
                 style = TextStyle(
                     fontSize = TextUnit.Sp(16),

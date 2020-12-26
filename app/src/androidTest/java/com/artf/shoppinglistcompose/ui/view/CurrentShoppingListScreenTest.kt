@@ -1,32 +1,27 @@
 package com.artf.shoppinglistcompose.ui.view
 
 import android.content.Context
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasSubstring
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
 import androidx.lifecycle.MutableLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.ui.test.assertIsDisplayed
-import androidx.ui.test.createComposeRule
-import androidx.ui.test.doClick
-import androidx.ui.test.findAllByTag
-import androidx.ui.test.findByTag
-import androidx.ui.test.runOnIdleCompose
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.findAllBySubstring
 import com.artf.shoppinglistcompose.launchApp
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.MutableScreenUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.shoppingListNameState
 import com.artf.shoppinglistcompose.ui.model.state.ScreenState
-import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogAdd
-import com.artf.shoppinglistcompose.ui.view.value.TestTag.dialogCancel
-import com.artf.shoppinglistcompose.ui.view.value.TestTag.fab
+import com.artf.shoppinglistcompose.ui.view.value.util.TestTag.dialogAdd
+import com.artf.shoppinglistcompose.ui.view.value.util.TestTag.dialogCancel
+import com.artf.shoppinglistcompose.ui.view.value.util.TestTag.fab
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.assertThat
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,7 +35,7 @@ import org.mockito.Mockito.verify
 class CurrentShoppingListScreenTest {
 
     @get:Rule
-    val composeTestRule = createComposeRule(disableTransitions = true)
+    val composeTestRule = createComposeRule()
 
     private lateinit var appContext: Context
     private val sharedViewModel = Mockito.mock(SharedViewModel::class.java)
@@ -56,24 +51,22 @@ class CurrentShoppingListScreenTest {
 
     @Test
     fun checkTitleOnActionBar() {
-        findAllBySubstring(appContext.getString(R.string.app_name)).first().assertIsDisplayed()
+        composeTestRule.onAllNodes(hasSubstring(appContext.getString(R.string.app_name)))[0].assertIsDisplayed()
     }
 
-    @Ignore("Ignoring because of https://issuetracker.google.com/154617105")
     @Test
     fun openAndCloseDialog() {
-        findByTag(fab).doClick()
-        findByTag(dialogCancel).doClick()
-        assertThat(findAllByTag(dialogCancel).size, `is`(0))
+        composeTestRule.onNodeWithTag(fab).performClick()
+        composeTestRule.onNodeWithTag(dialogCancel).performClick()
+        composeTestRule.onAllNodes(hasSubstring(dialogCancel))[0].assertDoesNotExist()
     }
 
-    @Ignore("Ignoring because of https://issuetracker.google.com/154617105")
     @Test
     fun addShoppingList() {
         val shoppingListName = "TestTask"
-        runOnIdleCompose { shoppingListNameState = shoppingListName }
-        findByTag(fab).doClick()
-        findByTag(dialogAdd).doClick()
+        composeTestRule.runOnIdle { shoppingListNameState.value = shoppingListName }
+        composeTestRule.onNodeWithTag(fab).performClick()
+        composeTestRule.onNodeWithTag(dialogAdd).performClick()
         verify(sharedViewModel).createShoppingList(shoppingListName)
     }
 }

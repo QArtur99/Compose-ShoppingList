@@ -1,12 +1,13 @@
 package com.artf.shoppinglistcompose.ui.model
 
-import androidx.compose.ambientOf
+
+import androidx.compose.runtime.ambientOf
 import com.artf.shoppinglistcompose.ui.model.model.ScreenUi
 
-val SharedViewModelAmbient = ambientOf<SharedViewModel> {
+val AmbientSharedViewModel = ambientOf<SharedViewModel> {
     throw IllegalStateException("SharedViewModel is not initialized")
 }
 
-val ScreenStateAmbient = ambientOf<ScreenUi> {
+val AmbientScreenState = ambientOf<ScreenUi> {
     throw IllegalStateException("SharedViewModel is not initialized")
 }
