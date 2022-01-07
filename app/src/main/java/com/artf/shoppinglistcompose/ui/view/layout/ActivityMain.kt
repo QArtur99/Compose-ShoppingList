@@ -14,15 +14,11 @@ import com.artf.shoppinglistcompose.ui.view.layout.archivedList.ArchivedProductL
 import com.artf.shoppinglistcompose.ui.view.layout.archivedList.ShoppingListArchivedScreen
 import com.artf.shoppinglistcompose.ui.view.layout.currentList.ProductListCurrentScreen
 import com.artf.shoppinglistcompose.ui.view.layout.currentList.ShoppingListCurrentScreen
-import com.artf.shoppinglistcompose.ui.view.value.lightThemeColors
-import com.artf.shoppinglistcompose.ui.view.value.themeTypography
+import com.artf.shoppinglistcompose.ui.theme.ShoppingListTheme
 
 @Composable
 fun ShoppingListApp() {
-    MaterialTheme(
-        colors = lightThemeColors,
-        typography = themeTypography
-    ) {
+    ShoppingListTheme {
         Surface(color = MaterialTheme.colors.background) {
             AppContent()
         }

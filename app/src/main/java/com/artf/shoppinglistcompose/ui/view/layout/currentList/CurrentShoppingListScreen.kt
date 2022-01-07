@@ -22,10 +22,9 @@ import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListMo
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
-import com.artf.shoppinglistcompose.ui.view.value.util.TestTag
+import com.artf.shoppinglistcompose.ui.theme.util.TestTag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.*
 
 @Composable
 fun ShoppingListCurrentScreen(

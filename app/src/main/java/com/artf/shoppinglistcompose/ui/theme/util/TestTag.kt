@@ -1,4 +1,4 @@
-package com.artf.shoppinglistcompose.ui.view.value.util
+package com.artf.shoppinglistcompose.ui.theme.util
 
 object TestTag {
     const val fab = "Fab"

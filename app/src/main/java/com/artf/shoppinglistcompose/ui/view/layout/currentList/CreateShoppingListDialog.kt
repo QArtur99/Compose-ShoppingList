@@ -23,7 +23,7 @@ import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.editTextSelectionState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.shoppingListNameState
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.showDialogState
-import com.artf.shoppinglistcompose.ui.view.value.util.TestTag
+import com.artf.shoppinglistcompose.ui.theme.util.TestTag
 
 @Composable
 fun CreateShoppingListDialog() {

@@ -1,4 +1,4 @@
-package com.artf.shoppinglistcompose.ui.view.value
+package com.artf.shoppinglistcompose.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
