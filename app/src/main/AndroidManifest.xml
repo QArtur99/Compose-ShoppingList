@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
         <activity
+            android:exported="true"
             android:name="com.artf.shoppinglistcompose.ui.view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.App.NoActionBar">

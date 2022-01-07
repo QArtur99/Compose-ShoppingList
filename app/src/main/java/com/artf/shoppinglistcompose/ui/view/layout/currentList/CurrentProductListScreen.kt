@@ -1,28 +1,18 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.rememberScaffoldState
+import android.graphics.drawable.Icon
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.room.util.TableInfo
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
@@ -30,6 +20,10 @@ import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import org.w3c.dom.Text
+import java.util.*
 
 @Composable
 fun ProductListCurrentScreen(
@@ -44,12 +38,12 @@ fun ProductListCurrentScreen(
                 backgroundColor = MaterialTheme.colors.primary,
                 navigationIcon = {
                     IconButton(onClick = { sharedViewModel.popBackStack() }) {
-                        Icon(vectorResource(R.drawable.ic_baseline_arrow_back_24))
+                        Icon(ImageVector.vectorResource(R.drawable.ic_baseline_arrow_back_24), "")
                     }
                 }
             )
         },
-        bodyContent = {
+        content = {
             ScreenBody()
             CreateProductDialog()
         },
@@ -77,10 +71,14 @@ private fun LoadingScreen() {
 @Composable
 private fun SuccessScreen(productList: List<ProductUi>) {
     val sharedViewModel = AmbientSharedViewModel.current
-    ScrollableColumn {
-        Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            productList.forEach { post -> ProductCurrentItem(sharedViewModel, post) }
-        }
+
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp, 8.dp, 8.dp, 96.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        productList.forEach { post -> ProductCurrentItem(sharedViewModel, post) }
     }
 }
 
@@ -98,6 +96,6 @@ private fun Fab() {
         onClick = { CurrentProductListModel.showDialogState.value = true },
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
-        content = { Icon(vectorResource(R.drawable.ic_add_black_24dp)) }
+        content = { Icon(ImageVector.vectorResource(R.drawable.ic_add_black_24dp), "") }
     )
 }

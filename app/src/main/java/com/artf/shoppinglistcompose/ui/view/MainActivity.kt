@@ -2,8 +2,8 @@ package com.artf.shoppinglistcompose.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Providers
-import androidx.compose.ui.platform.setContent
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.activity.compose.setContent
 import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.ScreenBackStack
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Providers(
+            CompositionLocalProvider(
                 AmbientSharedViewModel provides sharedViewModel
             ) { ShoppingListApp() }
         }

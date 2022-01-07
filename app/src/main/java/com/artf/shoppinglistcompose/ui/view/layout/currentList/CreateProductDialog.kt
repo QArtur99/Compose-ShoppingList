@@ -1,23 +1,9 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
-import androidx.compose.foundation.layout.preferredWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,9 +47,9 @@ fun CreateProductDialog() {
         },
         text = {
             Column {
-                Spacer(Modifier.preferredHeight(16.dp))
+                Spacer(Modifier.height(16.dp))
                 ProductEditText()
-                Spacer(Modifier.preferredHeight(16.dp))
+                Spacer(Modifier.height(16.dp))
                 QuantityEditText()
             }
         },
@@ -76,7 +62,10 @@ private fun DialogButtons(
     sharedViewModel: SharedViewModel,
     shoppingList: ShoppingListUi
 ) {
-    Box(Modifier.fillMaxWidth().padding(all = 8.dp), contentAlignment = Alignment.CenterEnd) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .padding(all = 8.dp), contentAlignment = Alignment.CenterEnd) {
         Row(
             horizontalArrangement = Arrangement.End
         ) {
@@ -94,7 +83,7 @@ private fun DialogButtons(
                     )
                 }
             )
-            Spacer(Modifier.preferredWidth(8.dp))
+            Spacer(Modifier.width(8.dp))
             Button(
                 modifier = Modifier.weight(0.35f, true),
                 onClick = {
@@ -142,7 +131,9 @@ private fun ProductEditText() {
                     editTextProductNameSelectionState.value =
                         TextRange(it.text.length, it.text.length)
                 },
-                backgroundColor = MaterialTheme.colors.surface,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor =  MaterialTheme.colors.surface
+                ),
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.dialog_enter_product_name),
@@ -174,7 +165,9 @@ private fun QuantityEditText() {
                     editTextProductQuantitySelectionState.value =
                         TextRange(it.text.length, it.text.length)
                 },
-                backgroundColor = MaterialTheme.colors.surface,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor =  MaterialTheme.colors.surface
+                ),
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.dialog_enter_quantity),

@@ -1,22 +1,9 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,7 +64,7 @@ private fun DialogButtons(sharedViewModel: SharedViewModel) {
                     )
                 }
             )
-            Spacer(Modifier.preferredWidth(8.dp))
+            Spacer(Modifier.width(8.dp))
             Button(
                 modifier = Modifier.weight(0.35f, true).testTag(TestTag.dialogAdd),
                 onClick = {
@@ -113,7 +100,9 @@ private fun EditText() {
                     shoppingListNameState.value = it.text
                     editTextSelectionState.value = TextRange(it.text.length, it.text.length)
                 },
-                backgroundColor = MaterialTheme.colors.surface,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor =  MaterialTheme.colors.surface
+                ),
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.dialog_enter_shopping_list_name),

@@ -1,25 +1,14 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -34,10 +23,14 @@ import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
 import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
 import com.artf.shoppinglistcompose.ui.view.value.util.TestTag
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun ShoppingListCurrentScreen(
-    scaffoldState: ScaffoldState = rememberScaffoldState()
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    scope: CoroutineScope = rememberCoroutineScope()
 ) {
     val screenState = AmbientScreenState.current.currentScreenState
 
@@ -46,7 +39,11 @@ fun ShoppingListCurrentScreen(
         drawerContent = {
             AppDrawer(
                 currentScreenState = screenState,
-                closeDrawer = { scaffoldState.drawerState.close() }
+                closeDrawer = {
+                    scope.launch {
+                        scaffoldState.drawerState.close()
+                    }
+                }
             )
         },
         topBar = {
@@ -54,14 +51,14 @@ fun ShoppingListCurrentScreen(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
                 backgroundColor = MaterialTheme.colors.primary,
                 navigationIcon = {
-                    IconButton(onClick = { scaffoldState.drawerState.open() }) {
-                        Icon(vectorResource(R.drawable.ic_baseline_menu_24))
+                    IconButton(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
+                        Icon(ImageVector.vectorResource(R.drawable.ic_baseline_menu_24), "")
                     }
                 },
                 actions = { MainMenu() }
             )
         },
-        bodyContent = {
+        content = {
             ScreenBody()
             CreateShoppingListDialog()
         },
@@ -89,10 +86,13 @@ private fun LoadingScreen() {
 @Composable
 private fun SuccessScreenShopping(productList: List<ShoppingListUi>) {
     val sharedViewModel = AmbientSharedViewModel.current
-    ScrollableColumn {
-        Column(Modifier.fillMaxWidth().padding(8.dp, 8.dp, 8.dp, 96.dp)) {
-            productList.forEach { post -> ShoppingListCurrentItem(sharedViewModel, post) }
-        }
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp, 8.dp, 8.dp, 96.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        productList.forEach { post -> ShoppingListCurrentItem(sharedViewModel, post) }
     }
 }
 
@@ -111,6 +111,6 @@ private fun Fab() {
         onClick = { showDialogState.value = true },
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
-        content = { Icon(vectorResource(R.drawable.ic_add_black_24dp)) }
+        content = { Icon(ImageVector.vectorResource(R.drawable.ic_add_black_24dp), "") }
     )
 }

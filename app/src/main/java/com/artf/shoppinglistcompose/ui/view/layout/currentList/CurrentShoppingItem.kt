@@ -1,20 +1,13 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -31,7 +24,11 @@ fun ShoppingListCurrentItem(
     sharedViewModel: SharedViewModel,
     post: ShoppingListUi
 ) {
-    Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(all = 8.dp)
+    ) {
         Surface(
             shape = RoundedCornerShape(8.dp),
             elevation = 4.dp,
@@ -43,16 +40,23 @@ fun ShoppingListCurrentItem(
                 )
             })
         ) {
-            Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = 8.dp)
+            ) {
                 Text(
                     text = post.shoppingListName,
-                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
                         .padding(8.dp)
                 )
                 Column(horizontalAlignment = Alignment.End) {
                     IconButton(onClick = { sharedViewModel.updateShoppingList(post, true) }) {
                         Icon(
-                            vectorResource(R.drawable.ic_archive_black_24dp),
+                            ImageVector.vectorResource(R.drawable.ic_archive_black_24dp),
+                            "",
                             Modifier.fillMaxSize()
                         )
                     }

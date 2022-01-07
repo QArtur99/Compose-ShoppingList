@@ -2,14 +2,10 @@ package com.artf.shoppinglistcompose.ui.view.menu
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -24,7 +20,10 @@ fun MainMenu() {
     val sharedViewModel = AmbientSharedViewModel.current
 
     IconButton(onClick = { showMenu.value = true }) {
-        Icon(vectorResource(R.drawable.ic_baseline_more_vert_black_24))
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.ic_baseline_more_vert_black_24),
+            contentDescription = "",
+        )
     }
     if (showMenu.value.not()) {
         if (screenStateState.value == ScreenState.Empty) return
@@ -33,7 +32,6 @@ fun MainMenu() {
         return
     }
     DropdownMenu(
-        toggle = { showMenu.value = true },
         expanded = showMenu.value,
         onDismissRequest = { showMenu.value = false }
     ) {
@@ -42,7 +40,9 @@ fun MainMenu() {
             showMenu.value = false
         }) {
             Text(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                 text = stringResource(id = R.string.menu_current_shopping_list),
                 color = MaterialTheme.colors.onSurface,
                 maxLines = 1
@@ -53,7 +53,9 @@ fun MainMenu() {
             showMenu.value = false
         }) {
             Text(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                 text = stringResource(id = R.string.menu_archived_shopping_list),
                 color = MaterialTheme.colors.onSurface,
                 maxLines = 1

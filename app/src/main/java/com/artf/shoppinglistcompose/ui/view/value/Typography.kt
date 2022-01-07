@@ -3,27 +3,25 @@ package com.artf.shoppinglistcompose.ui.view.value
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.font
-import androidx.compose.ui.text.font.fontFamily
 import androidx.compose.ui.unit.sp
 import com.artf.shoppinglistcompose.R
 
-val regular = font(R.font.montserrat_regular)
-val medium = font(R.font.montserrat_medium, FontWeight.W500)
-val semibold = font(R.font.montserrat_semibold, FontWeight.W600)
+val regular = Font(R.font.montserrat_regular)
+val medium = Font(R.font.montserrat_medium, FontWeight.W500)
+val semibold = Font(R.font.montserrat_semibold, FontWeight.W600)
 
-val appFontFamily = fontFamily(fonts = listOf(
+val appFontFamily = FontFamily(
     regular,
     medium,
     semibold
-))
+)
 
-val bodyFontFamily = fontFamily(
-    fonts = listOf(
-        font(R.font.domine_regular),
-        font(R.font.domine_bold, FontWeight.Bold)
-    )
+val bodyFontFamily = FontFamily(
+    Font(R.font.domine_regular),
+    Font(R.font.domine_bold, FontWeight.Bold)
 )
 
 val themeTypography = Typography(

@@ -3,7 +3,7 @@ package com.artf.shoppinglistcompose.ui.view.layout
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
@@ -36,7 +36,7 @@ private fun AppContent() {
     val screenStateValue = screenState.value
     screenStateValue ?: return
 
-    Providers(AmbientScreenState provides screenStateValue) {
+    CompositionLocalProvider(AmbientScreenState provides screenStateValue) {
         when (screenStateValue.currentScreenState) {
             is ScreenState.CurrentShoppingList -> ShoppingListCurrentScreen()
             is ScreenState.ArchivedShoppingList -> ShoppingListArchivedScreen()

@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -49,7 +50,8 @@ fun ShoppingListArchivedItem(
                 Column(horizontalAlignment = Alignment.End) {
                     IconButton(onClick = { sharedViewModel.updateShoppingList(post, false) }) {
                         Icon(
-                            vectorResource(R.drawable.ic_unarchive_black_24dp),
+                            ImageVector.vectorResource(R.drawable.ic_unarchive_black_24dp),
+                            "",
                             Modifier.fillMaxSize()
                         )
                     }
