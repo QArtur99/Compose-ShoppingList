@@ -112,7 +112,9 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$versions.robolectric"
 
     //Android Test
+    androidTestImplementation "androidx.compose.ui:ui-test:$versions.compose_version"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$versions.compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$versions.compose_version"
     implementation("androidx.fragment:fragment-testing:$versions.fragment_testing", {
         exclude group: 'androidx.test', module: 'core'
     })

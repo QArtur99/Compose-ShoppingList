@@ -1,11 +1,8 @@
 package com.artf.shoppinglistcompose.ui.view
 
 import android.content.Context
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasSubstring
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performClick
 import androidx.lifecycle.MutableLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
@@ -16,9 +13,9 @@ import com.artf.shoppinglistcompose.ui.model.SharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.MutableScreenUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListModel.shoppingListNameState
 import com.artf.shoppinglistcompose.ui.model.state.ScreenState
-import com.artf.shoppinglistcompose.ui.view.value.util.TestTag.dialogAdd
-import com.artf.shoppinglistcompose.ui.view.value.util.TestTag.dialogCancel
-import com.artf.shoppinglistcompose.ui.view.value.util.TestTag.fab
+import com.artf.shoppinglistcompose.ui.theme.util.TestTag.dialogAdd
+import com.artf.shoppinglistcompose.ui.theme.util.TestTag.dialogCancel
+import com.artf.shoppinglistcompose.ui.theme.util.TestTag.fab
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import org.junit.Before
@@ -51,14 +48,14 @@ class CurrentShoppingListScreenTest {
 
     @Test
     fun checkTitleOnActionBar() {
-        composeTestRule.onAllNodes(hasSubstring(appContext.getString(R.string.app_name)))[0].assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(appContext.getString(R.string.app_name))[0].assertIsDisplayed()
     }
 
     @Test
     fun openAndCloseDialog() {
         composeTestRule.onNodeWithTag(fab).performClick()
         composeTestRule.onNodeWithTag(dialogCancel).performClick()
-        composeTestRule.onAllNodes(hasSubstring(dialogCancel))[0].assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(dialogCancel)[0].assertDoesNotExist()
     }
 
     @Test
