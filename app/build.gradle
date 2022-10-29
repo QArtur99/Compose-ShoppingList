@@ -13,11 +13,11 @@ noArg {
     annotation 'com.artf.shoppinglistcompose.testing.NoArgClass'
 }
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.artf.shoppinglistcompose"
         minSdkVersion 24
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -43,7 +43,6 @@ android {
     kotlinOptions {
         jvmTarget = '11'
         freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
-        useIR = true
     }
     buildFeatures {
         compose true
@@ -56,12 +55,18 @@ android {
         unitTests.returnDefaultValues = true
     }
     packagingOptions {
-        pickFirst "META-INF/*"
+        jniLibs {
+            pickFirsts += ['META-INF/*']
+        }
+        resources {
+            pickFirsts += ['META-INF/*']
+        }
     }
+    namespace 'com.artf.shoppinglistcompose'
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.support"
@@ -120,7 +125,7 @@ dependencies {
     })
     implementation "androidx.fragment:fragment-ktx:$versions.fragment"
     androidTestImplementation "com.google.truth:truth:$versions.truth"
-    androidTestImplementation 'androidx.annotation:annotation:1.3.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.5.0'
     androidTestImplementation "androidx.arch.core:core-testing:$versions.arch_core"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.espresso"
@@ -150,6 +155,5 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
-        useIR = true
     }
 }

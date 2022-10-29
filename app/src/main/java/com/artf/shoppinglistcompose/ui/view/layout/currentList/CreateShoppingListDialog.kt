@@ -26,7 +26,7 @@ import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentShoppingListMo
 import com.artf.shoppinglistcompose.ui.theme.util.TestTag
 
 @Composable
-fun CreateShoppingListDialog() {
+fun CreateShoppingListDialog(padding : PaddingValues) {
     val sharedViewModel = AmbientSharedViewModel.current
     if (showDialogState.value.not()) return
 

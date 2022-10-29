@@ -17,7 +17,6 @@ import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
 import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
-import java.util.*
 
 @Composable
 fun ArchivedProductListScreen(
@@ -40,16 +39,17 @@ fun ArchivedProductListScreen(
                 }
             )
         },
-        content = { ScreenBody() }
+        content = { padding -> ScreenBody(padding) }
     )
 }
 
 @Composable
-private fun ScreenBody() {
+private fun ScreenBody(padding: PaddingValues) {
     when (val result = AmbientScreenState.current.productListUi) {
         is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
+        else -> {}
     }
 }
 

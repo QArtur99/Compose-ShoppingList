@@ -1,6 +1,5 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,7 +11,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.room.util.TableInfo
 import com.artf.shoppinglistcompose.R
 import com.artf.shoppinglistcompose.data.status.ResultStatus
 import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
@@ -20,10 +18,6 @@ import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel
 import com.artf.shoppinglistcompose.ui.view.layout.EmptyScreen
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.progressindicator.CircularProgressIndicator
-import org.w3c.dom.Text
-import java.util.*
 
 @Composable
 fun ProductListCurrentScreen(
@@ -43,20 +37,21 @@ fun ProductListCurrentScreen(
                 }
             )
         },
-        content = {
-            ScreenBody()
-            CreateProductDialog()
+        content = { padding ->
+            ScreenBody(padding)
+            CreateProductDialog(padding)
         },
         floatingActionButton = { Fab() }
     )
 }
 
 @Composable
-private fun ScreenBody() {
+private fun ScreenBody(padding : PaddingValues) {
     when (val result = AmbientScreenState.current.productListUi) {
         is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
+        else -> {}
     }
 }
 

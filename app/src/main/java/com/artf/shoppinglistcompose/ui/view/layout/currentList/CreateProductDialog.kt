@@ -32,7 +32,7 @@ import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListMod
 import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.showDialogState
 
 @Composable
-fun CreateProductDialog() {
+fun CreateProductDialog(padding : PaddingValues) {
     val sharedViewModelAmbient = AmbientSharedViewModel.current
     val selectedShoppingList = AmbientScreenState.current.selectedShoppingList ?: return
     if (showDialogState.value.not()) return

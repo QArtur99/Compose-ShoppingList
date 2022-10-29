@@ -22,7 +22,6 @@ import com.artf.shoppinglistcompose.ui.view.menu.AppDrawer
 import com.artf.shoppinglistcompose.ui.view.menu.MainMenu
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.*
 
 @Composable
 fun ShoppingListArchivedScreen(
@@ -54,16 +53,17 @@ fun ShoppingListArchivedScreen(
                 actions = { MainMenu() }
             )
         },
-        content = { ScreenBody() }
+        content = { padding -> ScreenBody(padding) }
     )
 }
 
 @Composable
-private fun ScreenBody() {
+private fun ScreenBody(padding: PaddingValues) {
     when (val result = AmbientScreenState.current.shoppingListsUi) {
         is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success -> SuccessScreen(result.data)
         is ResultStatus.Error -> ErrorScreen()
+        else -> {}
     }
 }
 

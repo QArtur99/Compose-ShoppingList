@@ -57,7 +57,7 @@ fun ShoppingListCurrentItem(
                         Icon(
                             ImageVector.vectorResource(R.drawable.ic_archive_black_24dp),
                             "",
-                            Modifier.fillMaxSize()
+                            Modifier.wrapContentSize()
                         )
                     }
                     Text(

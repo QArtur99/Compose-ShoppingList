@@ -38,6 +38,7 @@ private fun AppContent() {
             is ScreenState.ArchivedShoppingList -> ShoppingListArchivedScreen()
             is ScreenState.CurrentProductList -> ProductListCurrentScreen()
             is ScreenState.ArchivedProductList -> ArchivedProductListScreen()
+            else -> {}
         }
     }
 }

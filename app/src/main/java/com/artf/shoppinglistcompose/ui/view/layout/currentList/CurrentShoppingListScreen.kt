@@ -57,20 +57,21 @@ fun ShoppingListCurrentScreen(
                 actions = { MainMenu() }
             )
         },
-        content = {
-            ScreenBody()
-            CreateShoppingListDialog()
+        content = { padding->
+            ScreenBody(padding)
+            CreateShoppingListDialog(padding)
         },
         floatingActionButton = { Fab() }
     )
 }
 
 @Composable
-private fun ScreenBody() {
+private fun ScreenBody(padding : PaddingValues) {
     when (val result = AmbientScreenState.current.shoppingListsUi) {
         is ResultStatus.Loading -> LoadingScreen()
         is ResultStatus.Success<*> -> SuccessScreenShopping(result.data as List<ShoppingListUi>)
         is ResultStatus.Error -> ErrorScreen()
+        else -> {}
     }
 }
 
