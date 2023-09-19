@@ -1,9 +1,25 @@
 package com.artf.shoppinglistcompose.ui.view.layout.currentList
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,48 +35,54 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artf.shoppinglistcompose.R
-import com.artf.shoppinglistcompose.ui.model.AmbientScreenState
 import com.artf.shoppinglistcompose.ui.model.AmbientSharedViewModel
 import com.artf.shoppinglistcompose.ui.model.SharedViewModel
-import com.artf.shoppinglistcompose.ui.model.model.ShoppingListUi
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameFocusState
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductNameSelectionState
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductQuantityFocusState
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.editTextProductQuantitySelectionState
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.productNameState
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.productQuantityState
-import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel.showDialogState
+import com.artf.shoppinglistcompose.ui.model.model.ProductUi
+import com.artf.shoppinglistcompose.ui.model.model.compose.CurrentProductListModel
 
 @Composable
-fun CreateProductDialog(padding: PaddingValues) {
+fun UpdateProductDialog(padding: PaddingValues, product: ProductUi? = null) {
     val sharedViewModelAmbient = AmbientSharedViewModel.current
-    val selectedShoppingList = AmbientScreenState.current.selectedShoppingList ?: return
-    if (showDialogState.value.not()) return
+    if (CurrentProductListModel.showUpdateDialogState.value.not()) return
+    if (product == null) return
+
+    CurrentProductListModel.productNameState.value = product.productName
+    CurrentProductListModel.editTextProductNameSelectionState.value = TextRange(
+        product.productName.length,
+        product.productName.length,
+    )
+
+    CurrentProductListModel.productQuantityState.value = product.productQuantity.toString()
+    CurrentProductListModel.editTextProductQuantitySelectionState.value = TextRange(
+        product.productQuantity.toString().length,
+        product.productQuantity.toString().length,
+    )
+
     AlertDialog(
-        onDismissRequest = { showDialogState.value = false },
+        onDismissRequest = { CurrentProductListModel.showDialogState.value = false },
         title = {
             Text(
                 modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-                text = stringResource(id = R.string.dialog_title_add_new_product),
+                text = stringResource(id = R.string.dialog_title_edit_product),
             )
         },
         text = {
             Column {
                 Spacer(Modifier.height(16.dp))
-                ProductEditText()
+                UpdateProductEditText()
                 Spacer(Modifier.height(16.dp))
-                QuantityEditText()
+                UpdateQuantityEditText()
             }
         },
-        buttons = { DialogButtons(sharedViewModelAmbient, selectedShoppingList) },
+        buttons = { UpdateDialogButtons(sharedViewModelAmbient, product) },
     )
 }
 
 @Composable
-private fun DialogButtons(
+private fun UpdateDialogButtons(
     sharedViewModel: SharedViewModel,
-    shoppingList: ShoppingListUi,
+    product: ProductUi,
 ) {
     Box(
         Modifier
@@ -74,7 +96,11 @@ private fun DialogButtons(
             Spacer(Modifier.weight(0.3f, true))
             TextButton(
                 modifier = Modifier.weight(0.35f, true),
-                onClick = { showDialogState.value = false },
+                onClick = {
+                    CurrentProductListModel.productNameState.value = ""
+                    CurrentProductListModel.productQuantityState.value = ""
+                    CurrentProductListModel.showUpdateDialogState.value = false
+                },
                 border = BorderStroke(2.dp, MaterialTheme.colors.primary),
                 colors = ButtonDefaults.outlinedButtonColors(),
                 content = {
@@ -89,22 +115,22 @@ private fun DialogButtons(
             Button(
                 modifier = Modifier.weight(0.35f, true),
                 onClick = {
-                    if (productNameState.value.isEmpty()
-                            .not() && productQuantityState.value.isEmpty().not()
+                    if (CurrentProductListModel.productNameState.value.isEmpty()
+                            .not() && CurrentProductListModel.productQuantityState.value.isEmpty().not()
                     ) {
-                        sharedViewModel.createProduct(
-                            productNameState.value,
-                            productQuantityState.value.toLong(),
-                            shoppingList.id,
+                        val newProduct = product.copy(
+                            productName = CurrentProductListModel.productNameState.value,
+                            productQuantity = CurrentProductListModel.productQuantityState.value.toLong()
                         )
-                        showDialogState.value = false
-                        productNameState.value = ""
-                        productQuantityState.value = ""
+                        sharedViewModel.updateProduct(newProduct)
+                        CurrentProductListModel.showUpdateDialogState.value = false
+                        CurrentProductListModel.productNameState.value = ""
+                        CurrentProductListModel.productQuantityState.value = ""
                     }
                 },
                 content = {
                     Text(
-                        text = stringResource(R.string.dialog_button_add),
+                        text = stringResource(R.string.dialog_button_update),
                         maxLines = 1,
                         style = TextStyle(fontSize = 14.sp),
                     )
@@ -115,22 +141,24 @@ private fun DialogButtons(
 }
 
 @Composable
-private fun ProductEditText() {
+private fun UpdateProductEditText() {
     Column {
         Box {
             TextField(
                 value = TextFieldValue(
-                    productNameState.value,
-                    editTextProductNameSelectionState.value,
+                    CurrentProductListModel.productNameState.value,
+                    CurrentProductListModel.editTextProductNameSelectionState.value,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .onFocusChanged { editTextProductNameFocusState.value = true },
+                    .onFocusChanged {
+                        CurrentProductListModel.editTextProductNameFocusState.value = true
+                    },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = { it ->
-                    productNameState.value = it.text
-                    editTextProductNameSelectionState.value =
+                    CurrentProductListModel.productNameState.value = it.text
+                    CurrentProductListModel.editTextProductNameSelectionState.value =
                         TextRange(it.text.length, it.text.length)
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -149,22 +177,24 @@ private fun ProductEditText() {
 }
 
 @Composable
-private fun QuantityEditText() {
+private fun UpdateQuantityEditText() {
     Column {
         Box {
             TextField(
                 value = TextFieldValue(
-                    productQuantityState.value,
-                    editTextProductQuantitySelectionState.value,
+                    CurrentProductListModel.productQuantityState.value,
+                    CurrentProductListModel.editTextProductQuantitySelectionState.value,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .onFocusChanged { editTextProductQuantityFocusState.value = true },
+                    .onFocusChanged {
+                        CurrentProductListModel.editTextProductQuantityFocusState.value = true
+                    },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 textStyle = TextStyle(fontSize = 18.sp),
                 onValueChange = { it ->
-                    productQuantityState.value = it.text
-                    editTextProductQuantitySelectionState.value =
+                    CurrentProductListModel.productQuantityState.value = it.text
+                    CurrentProductListModel.editTextProductQuantitySelectionState.value =
                         TextRange(it.text.length, it.text.length)
                 },
                 colors = TextFieldDefaults.textFieldColors(

@@ -1,5 +1,6 @@
 package com.artf.shoppinglistcompose.ui.model
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 @OpenForTesting
 class SharedViewModel constructor(
     private val backStack: ScreenBackStack,
-    private val shoppingListRepository: ShoppingListRepository
+    private val shoppingListRepository: ShoppingListRepository,
 ) : ViewModel(), ScreenBackStack by backStack {
 
     private val currentScreenState = backStack.getCurrentScreen()
@@ -40,6 +41,9 @@ class SharedViewModel constructor(
 
     private val _createProductLoading = MutableLiveData<Boolean>()
     private val createProductLoading: LiveData<Boolean> = _createProductLoading
+
+    private val _updateProductLoading = MutableLiveData<Boolean>()
+    private val updateProductLoading: LiveData<Boolean> = _updateProductLoading
 
     private val _createShoppingListLoading = MutableLiveData<Boolean>()
     private val createShoppingListLoading: LiveData<Boolean> = _createShoppingListLoading
@@ -87,6 +91,9 @@ class SharedViewModel constructor(
         }
     }
 
+    final var productUi = mutableStateOf<ProductUi?>(null)
+        private set
+
     fun createShoppingList(name: String) {
         _createShoppingListLoading.value = true
         val shoppingList = ShoppingList(shoppingListName = name)
@@ -112,7 +119,7 @@ class SharedViewModel constructor(
         val product = Product(
             productName = name,
             productQuantity = quantity,
-            shoppingListId = shoppingListId
+            shoppingListId = shoppingListId,
         )
         viewModelScope.launch {
             shoppingListRepository.insertProduct(product)
@@ -126,6 +133,18 @@ class SharedViewModel constructor(
             shoppingListRepository.deleteProduct(product.asDomainModel())
             _deleteProductLoading.value = false
         }
+    }
+
+    fun updateProduct(product: ProductUi) {
+        _updateProductLoading.value = true
+        viewModelScope.launch {
+            shoppingListRepository.updateProduct(product.asDomainModel())
+            _updateProductLoading.value = false
+        }
+    }
+
+    fun updateProductUiInfo(product: ProductUi) {
+        productUi.value = product
     }
 
     private val _screenState = MediatorLiveData<MutableScreenUi>().apply {

@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextRange
 
 object CurrentProductListModel {
     var showDialogState = mutableStateOf(false)
+    var showUpdateDialogState = mutableStateOf(false)
     var productNameState = mutableStateOf("")
     var editTextProductNameFocusState = mutableStateOf(true)
     var editTextProductNameSelectionState = mutableStateOf(TextRange(0, 0))
