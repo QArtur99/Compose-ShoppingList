@@ -40,6 +40,7 @@ fun ProductListCurrentScreen(
         content = { padding ->
             ScreenBody(padding)
             CreateProductDialog(padding)
+            UpdateProductDialog(padding, sharedViewModel.productUi.value)
         },
         floatingActionButton = { Fab() }
     )
@@ -73,7 +74,10 @@ private fun SuccessScreen(productList: List<ProductUi>) {
             .padding(8.dp, 8.dp, 8.dp, 96.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        productList.forEach { post -> ProductCurrentItem(sharedViewModel, post) }
+        productList.forEach { post -> ProductCurrentItem(sharedViewModel, post) {
+            sharedViewModel.updateProductUiInfo(it)
+            CurrentProductListModel.showUpdateDialogState.value = true
+        } }
     }
 }
 

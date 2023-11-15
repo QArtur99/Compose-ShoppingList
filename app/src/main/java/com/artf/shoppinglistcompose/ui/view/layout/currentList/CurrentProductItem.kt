@@ -20,33 +20,46 @@ import com.artf.shoppinglistcompose.ui.model.model.ProductUi
 @Composable
 fun ProductCurrentItem(
     sharedViewModel: SharedViewModel,
-    product: ProductUi
+    product: ProductUi,
+    onClick: (ProductUi) -> Unit,
 ) {
-    Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(all = 8.dp),
+    ) {
         Surface(
             shape = RoundedCornerShape(8.dp),
             elevation = 4.dp,
             modifier = Modifier.clickable(onClick = {
-
-            })
+                onClick(product)
+            }),
         ) {
-            Row(modifier = Modifier.fillMaxWidth().padding(all = 8.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = 8.dp),
+            ) {
                 Text(
                     text = product.productName,
-                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
-                        .padding(8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .padding(8.dp),
                 )
                 Text(
                     text = product.productQuantity.toString(),
-                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
-                        .padding(8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .padding(8.dp),
                 )
                 Column(horizontalAlignment = Alignment.End) {
                     IconButton(onClick = { sharedViewModel.deleteProduct(product) }) {
                         Icon(
                             ImageVector.vectorResource(R.drawable.ic_delete_forever_black_24dp),
                             "",
-                            Modifier.wrapContentSize()
+                            Modifier.wrapContentSize(),
                         )
                     }
                 }

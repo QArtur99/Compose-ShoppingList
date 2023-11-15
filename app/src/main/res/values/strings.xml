@@ -3,12 +3,14 @@
     <!--  Dialog  -->
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_update">Update</string>
     <string name="dialog_enter_product_name">Enter product name</string>
     <string name="dialog_enter_quantity">Enter quantity</string>
     <string name="dialog_enter_shopping_list_name">Enter shopping list name</string>
     <string name="dialog_error_product_empty">Product name can\'t be empty</string>
     <string name="dialog_error_shopping_list_empty">Shopping list name can\'t be empty</string>
     <string name="dialog_title_add_new_product">Add new product</string>
+    <string name="dialog_title_edit_product">Edit product</string>
     <string name="dialog_title_add_new_shopping_list">Add new shopping list</string>
     <!--  Drawer  -->
     <string name="drawer_archived">Archived</string>
