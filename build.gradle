@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     def versions = [:]
-    versions.android_gradle_plugin = '7.3.1'
+    versions.android_gradle_plugin = '8.1.1'
     versions.arch_core = '2.1.0'
     versions.atsl_core = '1.4.0'
     versions.atsl_junit = '1.1.3'
