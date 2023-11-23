@@ -4,8 +4,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.artf.shoppinglistcompose.data.database.model.Product
@@ -158,5 +158,5 @@ class SharedViewModel constructor(
         addSourceInvoke(shoppingListsUi) { value?.shoppingListsUi = it }
         addSourceInvoke(productListUi) { value?.productListUi = it }
     }
-    val screenState: LiveData<ScreenUi> = Transformations.map(_screenState) { it.copy() }
+    val screenState: LiveData<ScreenUi> = _screenState.map { it.copy() }
 }

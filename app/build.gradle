@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id "org.jetbrains.kotlin.kapt"
     id 'kotlin-allopen'
     id 'kotlin-noarg'
+    id 'com.google.devtools.ksp'
 }
 
 allOpen {
@@ -13,23 +14,23 @@ noArg {
     annotation 'com.artf.shoppinglistcompose.testing.NoArgClass'
 }
 android {
-    compileSdkVersion 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.artf.shoppinglistcompose"
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    sourceSets {
-        String sharedTestDir = 'src/sharedTest/java'
-        String debugDir = 'src/debug/java'
-        main.java.srcDirs += debugDir
-        test.java.srcDirs += sharedTestDir
-        androidTest.java.srcDirs += sharedTestDir
-    }
+//    sourceSets {
+//        String sharedTestDir = 'src/sharedTest/java'
+//        String debugDir = 'src/debug/java'
+//        main.java.srcDirs += debugDir
+//        test.java.srcDirs += sharedTestDir
+//        androidTest.java.srcDirs += sharedTestDir
+//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -37,12 +38,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '11'
-        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+    kotlin {
+        jvmToolchain(8)
     }
     buildFeatures {
         compose true
@@ -66,7 +66,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.support"
@@ -103,7 +103,7 @@ dependencies {
 
     //Room
     implementation "androidx.room:room-runtime:$versions.room"
-    kapt "androidx.room:room-compiler:$versions.room"
+    ksp "androidx.room:room-compiler:$versions.room"
 
     //Test
     testImplementation "androidx.arch.core:core-testing:$versions.arch_core"
@@ -111,7 +111,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
     testImplementation "org.mockito:mockito-core:$versions.mockito"
-    testImplementation "org.mockito:mockito-inline:$versions.mockito"
+    testImplementation "org.mockito:mockito-inline:$versions.mockito_inline"
     testImplementation "junit:junit:$versions.junit"
     testImplementation "org.robolectric:annotations:$versions.robolectric"
     testImplementation "org.robolectric:robolectric:$versions.robolectric"
@@ -125,7 +125,7 @@ dependencies {
     })
     implementation "androidx.fragment:fragment-ktx:$versions.fragment"
     androidTestImplementation "com.google.truth:truth:$versions.truth"
-    androidTestImplementation 'androidx.annotation:annotation:1.5.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.7.0'
     androidTestImplementation "androidx.arch.core:core-testing:$versions.arch_core"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.espresso"
