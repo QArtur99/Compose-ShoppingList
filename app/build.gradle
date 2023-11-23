@@ -24,13 +24,13 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-//    sourceSets {
-//        String sharedTestDir = 'src/sharedTest/java'
-//        String debugDir = 'src/debug/java'
-//        main.java.srcDirs += debugDir
-//        test.java.srcDirs += sharedTestDir
-//        androidTest.java.srcDirs += sharedTestDir
-//    }
+    sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
+        String debugDir = 'src/debug/java'
+        main.java.srcDirs += debugDir
+        test.java.srcDirs += sharedTestDir
+        androidTest.java.srcDirs += sharedTestDir
+    }
     buildTypes {
         release {
             minifyEnabled false
